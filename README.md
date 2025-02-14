@@ -23,6 +23,7 @@ import com.cloudwise.dosm.api.bean.form.field.GroupField;
 import com.cloudwise.dosm.api.bean.form.field.InputField;
 import com.cloudwise.dosm.api.bean.form.field.MemberField;
 import com.cloudwise.dosm.api.bean.form.field.MultiSelectField;
+import com.cloudwise.dosm.api.bean.form.field.NumberField;
 import com.cloudwise.dosm.api.bean.form.field.RadioField;
 import com.cloudwise.dosm.api.bean.form.field.SelectField;
 import com.cloudwise.dosm.api.bean.form.field.SelectManyField;
@@ -128,14 +129,15 @@ public class CrStatusSyncTrigger implements ITriggerExtV2 {
         updateCrStatus2Form(ctx, crStatus, param);
         HttpResponse response = null;
         try {
-            List<UserInfo> createdBys = getUsers(Lists.newArrayList(Long.valueOf(workOrder.getCreatedBy())));
-
-            String makeParam = makeParam(ctx, param, workOrder, createdBys, crStatus, originMessageNode);
-            log.info("CrStatusSyncTriggermakeParam:{}", makeParam);
             String appCode = getConfig("dosm.custom.appCode");
             String appKey = getConfig("dosm.custom.appKey");
+            List<UserInfo> createdBys = getUsers(Lists.newArrayList(Long.valueOf(workOrder.getCreatedBy())));
             boolean isNewCr = isNewCr(originMessageNode, param);
-            response = HttpUtil.createPost(isNewCr ? param.getPushUrl() : param.getUpdateUrl()).header("Content-Type", "application/json").header("appCode", appCode).header("appKey", appKey).body(makeParam).execute();
+            JsonNode makeParam = makeParam(param, workOrder, createdBys, crStatus, isNewCr);
+            log.info("CrStatusSyncTriggermakeParam:{}", makeParam);
+            response = HttpUtil.createPost(isNewCr ? param.getPushUrl() : param.getUpdateUrl())
+                    .header("Content-Type", "application/json").header("appCode", appCode).header("appKey", appKey)
+                    .body(JsonUtils.toJsonString(makeParam)).execute();
             String body = response.body();
             log.info("CrStatusSyncTriggermakeResult:{}", body);
             JsonNode node = JsonUtils.parseJsonNode(body);
@@ -167,20 +169,19 @@ public class CrStatusSyncTrigger implements ITriggerExtV2 {
         }
     }
 
-    public static String getConfig(String configKey) {
+    public  String getConfig(String configKey) {
         Environment bean = com.cloudwise.dosm.core.utils.SpringContextUtils.getBean(Environment.class);
         return bean.getProperty(configKey);
     }
 
-    private String makeParam(TriggerContext ctx, ExtParam extParam, WorkOrderBean workOrder, List<UserInfo> createdBys, CrStatusEnums crStatus, JsonNode originMessageNode) {
+    public  JsonNode makeParam(ExtParam extParam, WorkOrderBean workOrder, List<UserInfo> createdBys, CrStatusEnums crStatus, Boolean isNew) {
         ObjectNode result = JsonUtils.createObjectNode();
         ObjectNode data = JsonUtils.createObjectNode();
         List<String> userOneBankIds = getUserOneBankIdsByUser(createdBys);
         ObjectNode formData = JsonUtils.createObjectNode();
-        makeFormInfo(formData, ctx, workOrder, extParam, originMessageNode);
-        JsonNode nodeIdNode = originMessageNode.get("nodeId");
-        result.put("action", CrStatusEnums.NEW.equals(crStatus) ? "Create" : "Modify");
-        if (!nodeIdNode.asText().equals(extParam.getCreateNodeId())) {
+        makeFormInfo(formData, workOrder, extParam);
+        result.put("action", isNew ? "Create" : "Modify");
+        if (isNew) {
             formData.put("state", crStatus.getLabel());
         } else {
             formData.put("requester", userOneBankIds.get(0));
@@ -192,7 +193,7 @@ public class CrStatusSyncTrigger implements ITriggerExtV2 {
         data.put("createdDate", workOrder.getCreatedTime().getTime());
         data.put("workOrderStatus", crStatus.getLabel());
         result.set("data", data);
-        return JsonUtils.toJsonString(result);
+        return result;
     }
 
     public boolean isNewCr(JsonNode originMessageNode, ExtParam extParam) {
@@ -206,7 +207,7 @@ public class CrStatusSyncTrigger implements ITriggerExtV2 {
         return false;
     }
 
-    private static CrStatusEnums getCrStatus(TriggerContext ctx, ExtParam extParam, WorkOrderBean workOrder) {
+    private  CrStatusEnums getCrStatus(TriggerContext ctx, ExtParam extParam, WorkOrderBean workOrder) {
         String originMessage = ctx.getOriginMessage();
         JsonNode originMessageNode = JsonUtils.parseJsonNode(originMessage);
         if (originMessageNode == null) {
@@ -292,24 +293,9 @@ public class CrStatusSyncTrigger implements ITriggerExtV2 {
         }
     }
 
-    private void makeFormInfo(ObjectNode formData, TriggerContext ctx, WorkOrderBean workOrder, ExtParam extParam, JsonNode originMessageNode) {
+    public  void makeFormInfo(ObjectNode formData, WorkOrderBean workOrder, ExtParam extParam) {
         Map<String, FieldInfo> formDataMap = workOrder.getFormDataMap();
-        Map<String, String> fieldMapping = extParam.getFieldMapping();
-        Set<String> ichampFieldCodes = fieldMapping.keySet();
-        for (String ichampFieldCode : ichampFieldCodes) {
-            String itsmFieldCode = fieldMapping.get(ichampFieldCode);
-            if (formDataMap.containsKey(itsmFieldCode)) {
-                FieldInfo fieldInfo = formDataMap.get(itsmFieldCode);
-                log.info("CrStatusSyncTriggermakeParam: fieldCode:{},fieldInfo:{}", itsmFieldCode, fieldInfo);
-                fillIchampValue(formData, fieldInfo, ichampFieldCode);
-            } else {
-                log.error("CrStatusSyncTriggermakeParam: fieldCode:{},noFieldInfo", itsmFieldCode);
-                String[] startAndEndCode = ichampFieldCode.split(",");
-                for (String fieldCode : startAndEndCode) {
-                    formData.put(fieldCode, "");
-                }
-            }
-        }
+        fillFieldMapping(formData, extParam.getFieldMapping(), formDataMap);
         //Special handling
         if (formDataMap.containsKey("F_Reversion_Plan")) {
             FieldInfo implementInfo = formDataMap.get("F_Reversion_Plan");
@@ -370,14 +356,13 @@ public class CrStatusSyncTrigger implements ITriggerExtV2 {
         for (Map.Entry<String, List<TableFieldMapping>> item : tableFieldMappings.entrySet()) {
             String key = item.getKey();
             ObjectNode itemResult = JsonUtils.createObjectNode();
-
             List<TableFieldMapping> itemValue = item.getValue();
             for (TableFieldMapping tableFieldMapping : itemValue) {
                 String itsmTableFieldInfo = tableFieldMapping.getItsmTableFieldInfo();
                 FieldInfo jobDetailsSection = formDataMap.get(itsmTableFieldInfo);
                 if (jobDetailsSection != null) {
                     ArrayNode jobDetailResult = JsonUtils.createArrayNode();
-                    TableFormField jobDetailsSectionField = new TableFormField();
+                    TableFormField jobDetailsSectionField = (TableFormField) jobDetailsSection.getFieldValueObj();
                     Collection<RowData> jobDetailsSectionFieldValue = jobDetailsSectionField.getValue();
                     Map<String, String> fieldMapping1 = tableFieldMapping.getFieldMapping();
                     for (RowData rowData : jobDetailsSectionFieldValue) {
@@ -386,8 +371,8 @@ public class CrStatusSyncTrigger implements ITriggerExtV2 {
                         for (Map.Entry<String, String> stringStringEntry : fieldMapping1.entrySet()) {
                             FieldInfo fieldValueInfo = columnDataMap.get(stringStringEntry.getValue());
                             fillIchampValue(jobDetailItem, fieldValueInfo, stringStringEntry.getKey());
-                            jobDetailResult.add(jobDetailItem);
                         }
+                        jobDetailResult.add(jobDetailItem);
                     }
                     itemResult.put(tableFieldMapping.getIchampTableFieldInfo(), jobDetailResult);
                 }
@@ -430,9 +415,32 @@ public class CrStatusSyncTrigger implements ITriggerExtV2 {
 
     }
 
-    private void fillIchampValue(ObjectNode formData, FieldInfo fieldInfo, String ichampFieldCode) {
+    public void fillFieldMapping(ObjectNode formData, Map<String, String> fieldMapping, Map<String, FieldInfo> formDataMap) {
+        Set<String> ichampFieldCodes = fieldMapping.keySet();
+        for (String ichampFieldCode : ichampFieldCodes) {
+            String itsmFieldCode = fieldMapping.get(ichampFieldCode);
+            if (formDataMap.containsKey(itsmFieldCode)) {
+                FieldInfo fieldInfo = formDataMap.get(itsmFieldCode);
+                log.info("CrStatusSyncTriggermakeParam: fieldCode:{},fieldInfo:{}", itsmFieldCode, fieldInfo);
+                fillIchampValue(formData, fieldInfo, ichampFieldCode);
+            } else {
+                log.error("CrStatusSyncTriggermakeParam: fieldCode:{},noFieldInfo", itsmFieldCode);
+                String[] startAndEndCode = ichampFieldCode.split(",");
+                for (String fieldCode : startAndEndCode) {
+                    formData.put(fieldCode, "");
+                }
+            }
+        }
+    }
+
+    public  void fillIchampValue(ObjectNode formData, FieldInfo fieldInfo, String ichampFieldCode) {
         FieldValueTypeEnum fieldType = fieldInfo.getFieldType();
         switch (fieldType) {
+            case NUMBER:
+                NumberField numberField = (NumberField) fieldInfo.getFieldValueObj();
+                String numberFieldIntValue = numberField.getValue();
+                formData.put(ichampFieldCode, StrUtil.isBlank(numberFieldIntValue) ? "" : numberFieldIntValue);
+                break;
             case RADIO:
                 RadioField radioField = (RadioField) fieldInfo.getFieldValueObj();
                 String radioFieldLabel = radioField.getLabel();
@@ -502,16 +510,16 @@ public class CrStatusSyncTrigger implements ITriggerExtV2 {
                 break;
             case DATE:
                 DateField dateField = (DateField) fieldInfo.getFieldValueObj();
-                formData.put(ichampFieldCode, dateField.getValue() == null ? "" : dateField.getValue().toString());
+                formData.put(ichampFieldCode, dateField.getValue() == null ? "" : DateUtil.format(new Date(dateField.getValue()), "yyyy-MM-dd HH:mm:ss"));
                 break;
             case TIME:
                 TimeField timeField = (TimeField) fieldInfo.getFieldValueObj();
-                formData.put(ichampFieldCode, timeField.getValue() == null ? "" : timeField.getValue().toString());
+                formData.put(ichampFieldCode, timeField.getValue() == null ? "" : DateUtil.format(new Date(timeField.getValue()), "yyyy-MM-dd HH:mm:ss"));
                 break;
         }
     }
 
-    private static void setRiskValue(ObjectNode formData, Map<String, FieldInfo> formDataMap, String itsmFieldCode, String lowDictId, String ichampFieldCode) {
+    private  void setRiskValue(ObjectNode formData, Map<String, FieldInfo> formDataMap, String itsmFieldCode, String lowDictId, String ichampFieldCode) {
         FieldInfo fieldInfo = formDataMap.get(itsmFieldCode);
         if (fieldInfo == null) {
             formData.put(ichampFieldCode, "3");
@@ -537,7 +545,7 @@ public class CrStatusSyncTrigger implements ITriggerExtV2 {
     }
 
     @NotNull
-    private List<String> getUserOneBankIdsByUser(List<UserInfo> userList) {
+    public  List<String> getUserOneBankIdsByUser(List<UserInfo> userList) {
         List<String> oneBankIds = new ArrayList<>();
         userList.forEach(item -> {
             String onebankId = "";
@@ -553,7 +561,7 @@ public class CrStatusSyncTrigger implements ITriggerExtV2 {
 
 
     @NotNull
-    private List<UserInfo> getUsers(List<Long> userIdList) {
+    public List<UserInfo> getUsers(List<Long> userIdList) {
         RequestDomain requestDomain = UserHolder.get();
         UserConditionReq condition = new UserConditionReq();
         condition.setAccountId(Long.valueOf(requestDomain.getTopAccountId()));
@@ -566,7 +574,7 @@ public class CrStatusSyncTrigger implements ITriggerExtV2 {
     }
 
     @Data
-    static class ExtParam {
+    public static class ExtParam {
         private String pushUrl;
         private String updateUrl;
         private String pushMethod;
@@ -581,10 +589,11 @@ public class CrStatusSyncTrigger implements ITriggerExtV2 {
         private Map<String, String> riskDictMapping;
         private Map<String, List<TableFieldMapping>> tableFieldMapping;
         private List<ApproveInfo> approveInfoMapping;
+        private Map<String, String> rcaFieldMapping;
     }
 
     @Data
-    static class ApproveInfo {
+    public static class ApproveInfo {
 
         private String nodeId;
         private String rejectionCode;
@@ -595,7 +604,7 @@ public class CrStatusSyncTrigger implements ITriggerExtV2 {
 
 
     @Data
-    static class TableFieldMapping {
+    public static class TableFieldMapping {
         private String ichampTableFieldInfo;
         private String itsmTableFieldInfo;
         private Map<String, String> fieldMapping;
