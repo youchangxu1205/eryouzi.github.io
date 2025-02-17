@@ -37,6 +37,7 @@ import com.cloudwise.dosm.api.bean.trigger.entity.TriggerContext;
 import com.cloudwise.dosm.api.bean.utils.JsonUtils;
 import com.cloudwise.dosm.biz.instance.dao.MdlInstanceMapper;
 import com.cloudwise.dosm.biz.instance.entity.MdlInstance;
+import com.cloudwise.dosm.bpm.api.action.enums.EventTypeEnum;
 import com.cloudwise.dosm.bpm.base.dao.MdlApproveRecordDetailMapper;
 import com.cloudwise.dosm.bpm.base.dao.MdlApproveRecordMapper;
 import com.cloudwise.dosm.bpm.base.entity.MdlApproveRecord;
@@ -129,15 +130,32 @@ public class CrStatusSyncTrigger implements ITriggerExtV2 {
 
         //判断是否为第一次提交
         CrStatusEnums crStatus = getCrStatus(ctx, param, workOrder);
-        if (crStatus == null) {
+        if (crStatus != null) {
+            updateCrStatus2Form(ctx, crStatus, param);
+        }
+        HttpResponse response = null;
+        JsonNode nodeIdNode = originMessageNode.get("nodeId");
+        String nodeId = nodeIdNode.asText();
+        JsonNode eventTypeNode = originMessageNode.get("eventType");
+        String eventType = eventTypeNode.asText();
+        if (nodeId.equals(param.getCreateNodeId()) && EventTypeEnum.NODE_EXIT.getCode().equals(eventType)) {
             return;
         }
-        updateCrStatus2Form(ctx, crStatus, param);
-        HttpResponse response = null;
+
         boolean isNewCr = isNewCr(originMessageNode, param);
         String url = isNewCr ? param.getPushUrl() : param.getUpdateUrl();
         String jsonString = null;
         try {
+            if(crStatus == null) {
+                Map<String, FieldInfo> formDataMap = workOrder.getFormDataMap();
+                FieldInfo fieldInfo = formDataMap.get(param.getCrStatusFieldCode());
+                SelectField fieldValueObj = (SelectField) fieldInfo.getFieldValueObj();
+                crStatus = CrStatusEnums.getByLabel(fieldValueObj.getLabel());
+            }
+            if(!isNewCr && (crStatus == null || crStatus == CrStatusEnums.NEW)){
+                log.error("CrStatusSyncTrigger:originMessage：errorMessage:{}", originMessage);
+                crStatus = CrStatusEnums.OPEN;
+            }
             String appCode = getConfig("dosm.custom.appCode");
             String appKey = getConfig("dosm.custom.appKey");
             List<UserInfo> createdBys = getUsers(Lists.newArrayList(Long.valueOf(workOrder.getCreatedBy())));
@@ -274,10 +292,7 @@ public class CrStatusSyncTrigger implements ITriggerExtV2 {
         } else if ("WORK_ROLLBACK".equals(eventType.asText()) && rollbackToNodeId != null && rollbackToNodeId.asText().equals(extParam.getSignoffNodeId())) {
             return CrStatusEnums.REJECTED;
         }
-        Map<String, FieldInfo> formDataMap = workOrder.getFormDataMap();
-        FieldInfo fieldInfo = formDataMap.get(extParam.getCrStatusFieldCode());
-        SelectField fieldValueObj = (SelectField) fieldInfo.getFieldValueObj();
-        return CrStatusEnums.getByLabel(fieldValueObj.getLabel());
+        return null;
     }
 
     /**
@@ -707,382 +722,5 @@ public class CrStatusSyncTrigger implements ITriggerExtV2 {
         String[] split = ips.split(",");
         int idx = RandomUtil.randomInt(0, split.length);
         return split[idx];
-    }
-}
-
-
-
-
-
-package com.cloudwise.dosm.dbs.trigger;
-
-import cn.hutool.http.HttpResponse;
-import cn.hutool.http.HttpUtil;
-import cn.hutool.json.JSONUtil;
-import com.cloudwise.dosm.api.adv.extend.CustomBtnCurrentWorkInfo;
-import com.cloudwise.dosm.api.adv.extend.ExtendConfig;
-import com.cloudwise.dosm.api.adv.extend.ICustomBtnExt;
-import com.cloudwise.dosm.api.bean.instance.entity.WorkOrderBean;
-import com.cloudwise.dosm.biz.instance.dao.MdlInstanceMapper;
-import com.cloudwise.dosm.biz.instance.entity.MdlInstance;
-import com.cloudwise.dosm.bpm.api.instance.MdlInstanceApiService;
-import com.cloudwise.dosm.bpm.base.dao.BpmAdvEventMapper;
-import com.cloudwise.dosm.bpm.base.entity.BpmAdvEvent;
-import com.cloudwise.dosm.core.exception.BaseException;
-import com.cloudwise.dosm.core.pojo.bo.RequestDomain;
-import com.cloudwise.dosm.core.utils.UserHolder;
-import com.cloudwise.dosm.dict.dao.DataDictDetailMapper;
-import com.cloudwise.dosm.dict.dao.DataDictMapper;
-import com.cloudwise.dosm.dict.entity.DataDict;
-import com.cloudwise.dosm.dict.entity.DataDictDetail;
-import com.cloudwise.dosm.douc.entity.user.UserInfo;
-import com.cloudwise.dosm.facewall.core.utils.JsonUtils;
-import com.cloudwise.dosm.facewall.extension.base.startup.util.SpringContextUtils;
-import com.cloudwise.dosm.facewall.extension.core.annotation.Action;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.google.common.collect.Lists;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-
-@Slf4j
-@ExtendConfig(id = "dbs_cr_status_reopen_btn_four", name = "reopen btn", desc = "reopen btn")
-public class DbsCrStatusReopenBtnFour implements ICustomBtnExt {
-    @Autowired
-    MdlInstanceApiService mdlInstanceApiService;
-
-    @Override
-    @Action(value = "dbs_cr_status_reopen_btn_four", label = "Reopen", description = "Reopen")
-    public Map<String, Object> handler(Map<String, Object> requestParamMap) {
-        log.info("cr_status_reopen requestParamMap:{}", requestParamMap);
-        Map<String, Object> res = new HashMap<>();
-        CustomBtnCurrentWorkInfo currentOrder = getCurrentOrder(requestParamMap);
-
-        // 获取参数
-        String fieldCode = "crStatus";
-        String crStatusValue = "Reopen";
-        String reopenDictCode = "crStatus";
-        String workOrderId = currentOrder.getWorkOrderId();
-
-//        // Find the "CR Status" node
-//        JsonNode crStatusNode = findCrStatusNode(formInfo,fieldCode);
-//        if (Objects.isNull(crStatusNode)) {
-//            throw new BaseException("Cannot find the cr status key");
-//        }
-//        String directoryValue = crStatusNode.path("x-props").path("directoryValue").asText();
-//        log.error("cr_status_reopen workorderId:{},directoryValue:{}",workOrderId,JsonUtils.toJsonString(directoryValue));
-
-
-        // 更新工单crStatus
-        MdlInstanceMapper mdlInstanceMapper = SpringContextUtils.getBean(MdlInstanceMapper.class);
-        MdlInstance mdlInstance = mdlInstanceMapper.selectById(workOrderId, null);
-        log.error("cr_status_reopen workorderId:{},mdlInstance:{}", workOrderId, JsonUtils.toJsonString(mdlInstance));
-        if (Objects.isNull(mdlInstance)) {
-            throw new BaseException("Cannot find the current work order");
-        }
-
-        Object data = mdlInstance.getFormData();
-        ObjectNode formData = (ObjectNode) com.cloudwise.dosm.api.bean.utils.JsonUtils.parseJsonNode(data);
-
-        List<DataDictDetail> dataDictDetails = this.getDictOption(reopenDictCode);
-        log.error("cr_status_reopen dataDictDetails:{}", JSONUtil.toJsonStr(dataDictDetails));
-        Optional<DataDictDetail> first = dataDictDetails.stream().filter(item -> item.getData().equals(crStatusValue)).findFirst();
-        if (!first.isPresent()) {
-            throw new BaseException("Cannot find the reopen option");
-        }
-        formData.put(fieldCode, first.get().getId());
-        formData.put(fieldCode + "_value", first.get().getLabel());
-        mdlInstance.setFormData(formData);
-        mdlInstanceMapper.updateByIdSelective(mdlInstance);
-
-
-        try {
-            BpmAdvEventMapper bpmAdvEventMapper = SpringContextUtils.getBean(BpmAdvEventMapper.class);
-            List<BpmAdvEvent> bpmAdvEventMapperLast = bpmAdvEventMapper.getLast("110", mdlInstance.getMdlDefKey());
-            log.error("DbsCrStatusReopenBtnTwo:{}",bpmAdvEventMapperLast);
-            Optional<BpmAdvEvent> crStatus = bpmAdvEventMapperLast.stream().filter(item -> item.getTitle().equals("CR Status")).findFirst();
-            if (!crStatus.isPresent()) {
-                return res;
-            }
-            JsonNode ruleContent = crStatus.get().getRuleContent();
-            JsonNode extend = ruleContent.get("EXTEND");
-            JsonNode extendFunctions = extend.get("extendFunctions");
-            JsonNode content = extendFunctions.get(0).get("params");
-
-            ExtParam param = com.cloudwise.dosm.api.bean.utils.JsonUtils.parseObject(content.asText(), ExtParam.class);
-            CrStatusSyncTrigger crStatusSyncTrigger = SpringContextUtils.getBean(CrStatusSyncTrigger.class);
-            RequestDomain requestDomain = UserHolder.get();
-            WorkOrderBean workOrder = mdlInstanceApiService.getAuthorizeWorkOrder(requestDomain.getTopAccountId(), requestDomain.getAccountId(), requestDomain.getUserId(), mdlInstance.getProcessInstanceId());
-            List<UserInfo> createdBys = crStatusSyncTrigger.getUsers(Lists.newArrayList(Long.valueOf(workOrder.getCreatedBy())));
-            String appCode = crStatusSyncTrigger.getConfig("dosm.custom.appCode");
-            String appKey = crStatusSyncTrigger.getConfig("dosm.custom.appKey");
-            JsonNode params = crStatusSyncTrigger.makeParam(param, workOrder, createdBys, CrStatusEnums.REOPEN, false);
-            String jsonString = com.cloudwise.dosm.api.bean.utils.JsonUtils.toJsonString(params);
-            HttpResponse response = null;
-            String body = null;
-            try {
-                response = HttpUtil.createPost(param.getUpdateUrl()).header("Content-Type", "application/json")
-                        .header("appCode", appCode).header("appKey", appKey).body(jsonString).execute();
-                body = response.body();
-                log.info("CrStatusSyncTriggermakeResult:{}", body);
-                JsonNode node = com.cloudwise.dosm.api.bean.utils.JsonUtils.parseJsonNode(body);
-                if ("200".equals(node.get("code").asText())) {
-                    JsonNode dataResult = node.get("data");
-                    JsonNode status = dataResult.get("Status");
-                    if ("FAILED".equals(status.asText())) {
-
-                        crStatusSyncTrigger.saveApiLog(param.getUpdateUrl(), jsonString, body, mdlInstance.getBizKey(), "crStatusSync", false);
-                    } else {
-                        crStatusSyncTrigger.saveApiLog(param.getUpdateUrl(), jsonString, body, mdlInstance.getBizKey(), "crStatusSync", true);
-                    }
-                } else {
-
-                    crStatusSyncTrigger.saveApiLog(param.getUpdateUrl(), jsonString, body, mdlInstance.getBizKey(), "crStatusSync", false);
-                }
-            } catch (Exception e) {
-                log.error("RcaStatusSyncTrigger send to ichamp error:{}", e.getMessage(), e);
-                crStatusSyncTrigger.saveApiLog(param.getUpdateUrl(), jsonString, body, mdlInstance.getBizKey(), "crStatusSync", false);
-            }
-        } catch (Exception e) {
-
-        }
-        return res;
-    }
-
-
-    public List<DataDictDetail> getDictOption(String dictCode) {
-        DataDictDetailMapper dataDictDetailMapper = SpringContextUtils.getBean(DataDictDetailMapper.class);
-        DataDictMapper dataDictMapper = SpringContextUtils.getBean(DataDictMapper.class);
-        DataDict dataDict = new DataDict();
-        dataDict.setIsDel(0);
-        dataDict.setDictCode(dictCode);
-        DataDict crStatusDataDict = dataDictMapper.selectOneByParam(dataDict);
-        List<DataDictDetail> dataDictDetails = dataDictDetailMapper.selectDetailByDictIdAndLevel(crStatusDataDict.getId(), 1, crStatusDataDict.getAccountId());
-        return dataDictDetails;
-    }
-
-//    /**
-//     * 获取formInfo 中的 fieldCode 的规则
-//     */
-//    public static JsonNode findCrStatusNode(JsonNode node,String fieldCode) {
-//        if (node.isObject()) {
-//            // Check if the current node is the "cr_status" node
-//            if (fieldCode.equals(node.path("key").asText())) {
-//                return node;
-//            }
-//
-//            // Recursively search in the properties of the current node
-//            JsonNode propertiesNode = node.path("properties");
-//            if (propertiesNode.isObject()) {
-//                for (JsonNode propertyNode : propertiesNode) {
-//                    JsonNode result = findCrStatusNode(propertyNode,fieldCode);
-//                    if (result != null) {
-//                        return result;
-//                    }
-//                }
-//            }
-//        }
-//        return null;
-//    }
-
-}
-package com.cloudwise.dosm.dbs.trigger;
-
-import cn.hutool.http.HttpResponse;
-import cn.hutool.http.HttpUtil;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.cloudwise.dosm.api.adv.extend.ExtendConfig;
-import com.cloudwise.dosm.api.adv.extend.v2.ITriggerExtV2;
-import com.cloudwise.dosm.api.bean.form.FieldInfo;
-import com.cloudwise.dosm.api.bean.form.field.FieldValue;
-import com.cloudwise.dosm.api.bean.form.field.SelectField;
-import com.cloudwise.dosm.api.bean.instance.entity.WorkOrderBean;
-import com.cloudwise.dosm.api.bean.trigger.entity.ResultBean;
-import com.cloudwise.dosm.api.bean.trigger.entity.TriggerContext;
-import com.cloudwise.dosm.api.bean.utils.JsonUtils;
-import com.cloudwise.dosm.biz.instance.dao.MdlInstanceMapper;
-import com.cloudwise.dosm.biz.instance.entity.MdlInstance;
-import com.cloudwise.dosm.bpm.api.instance.MdlInstanceApiService;
-import com.cloudwise.dosm.core.utils.SpringContextUtils;
-import com.cloudwise.dosm.douc.entity.user.UserInfo;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.google.common.collect.Lists;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
-import java.util.Map;
-
-@Slf4j
-@ExtendConfig(id = "rca-status-sync-trigger", name = "RCA Status Sync to IChamp", desc = "RCA Status Sync to IChamp")
-public class RcaStatusSyncTrigger implements ITriggerExtV2 {
-    @Autowired
-    MdlInstanceApiService mdlInstanceApiService;
-    @Autowired
-    MdlInstanceMapper mdlInstanceMapper;
-
-    @Override
-    public void handler(TriggerContext ctx) {
-        WorkOrderBean rcaWorkOrderInfo = ctx.getWorkOrder();
-        Map<String, FieldInfo> rcaFormData = rcaWorkOrderInfo.getFormDataMap();
-        FieldInfo crTicketNumber = rcaFormData.get("CRTicketNumber");
-        FieldValue fieldValueObj = crTicketNumber.getFieldValueObj();
-        MdlInstance mdlInstance = mdlInstanceMapper.selectOne(Wrappers.lambdaQuery(MdlInstance.class).eq(MdlInstance::getBizKey, fieldValueObj.getValue()), false);
-        if (mdlInstance == null) {
-            return;
-        }
-        CrStatusSyncTrigger.ExtParam param = JsonUtils.parseObject(ctx.getExtParam(), CrStatusSyncTrigger.ExtParam.class);
-        WorkOrderBean workOrder = mdlInstanceApiService.getAuthorizeWorkOrder(ctx.getTopAccountId(), ctx.getAccountId(), ctx.getUserId(), mdlInstance.getProcessInstanceId());
-        CrStatusSyncTrigger crStatusSyncTrigger = SpringContextUtils.getBean(CrStatusSyncTrigger.class);
-        List<UserInfo> createdBys = crStatusSyncTrigger.getUsers(Lists.newArrayList(Long.valueOf(workOrder.getCreatedBy())));
-        Map<String, FieldInfo> formDataMap = workOrder.getFormDataMap();
-        FieldInfo fieldInfo = formDataMap.get(param.getCrStatusFieldCode());
-        SelectField crStatusValue = (SelectField) fieldInfo.getFieldValueObj();
-        String appCode = crStatusSyncTrigger.getConfig("dosm.custom.appCode");
-        String appKey = crStatusSyncTrigger.getConfig("dosm.custom.appKey");
-        JsonNode params = crStatusSyncTrigger.makeParam(param, workOrder, createdBys, CrStatusEnums.getByLabel(crStatusValue.getLabel()), false);
-        ObjectNode formData = (ObjectNode) params.get("formData");
-        crStatusSyncTrigger.fillFieldMapping(formData, param.getRcaFieldMapping(), rcaFormData);
-        log.info("RcaStatusSyncTriggermakeParam:{}", params);
-        String jsonString = JsonUtils.toJsonString(params);
-        HttpResponse response = null;
-        String body = null;
-        try {
-            response = HttpUtil.createPost(param.getUpdateUrl()).header("Content-Type", "application/json")
-                    .header("appCode", appCode).header("appKey", appKey).body(jsonString).execute();
-            body = response.body();
-            log.info("CrStatusSyncTriggermakeResult:{}", body);
-            JsonNode node = JsonUtils.parseJsonNode(body);
-            if ("200".equals(node.get("code").asText())) {
-                JsonNode data = node.get("data");
-                JsonNode status = data.get("Status");
-                JsonNode message = data.get("Message");
-                if ("FAILED".equals(status.asText())) {
-                    ResultBean resultBean = ctx.getResult();
-                    resultBean.setError(message.asText());
-                    ctx.setResult(resultBean);
-                    crStatusSyncTrigger.saveApiLog(param.getUpdateUrl(), jsonString, body, mdlInstance.getBizKey(), "crStatusSync", false);
-                } else {
-                    crStatusSyncTrigger.saveApiLog(param.getUpdateUrl(), jsonString, body, mdlInstance.getBizKey(), "crStatusSync", true);
-                }
-            } else {
-                ResultBean resultBean = ctx.getResult();
-                resultBean.setError(body);
-                ctx.setResult(resultBean);
-                crStatusSyncTrigger.saveApiLog(param.getUpdateUrl(), jsonString, body, mdlInstance.getBizKey(), "crStatusSync", false);
-            }
-        } catch (Exception e) {
-            log.error("RcaStatusSyncTrigger send to ichamp error:{}", e.getMessage(), e);
-            ResultBean resultBean = ctx.getResult();
-            resultBean.setError("Sync data to ichamp fail: data:" + e.getMessage());
-            ctx.setResult(resultBean);
-            crStatusSyncTrigger.saveApiLog(param.getUpdateUrl(), jsonString, body, mdlInstance.getBizKey(), "crStatusSync", false);
-        }
-
-    }
-}
-
-
-package com.cloudwise.dosm.dbs.trigger;
-
-import cn.hutool.http.HttpResponse;
-import cn.hutool.http.HttpUtil;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.cloudwise.dosm.api.adv.extend.ExtendConfig;
-import com.cloudwise.dosm.api.adv.extend.v2.ITriggerExtV2;
-import com.cloudwise.dosm.api.bean.form.FieldInfo;
-import com.cloudwise.dosm.api.bean.form.field.FieldValue;
-import com.cloudwise.dosm.api.bean.form.field.SelectField;
-import com.cloudwise.dosm.api.bean.instance.entity.WorkOrderBean;
-import com.cloudwise.dosm.api.bean.trigger.entity.ResultBean;
-import com.cloudwise.dosm.api.bean.trigger.entity.TriggerContext;
-import com.cloudwise.dosm.api.bean.utils.JsonUtils;
-import com.cloudwise.dosm.biz.instance.dao.MdlInstanceMapper;
-import com.cloudwise.dosm.biz.instance.entity.MdlInstance;
-import com.cloudwise.dosm.bpm.api.instance.MdlInstanceApiService;
-import com.cloudwise.dosm.core.utils.SpringContextUtils;
-import com.cloudwise.dosm.douc.entity.user.UserInfo;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.google.common.collect.Lists;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
-import java.util.Map;
-
-@Slf4j
-@ExtendConfig(id = "rca-status-sync-trigger", name = "RCA Status Sync to IChamp", desc = "RCA Status Sync to IChamp")
-public class RcaStatusSyncTrigger implements ITriggerExtV2 {
-    @Autowired
-    MdlInstanceApiService mdlInstanceApiService;
-    @Autowired
-    MdlInstanceMapper mdlInstanceMapper;
-
-    @Override
-    public void handler(TriggerContext ctx) {
-        WorkOrderBean rcaWorkOrderInfo = ctx.getWorkOrder();
-        Map<String, FieldInfo> rcaFormData = rcaWorkOrderInfo.getFormDataMap();
-        FieldInfo crTicketNumber = rcaFormData.get("CRTicketNumber");
-        FieldValue fieldValueObj = crTicketNumber.getFieldValueObj();
-        MdlInstance mdlInstance = mdlInstanceMapper.selectOne(Wrappers.lambdaQuery(MdlInstance.class).eq(MdlInstance::getBizKey, fieldValueObj.getValue()), false);
-        if (mdlInstance == null) {
-            return;
-        }
-        ExtParam param = JsonUtils.parseObject(ctx.getExtParam(), ExtParam.class);
-        WorkOrderBean workOrder = mdlInstanceApiService.getAuthorizeWorkOrder(ctx.getTopAccountId(), ctx.getAccountId(), ctx.getUserId(), mdlInstance.getProcessInstanceId());
-        CrStatusSyncTrigger crStatusSyncTrigger = SpringContextUtils.getBean(CrStatusSyncTrigger.class);
-        List<UserInfo> createdBys = crStatusSyncTrigger.getUsers(Lists.newArrayList(Long.valueOf(workOrder.getCreatedBy())));
-        Map<String, FieldInfo> formDataMap = workOrder.getFormDataMap();
-        FieldInfo fieldInfo = formDataMap.get(param.getCrStatusFieldCode());
-        SelectField crStatusValue = (SelectField) fieldInfo.getFieldValueObj();
-        String appCode = crStatusSyncTrigger.getConfig("dosm.custom.appCode");
-        String appKey = crStatusSyncTrigger.getConfig("dosm.custom.appKey");
-        JsonNode params = crStatusSyncTrigger.makeParam(param, workOrder, createdBys, CrStatusEnums.getByLabel(crStatusValue.getLabel()), false);
-        ObjectNode formData = (ObjectNode) params.get("formData");
-        crStatusSyncTrigger.fillFieldMapping(formData, param.getRcaFieldMapping(), rcaFormData);
-        log.info("RcaStatusSyncTriggermakeParam:{}", params);
-        String jsonString = JsonUtils.toJsonString(params);
-        HttpResponse response = null;
-        String body = null;
-        try {
-            response = HttpUtil.createPost(param.getUpdateUrl()).header("Content-Type", "application/json")
-                    .header("appCode", appCode).header("appKey", appKey).body(jsonString).execute();
-            body = response.body();
-            log.info("CrStatusSyncTriggermakeResult:{}", body);
-            JsonNode node = JsonUtils.parseJsonNode(body);
-            if ("200".equals(node.get("code").asText())) {
-                JsonNode data = node.get("data");
-                JsonNode status = data.get("Status");
-                JsonNode message = data.get("Message");
-                if ("FAILED".equals(status.asText())) {
-                    ResultBean resultBean = ctx.getResult();
-                    resultBean.setError(message.asText());
-                    ctx.setResult(resultBean);
-                    crStatusSyncTrigger.saveApiLog(param.getUpdateUrl(), jsonString, body, mdlInstance.getBizKey(), "crStatusSync", false);
-                } else {
-                    crStatusSyncTrigger.saveApiLog(param.getUpdateUrl(), jsonString, body, mdlInstance.getBizKey(), "crStatusSync", true);
-                }
-            } else {
-                ResultBean resultBean = ctx.getResult();
-                resultBean.setError(body);
-                ctx.setResult(resultBean);
-                crStatusSyncTrigger.saveApiLog(param.getUpdateUrl(), jsonString, body, mdlInstance.getBizKey(), "crStatusSync", false);
-            }
-        } catch (Exception e) {
-            log.error("RcaStatusSyncTrigger send to ichamp error:{}", e.getMessage(), e);
-            ResultBean resultBean = ctx.getResult();
-            resultBean.setError("Sync data to ichamp fail: data:" + e.getMessage());
-            ctx.setResult(resultBean);
-            crStatusSyncTrigger.saveApiLog(param.getUpdateUrl(), jsonString, body, mdlInstance.getBizKey(), "crStatusSync", false);
-        }
-
     }
 }
