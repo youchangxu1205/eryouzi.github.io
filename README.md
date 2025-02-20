@@ -68,6 +68,7 @@ import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -171,6 +172,9 @@ public class CommitButtonExt implements IButtonActionExt {
             if (notNeedAiml.asBoolean()) {
                 ((ObjectNode) formData).remove("notNeedAiml");
                 btnActionBo.setFormData(formData);
+                if (isSignOffNode(btnActionBo)) {
+                    handleCrStatus2Open(btnActionBo, formData);
+                }
                 log.error("AimlCommitButtonExt:{}", formData);
                 return;
             }
@@ -196,7 +200,7 @@ public class CommitButtonExt implements IButtonActionExt {
             handleSignOffNodeAction(btnActionBo, resultBo, bizKey, formData, dictInfoMap, groupBean);
 
             //L1.5 CM Team
-            this.handlerNeedL1HalfCmTeamApprove(judgeCmTeamApprove, btnActionBo, groupBean);
+//            this.handlerNeedL1HalfCmTeamApprove(judgeCmTeamApprove, btnActionBo, groupBean);
             handleCrStatus2Open(btnActionBo,formData);
         }
 
@@ -208,7 +212,7 @@ public class CommitButtonExt implements IButtonActionExt {
 
     }
 
-    private void handleCrStatus2Open(BtnActionBo btnActionBo,JsonNode formData) {
+    private void handleCrStatus2Open(BtnActionBo btnActionBo, JsonNode formData) {
         ObjectNode formDataResult = (ObjectNode) formData;
         DataDictDetailMapper dataDictDetailMapper = SpringContextUtils.getBean(DataDictDetailMapper.class);
         DataDictMapper dataDictMapper = SpringContextUtils.getBean(DataDictMapper.class);
@@ -359,6 +363,9 @@ public class CommitButtonExt implements IButtonActionExt {
         if (crStatusValue.equals("Closed Successful")) {
             JSONObject paramBody = new JSONObject();
             JsonNode droneTicket = formData.get("DroneTicket");
+            if (droneTicket == null) {
+                return;
+            }
             paramBody.set("releaseticketids", droneTicket.asText());
             String droneUrl = getConfig("dosm.custom.droneTickets");
             JSONObject ticketResult = getApiTenByParam(droneUrl, paramBody, bizKey);
@@ -557,15 +564,28 @@ public class CommitButtonExt implements IButtonActionExt {
                     ObjectNode formDataResult = JsonUtils.createObjectNode();
                     JsonNode aimlData = aimlResult.get("data");
                     JsonNode aimlRowData = aimlData.get("rowData");
+                    JsonNode explainability = aimlRowData.get("explainability");
+                    String explainabilityText = explainability.asText();
+                    String[] explainabilitys = explainabilityText.split(",");
                     formDataResult.set("riskScore", aimlRowData.get("score"));
                     formDataResult.set("riskThreshold", aimlRowData.get("risk_threshold"));
                     JsonNode explainabilityScore = aimlRowData.get("explainability_scores");
-                    formDataResult.set("explainabilityScores", explainabilityScore);
-                    formDataResult.set("explainability", aimlRowData.get("explainability"));
+                    List<Double> explainabilityScoreList = new ArrayList<>();
+                    for (JsonNode featureValue : explainabilityScore) {
+                        double aDouble = featureValue.asDouble();
+                        explainabilityScoreList.add(aDouble);
+                    }
+                    formDataResult.set("explainabilityScores", JsonUtils.parseJsonNode(explainabilityScoreList.stream().limit(5).collect(Collectors.toList())));
+                    formDataResult.put("explainability", Arrays.stream(explainabilitys).limit(5).collect(Collectors.joining(",")));
                     formDataResult.set("explainabilityBase", aimlRowData.get("explainability_base"));
-                    formDataResult.put("recommendedRisk", "high");
-//                    formDataResult.set("recommendedRisk", aimlRowData.get("risk"));
-                    formDataResult.set("featureValues", aimlRowData.get("feature_values"));
+//                    formDataResult.put("recommendedRisk", "high");
+                    formDataResult.set("recommendedRisk", aimlRowData.get("risk"));
+                    JsonNode featureValues = aimlRowData.get("feature_values");
+                    List<Double> featureValueList = new ArrayList<>();
+                    for (JsonNode featureValue : featureValues) {
+                        featureValueList.add(featureValue.asDouble());
+                    }
+                    formDataResult.set("featureValues", JsonUtils.parseJsonNode(featureValueList.stream().limit(5).collect(Collectors.toList())));
                     objectNode.set("formData", formDataResult);
                     objectNode.setAll((ObjectNode) aimlResult.get("data"));
                     resultBo.setResultData(objectNode);
@@ -732,8 +752,8 @@ public class CommitButtonExt implements IButtonActionExt {
         columns.add("ChangeSchedEndDateTime");
         JsonNode changeScheduleStartEndTime = formData.get("ChangeSchedule_StartEndTime");
         if (changeScheduleStartEndTime != null) {
-            dataItem.add(DateUtil.formatDateTime(new Date(changeScheduleStartEndTime.get("startDate").asLong())));
-            dataItem.add(DateUtil.formatDateTime(new Date(changeScheduleStartEndTime.get("endDate").asLong())));
+            dataItem.add(DateUtil.format(new Date(changeScheduleStartEndTime.get("startDate").asLong()), "MM/dd/yyyy HH:mm"));
+            dataItem.add(DateUtil.format(new Date(changeScheduleStartEndTime.get("endDate").asLong()), "MM/dd/yyyy HH:mm"));
         } else {
             throw new BaseException("changeScheduleStartEndTime can not be null");
         }
@@ -774,7 +794,7 @@ public class CommitButtonExt implements IButtonActionExt {
         dataItem.add(uat);
 
         columns.add("RPCCB_Number");
-        dataItem.add(null);
+        dataItem.add("");
 
         columns.add("MASAppcodeFlag");
         long count = entities.stream().filter(item -> item.get("mas").equals("Y")).count();
@@ -782,7 +802,7 @@ public class CommitButtonExt implements IButtonActionExt {
 
         columns.add("Live Verification (LV)");
         String lv = getSingleValue(formData, "liveVerificationAfterImplementat_value");
-        dataItem.add(lv);
+        dataItem.add(LvEnum.ofItsmValue(lv).getAimlValue());
 
         columns.add("CountryImpacted");
         List<String> countryImpacteValue = getMultiValues(formData, "CountryImpacte_value");
@@ -798,7 +818,9 @@ public class CommitButtonExt implements IButtonActionExt {
 
         columns.add("changeGroup");
         String changeGroupValue = getSingleValue(formData, "changeGroup_value");
-        dataItem.add(changeGroupValue);
+        ChangeGroupEnum changeGroupEnum = ChangeGroupEnum.ofItsmValue(changeGroupValue);
+        dataItem.add(changeGroupEnum.getAimlValue());
+
 
         columns.add("Location");
         String locationValue = getSingleValue(formData, "location_value");
@@ -818,7 +840,12 @@ public class CommitButtonExt implements IButtonActionExt {
 
         columns.add("ChangeCategory");
         String chCategoryValue = getSingleValue(formData, "Change_Category");
-        dataItem.add(chCategoryValue);
+        if(chCategoryValue.equals("High")){
+            dataItem.add(1);
+        }else{
+            dataItem.add(3);
+        }
+
 
         columns.add("ChangeDescription");
         String changeDescribtion = getSingleValue(formData, "changeDescribtion");
@@ -1043,1108 +1070,75 @@ public class CommitButtonExt implements IButtonActionExt {
 }
 
 
-
-
-package com.cloudwise.dosm.dbs.trigger;
-
-import cn.hutool.core.collection.CollectionUtil;
-import cn.hutool.core.date.DateTime;
-import cn.hutool.core.date.DateUnit;
-import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.text.CharSequenceUtil;
-import cn.hutool.core.util.IdUtil;
-import cn.hutool.core.util.RandomUtil;
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.http.HttpRequest;
-import cn.hutool.http.HttpResponse;
-import cn.hutool.http.HttpUtil;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.cloudwise.dosm.api.adv.extend.ExtendConfig;
-import com.cloudwise.dosm.api.adv.extend.v2.ITriggerExtV2;
-import com.cloudwise.dosm.api.bean.form.FieldInfo;
-import com.cloudwise.dosm.api.bean.form.RowData;
-import com.cloudwise.dosm.api.bean.form.enums.FieldValueTypeEnum;
-import com.cloudwise.dosm.api.bean.form.field.CheckboxField;
-import com.cloudwise.dosm.api.bean.form.field.DateField;
-import com.cloudwise.dosm.api.bean.form.field.DateRangeField;
-import com.cloudwise.dosm.api.bean.form.field.FieldValue;
-import com.cloudwise.dosm.api.bean.form.field.GroupField;
-import com.cloudwise.dosm.api.bean.form.field.InputField;
-import com.cloudwise.dosm.api.bean.form.field.MemberField;
-import com.cloudwise.dosm.api.bean.form.field.MultiSelectField;
-import com.cloudwise.dosm.api.bean.form.field.NumberField;
-import com.cloudwise.dosm.api.bean.form.field.RadioField;
-import com.cloudwise.dosm.api.bean.form.field.SelectField;
-import com.cloudwise.dosm.api.bean.form.field.SelectManyField;
-import com.cloudwise.dosm.api.bean.form.field.TableFormField;
-import com.cloudwise.dosm.api.bean.form.field.TextareaField;
-import com.cloudwise.dosm.api.bean.form.field.TimeField;
-import com.cloudwise.dosm.api.bean.instance.entity.WorkOrderBean;
-import com.cloudwise.dosm.api.bean.trigger.entity.ResultBean;
-import com.cloudwise.dosm.api.bean.trigger.entity.TriggerContext;
-import com.cloudwise.dosm.api.bean.utils.JsonUtils;
-import com.cloudwise.dosm.biz.instance.dao.MdlInstanceMapper;
-import com.cloudwise.dosm.biz.instance.entity.MdlInstance;
-import com.cloudwise.dosm.biz.instance.table.dao.MdlInstanceTableDataMapper;
-import com.cloudwise.dosm.biz.instance.table.service.MdlInstanceTableDataService;
-import com.cloudwise.dosm.biz.instance.table.vo.MdlInstanceTableRowVo;
-import com.cloudwise.dosm.bpm.api.action.enums.EventTypeEnum;
-import com.cloudwise.dosm.bpm.api.instance.MdlInstanceApiService;
-import com.cloudwise.dosm.bpm.base.dao.MdlApproveRecordDetailMapper;
-import com.cloudwise.dosm.bpm.base.dao.MdlApproveRecordMapper;
-import com.cloudwise.dosm.bpm.base.entity.MdlApproveRecord;
-import com.cloudwise.dosm.bpm.base.entity.MdlApproveRecordDetail;
-import com.cloudwise.dosm.bpm.base.enums.ApproveResultEnum;
-import com.cloudwise.dosm.bpm.base.enums.ApproveStatusEnum;
-import com.cloudwise.dosm.core.config.NacosConfigLocalCatch;
-import com.cloudwise.dosm.core.constant.IDosmConstant;
-import com.cloudwise.dosm.core.pojo.bo.RequestDomain;
-import com.cloudwise.dosm.core.pojo.po.BasePo;
-import com.cloudwise.dosm.core.utils.RedisUtil;
-import com.cloudwise.dosm.core.utils.UserHolder;
-import com.cloudwise.dosm.dict.dao.DataDictDetailMapper;
-import com.cloudwise.dosm.dict.dao.DataDictMapper;
-import com.cloudwise.dosm.dict.entity.DataDict;
-import com.cloudwise.dosm.dict.entity.DataDictDetail;
-import com.cloudwise.dosm.douc.base.Constant;
-import com.cloudwise.dosm.douc.entity.BaseExtend;
-import com.cloudwise.dosm.douc.entity.user.UserInfo;
-import com.cloudwise.dosm.douc.service.UserService;
-import com.cloudwise.dosm.douc.util.UserUtil;
-import com.cloudwise.dosm.facewall.extension.base.startup.util.SpringContextUtils;
-import com.cloudwise.dosm.file.entity.FileInfoPo;
-import com.cloudwise.dosm.file.service.IFileInfoService;
-import com.cloudwise.dosm.form.biz.service.FormFieldService;
-import com.cloudwise.douc.dto.v3.user.UserConditionReq;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.NullNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.google.common.collect.Lists;
-import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
-import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCallback;
-import org.springframework.jdbc.core.PreparedStatementSetter;
-import org.springframework.jdbc.core.ResultSetExtractor;
-import org.springframework.jdbc.core.RowMapper;
-
-import java.io.File;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-
-import static com.cloudwise.dosm.dbs.trigger.SignoffConstants.SignoffItem.DATA_CENTER_OPS_BATCH_SIGNOFF;
-import static com.cloudwise.dosm.dbs.trigger.SignoffConstants.SignoffItem.IDR_SIGNOFF_PROCUTOVER;
-
-/**
- * <p>
- *
- * </p>
- *
- * @author Norval.Xu
- * @since 2024/12/12
- */
-@Slf4j
-@ExtendConfig(id = "cr-status-sync-trigger", name = "CR Status Sync to IChamp", desc = "CR Status Sync to IChamp")
-public class CrStatusSyncTrigger implements ITriggerExtV2 {
-
-    private static final String CSH = "custom.service.host";
-    private static final String CSHPRE = "custom.service.host.prefix";
-
-
-    private static final String PATH_SEND_MSG = "/dcs/custom/api/sendMessage";
-
-    @Autowired
-    UserService userService;
-
-    @Autowired
-    private NacosConfigLocalCatch nacosConfigLocalCatch;
-    @Autowired
-    private MdlApproveRecordDetailMapper mdlApproveRecordDetailMapper;
-    @Autowired
-    private MdlApproveRecordMapper mdlApproveRecordMapper;
-    @Autowired
-    private DataDictDetailMapper dataDictDetailMapper;
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
-    @Autowired
-    private MdlInstanceTableDataService mdlInstanceTableDataService;
-    @Autowired
-    private FormFieldService formFieldService;
-    @Autowired
-    private IFileInfoService fileInfoService;
-
-
-    @Override
-    public void handler(TriggerContext ctx) {
-        String extParam = ctx.getExtParam();
-        ExtParam param = JsonUtils.parseObject(extParam, ExtParam.class);
-        WorkOrderBean workOrder = ctx.getWorkOrder();
-        String originMessage = ctx.getOriginMessage();
-        JsonNode originMessageNode = JsonUtils.parseJsonNode(originMessage);
-        if (originMessageNode == null) {
-            log.error("origin message error:{}", ctx.getOriginMessage());
-            throw new IllegalArgumentException("origin message error");
-        }
-
-        //判断是否为第一次提交
-        CrStatusEnums crStatus = getCrStatus(ctx, param, workOrder);
-        if (crStatus != null) {
-            updateCrStatus2Form(ctx, crStatus, param);
-        }
-        HttpResponse response = null;
-        JsonNode nodeIdNode = originMessageNode.get("nodeId");
-        String nodeId = nodeIdNode.asText();
-        JsonNode eventTypeNode = originMessageNode.get("eventType");
-        String eventType = eventTypeNode.asText();
-        if (nodeId.equals(param.getCreateNodeId()) && EventTypeEnum.NODE_EXIT.getCode().equals(eventType)) {
-            return;
-        }
-
-        boolean isNewCr = isNewCr(originMessageNode, param, workOrder);
-        String url = isNewCr ? param.getPushUrl() : param.getUpdateUrl();
-        String jsonString = null;
-        Map<String, Object> datas = new HashMap<>();
-        datas.put("workOrder", workOrder);
-        datas.put("originMessage", originMessageNode);
-        try {
-            if (crStatus == null) {
-                Map<String, FieldInfo> formDataMap = workOrder.getFormDataMap();
-                FieldInfo fieldInfo = formDataMap.get(param.getCrStatusFieldCode());
-                SelectField fieldValueObj = (SelectField) fieldInfo.getFieldValueObj();
-                crStatus = CrStatusEnums.getByLabel(fieldValueObj.getLabel());
-            }
-            String appCode = getConfig("dosm.custom.appCode");
-            String appKey = getConfig("dosm.custom.appKey");
-            List<UserInfo> createdBys = getUsers(Lists.newArrayList(Long.valueOf(workOrder.getCreatedBy())));
-            Map<String, List<MdlInstanceTableRowVo>> tableMap = mdlInstanceTableDataService.getTableRowVoMapByWorkOrderId(workOrder.getId());
-            ObjectNode tables = com.cloudwise.dosm.core.utils.JsonUtils.parseOrCreateObjectNode(tableMap);
-            //将表格数据回填到表单展示
-            ObjectNode formData = JsonUtils.createObjectNode();
-            for (Map.Entry<String, JsonNode> tableE : tables.properties()) {
-                formData.set(tableE.getKey(), tableE.getValue());
-            }
-            Map<String, FieldInfo> formDataMap = formFieldService.getFormData(workOrder.getFormId(), null, formData);
-            workOrder.getFormDataMap().putAll(formDataMap);
-            JsonNode makeParam = makeParam(param, workOrder, createdBys, crStatus, isNewCr);
-            log.info("CrStatusSyncTriggermakeParam:{}", makeParam);
-            jsonString = JsonUtils.toJsonString(makeParam);
-            response = HttpUtil.createPost(url).header("Content-Type", "application/json").header("appCode", appCode).header("appKey", appKey).body(jsonString).execute();
-            String body = response.body();
-            log.info("CrStatusSyncTriggermakeResult:{}", body);
-            JsonNode node = JsonUtils.parseJsonNode(body);
-
-            datas.put("reqParam", makeParam);
-            datas.put("workOrder", workOrder);
-            String jsonString1 = com.cloudwise.dosm.core.utils.JsonUtils.toJsonString(datas);
-            if ("200".equals(node.get("code").asText())) {
-                JsonNode data = node.get("data");
-                JsonNode status = data.get("Status");
-                JsonNode message = data.get("Message");
-                if ("FAILED".equals(status.asText())) {
-                    ResultBean resultBean = ctx.getResult();
-                    resultBean.setError(message.asText());
-                    ctx.setResult(resultBean);
-
-                    saveApiLog(url, jsonString1, body, workOrder.getBizKey(), "crStatusSync", false);
-                } else {
-                    saveApiLog(url, jsonString1, body, workOrder.getBizKey(), "crStatusSync", true);
-                }
-            } else {
-                ResultBean resultBean = ctx.getResult();
-                resultBean.setError(body);
-                ctx.setResult(resultBean);
-                saveApiLog(url, jsonString1, body, workOrder.getBizKey(), "crStatusSync", false);
-            }
-
-            sendApprovalMsg(crStatus, ctx, createdBys);
-        } catch (Exception e) {
-            log.error("CrStatusSyncTrigger send to ichamp error:{}", e.getMessage(), e);
-            ResultBean resultBean = ctx.getResult();
-            resultBean.setError("Sync data to ichamp fail: data:" + e.getMessage());
-            ctx.setResult(resultBean);
-            saveApiLog(url, jsonString, e.getMessage(), workOrder.getBizKey(), "crStatusSync", false);
-        } finally {
-            if (response != null) {
-                response.close();
-            }
-        }
-    }
-
-    public String getConfig(String configKey) {
-        Environment bean = com.cloudwise.dosm.core.utils.SpringContextUtils.getBean(Environment.class);
-        return bean.getProperty(configKey);
-    }
-
-    public JsonNode makeParam(ExtParam extParam, WorkOrderBean workOrder, List<UserInfo> createdBys, CrStatusEnums crStatus, Boolean isNew) {
-        ObjectNode result = JsonUtils.createObjectNode();
-        ObjectNode data = JsonUtils.createObjectNode();
-        List<String> userOneBankIds = getUserOneBankIdsByUser(createdBys);
-        ObjectNode formData = JsonUtils.createObjectNode();
-        makeFormInfo(formData, workOrder, extParam);
-        result.put("action", isNew ? "Create" : "Modify");
-        if (!isNew) {
-            formData.put("state", crStatus.getLabel());
-        } else {
-            formData.put("requester", userOneBankIds.get(0));
-        }
-        formData.put("changerequestor", userOneBankIds.get(0));
-        data.set("formData", formData);
-        data.put("workOrderNo", workOrder.getBizKey());
-        data.put("createdBy", userOneBankIds.get(0));
-        data.put("createdDate", workOrder.getCreatedTime().getTime());
-        data.put("workOrderStatus", crStatus.getLabel());
-        result.set("data", data);
-        return result;
-    }
-
-    public boolean isNewCr(JsonNode originMessageNode, ExtParam extParam, WorkOrderBean workOrderBean) {
-        JsonNode nodeIdNode = originMessageNode.get("nodeId");
-        String nodeId = nodeIdNode.asText();
-        JsonNode eventTypeNode = originMessageNode.get("eventType");
-        String eventType = eventTypeNode.asText();
-        if (nodeId.equals(extParam.getCreateNodeId()) && "WORK_COMMIT".equals(eventType)) {
-            return true;
-        }
-        return false;
-    }
-
-    private CrStatusEnums getCrStatus(TriggerContext ctx, ExtParam extParam, WorkOrderBean workOrder) {
-        String originMessage = ctx.getOriginMessage();
-        JsonNode originMessageNode = JsonUtils.parseJsonNode(originMessage);
-        if (originMessageNode == null) {
-            log.error("origin message error:{}", ctx.getOriginMessage());
-            throw new IllegalArgumentException("origin message error");
-        }
-        JsonNode eventType = originMessageNode.get("eventType");
-        JsonNode nodeIdNode = originMessageNode.get("nodeId");
-        String nodeId = nodeIdNode.asText();
-        JsonNode rollbackToNodeId = originMessageNode.get("rollbackToNodeId");
-        log.info("CrStatusSyncTrigger:eventType:{},nodeId:{},rollbackNodeId:{},workOrder:{}", eventType, nodeIdNode, rollbackToNodeId, workOrder);
-
-        /**
-         * 1.Determine if the work order is submitted
-         *  1.1 Determine if it is the work order creation node
-         *      1.1.1 If it is determined to be Reopen, set the status to Reopen
-         *      1.1.2 If it is determined to be a new work order, set the status to New
-         *  1.2 Determine if it is the CR closure node, the status remains unchanged
-         *  1.3 Determine if it is the signOff node, set the status to Open
-         * 2.Determine if it is entering the implementation node, set the status to Approved
-         * 3.Determine if it is the signOff node retrieval, set the status to Closed Cancel
-         * 4.Determine if it is the signOff node rollback, set the status to Rejected
-         */
-        if ("WORK_COMMIT".equals(eventType.asText())) {
-            if (nodeId.equals(extParam.getCreateNodeId())) {
-                Map<String, FieldInfo> formDataMap = workOrder.getFormDataMap();
-                if (formDataMap.containsKey(extParam.getCrStatusFieldCode())) {
-                    FieldInfo fieldInfo = formDataMap.get(extParam.getCrStatusFieldCode());
-                    SelectField fieldValueObj = (SelectField) fieldInfo.getFieldValueObj();
-                    String label = fieldValueObj.getLabel();
-                    if (label.equals("Closed Cancel") || label.equals("Rejected")) {
-                        return CrStatusEnums.REOPEN;
-                    }
-                } else {
-                    return CrStatusEnums.NEW;
-                }
-
-            } else if (nodeId.equals(extParam.getCloseNodeId())) {
-                Map<String, FieldInfo> formDataMap = workOrder.getFormDataMap();
-                FieldInfo fieldInfo = formDataMap.get(extParam.getCloseStatusFieldCode());
-                SelectField fieldValueObj = (SelectField) fieldInfo.getFieldValueObj();
-                return CrStatusEnums.getByLabel(fieldValueObj.getLabel());
-            } else if (nodeId.equals(extParam.getSignoffNodeId())) {
-                return CrStatusEnums.OPEN;
-            }
-        } else if ("NODE_ENTER".equals(eventType.asText()) && (nodeId.equals(extParam.getImplementationNodeId()) || nodeId.equals(extParam.getCloseNodeId()))) {
-            return CrStatusEnums.APPROVED;
-        } else if ("WORK_GET_BACK".equals(eventType.asText()) && rollbackToNodeId != null && rollbackToNodeId.asText().equals(extParam.getSignoffNodeId())) {
-            return CrStatusEnums.CLOSED_CANCEL;
-        } else if ("WORK_ROLLBACK".equals(eventType.asText()) && rollbackToNodeId != null && rollbackToNodeId.asText().equals(extParam.getSignoffNodeId())) {
-            return CrStatusEnums.REJECTED;
-        }
-        return null;
-    }
-
-    /**
-     * 更新crStatus至form表单
-     *
-     * @param ctx
-     * @param crStatus
-     * @param param
-     */
-    private void updateCrStatus2Form(TriggerContext ctx, CrStatusEnums crStatus, ExtParam param) {
-        MdlInstanceMapper mdlInstanceMapper = SpringContextUtils.getBean(MdlInstanceMapper.class);
-        MdlInstance mdlInstance = mdlInstanceMapper.selectById(ctx.getWorkOrder().getId(), ctx.getAccountId());
-        Object data = mdlInstance.getFormData();
-        ObjectNode formData = (ObjectNode) JsonUtils.parseJsonNode(data);
-
-        DataDictDetailMapper dataDictDetailMapper = SpringContextUtils.getBean(DataDictDetailMapper.class);
-        DataDictMapper dataDictMapper = SpringContextUtils.getBean(DataDictMapper.class);
-        DataDict dataDict = new DataDict();
-        dataDict.setIsDel(0);
-        dataDict.setDictCode(param.getCrStatusDictCode());
-        DataDict crStatusDataDict = dataDictMapper.selectOneByParam(dataDict);
-        List<DataDictDetail> dataDictDetails = dataDictDetailMapper.selectDetailByDictIdAndLevel(crStatusDataDict.getId(), 1, crStatusDataDict.getAccountId());
-        Optional<DataDictDetail> first = dataDictDetails.stream().filter(item -> item.getData().equals(crStatus.getLabel())).findFirst();
-        if (first.isPresent()) {
-            formData.put(param.getCrStatusFieldCode(), first.get().getId());
-            formData.put(param.getCrStatusFieldCode() + "_value", first.get().getLabel());
-            mdlInstance.setFormData(formData);
-            //是否需要记录？
-            mdlInstanceMapper.updateByIdSelective(mdlInstance);
-        }
-    }
-
-    public void saveApiLog(String requestUrl, String requestBody, String responseBody, String workOrderNo, String apiModule, boolean requestStatus) {
-        try {
-            jdbcTemplate.execute("insert into dbs_api_log (id,request_url,request_body,response_body,work_order_no,api_module,request_status) values(?,?,?,?,?,?,?)", (PreparedStatementCallback<Integer>) ps -> {
-                ps.setLong(1, IdUtil.getSnowflakeNextId());
-                ps.setString(2, requestUrl);
-                ps.setString(3, requestBody);
-                ps.setString(4, responseBody);
-                ps.setString(5, workOrderNo);
-                ps.setString(6, apiModule);
-                ps.setBoolean(7, requestStatus);
-                return ps.executeUpdate();
-            });
-        } catch (Exception ignore) {
-
-        }
-    }
-
-    public void makeFormInfo(ObjectNode formData, WorkOrderBean workOrder, ExtParam extParam) {
-        Map<String, FieldInfo> formDataMap = workOrder.getFormDataMap();
-        fillFieldMapping(formData, extParam.getFieldMapping(), formDataMap);
-        //Special handling
-        if (formDataMap.containsKey("F_Reversion_Plan")) {
-            FieldInfo implementInfo = formDataMap.get("F_Reversion_Plan");
-            TableFormField implementInfoFieldValueObj = (TableFormField) implementInfo.getFieldValueObj();
-            Collection<RowData> implementInfoFieldValueObjValue = implementInfoFieldValueObj.getValue();
-            int cmcrollbackduration = 0;
-            Long minDate = null;
-            Long maxDate = null;
-            for (RowData rowData : implementInfoFieldValueObjValue) {
-                Map<String, FieldInfo> columnDataMap = rowData.getColumnDataMap();
-                FieldInfo startTimeFieldInfo = columnDataMap.get("F_Start_Time");
-                DateField startTime = (DateField) startTimeFieldInfo.getFieldValueObj();
-                if (minDate == null) {
-                    minDate = startTime.getValue();
-                } else {
-                    minDate = Math.min(minDate, startTime.getValue());
-                }
-                FieldInfo endTimeFieldInfo = columnDataMap.get("F_End_Time");
-                DateField endTime = (DateField) endTimeFieldInfo.getFieldValueObj();
-                if (maxDate == null) {
-                    maxDate = endTime.getValue();
-                } else {
-                    maxDate = Math.max(maxDate, endTime.getValue());
-                }
-            }
-            if (minDate != null && maxDate != null) {
-                cmcrollbackduration = (int) ((maxDate - minDate) / (1000 * 60 * 60 * 24));
-            }
-
-            formData.put("cmcrollbackduration", cmcrollbackduration);
-        } else {
-            log.error("CrStatusSyncTrigger: implementInfo not found");
-        }
-        Map<String, String> riskDictMapping = extParam.getRiskDictMapping();
-        /**
-         * {
-         *     "CustomerServices":"d7b6d17cf02c401a93144a6323915745",
-         *     "InherentandResidualrisks":"f831cb01fd0f43b297a93ead68abc562",
-         *     "BusinessUnitsOperations":"2008e9b96d5d413798d119b829648535",
-         *     "ChangeComplexity":"845a783c49524348bd5804cfbc0ac06e",
-         *     "BackoutComplexity":"c7199dacb70e4a07ad29dd898cf56860",
-         *     "Documentation":"ff30d63471b14bc3870b90c849c66f7d",
-         *     "Security":"3240ef33f1bd4dbcbb1ad5ac86bb0b53",
-         *     "Interfaces":"aea98f47781147f8a8cb8eae078f7299",
-         * }
-         */
-        setRiskValue(formData, formDataMap, "CustomerServices", riskDictMapping.get("CustomerServices"), "cmrmavailablity");
-        setRiskValue(formData, formDataMap, "InherentandResidualrisks", riskDictMapping.get("InherentandResidualrisks"), "cmrminherentresidualrisks");
-        setRiskValue(formData, formDataMap, "BusinessUnitsOperations", riskDictMapping.get("BusinessUnitsOperations"), "cmrmcontinuity");
-        setRiskValue(formData, formDataMap, "ChangeComplexity", riskDictMapping.get("ChangeComplexity"), "cmrmcomplexity");
-        setRiskValue(formData, formDataMap, "BackoutComplexity", riskDictMapping.get("BackoutComplexity"), "cmrmimplement");
-        setRiskValue(formData, formDataMap, "Documentation", riskDictMapping.get("Documentation"), "cmrmtraining");
-        setRiskValue(formData, formDataMap, "Security", riskDictMapping.get("Security"), "cmrmsecurity");
-        setRiskValue(formData, formDataMap, "Interfaces", riskDictMapping.get("Interfaces"), "cmrminterfaces");
-
-        //mainframedata
-        Map<String, List<TableFieldMapping>> tableFieldMappings = extParam.getTableFieldMapping();
-        for (Map.Entry<String, List<TableFieldMapping>> item : tableFieldMappings.entrySet()) {
-            String key = item.getKey();
-            ObjectNode itemResult = JsonUtils.createObjectNode();
-            List<TableFieldMapping> itemValue = item.getValue();
-            for (TableFieldMapping tableFieldMapping : itemValue) {
-                String itsmTableFieldInfo = tableFieldMapping.getItsmTableFieldInfo();
-                FieldInfo jobDetailsSection = formDataMap.get(itsmTableFieldInfo);
-                if (jobDetailsSection != null) {
-                    log.error("CrStatusSyncTrigger find table info:{}", itsmTableFieldInfo);
-                    ArrayNode jobDetailResult = JsonUtils.createArrayNode();
-                    TableFormField jobDetailsSectionField = (TableFormField) jobDetailsSection.getFieldValueObj();
-                    Collection<RowData> jobDetailsSectionFieldValue = jobDetailsSectionField.getValue();
-                    Map<String, String> fieldMapping1 = tableFieldMapping.getFieldMapping();
-                    for (RowData rowData : jobDetailsSectionFieldValue) {
-                        ObjectNode jobDetailItem = JsonUtils.createObjectNode();
-                        Map<String, FieldInfo> columnDataMap = rowData.getColumnDataMap();
-                        for (Map.Entry<String, String> stringStringEntry : fieldMapping1.entrySet()) {
-                            FieldInfo fieldValueInfo = columnDataMap.get(stringStringEntry.getValue());
-                            fillIchampValue(jobDetailItem, fieldValueInfo, stringStringEntry.getKey());
-                        }
-                        jobDetailResult.add(jobDetailItem);
-                    }
-                    itemResult.put(tableFieldMapping.getIchampTableFieldInfo(), jobDetailResult);
-                } else {
-
-                    //try to query db?
-
-                    log.error("CrStatusSyncTrigger not find table info:{}", itsmTableFieldInfo);
-                }
-            }
-            if (!itemResult.isEmpty()) {
-                formData.put(key, itemResult);
-            }
-        }
-        List<ApproveInfo> approveInfoMapping = extParam.getApproveInfoMapping();
-        for (ApproveInfo approveInfo : approveInfoMapping) {
-            //if cr Status is not New ,need query approver status
-            LambdaQueryWrapper<MdlApproveRecord> wrapper = Wrappers.lambdaQuery(MdlApproveRecord.class).eq(MdlApproveRecord::getWorkOrderId, workOrder.getId()).eq(MdlApproveRecord::getNodeId, approveInfo.getNodeId()).orderByDesc(BasePo::getCreatedTime);
-            MdlApproveRecord mdlApproveRecord = mdlApproveRecordMapper.selectOne(wrapper, false);
-            log.error("CrStatus:queryApprove:{}", mdlApproveRecord);
-            if (mdlApproveRecord != null) {
-                if (mdlApproveRecord.getApproveStatus().equals(ApproveStatusEnum.FINISHED.getCode() + "")) {
-                    MdlApproveRecordDetail mdlApproveRecordDetail = mdlApproveRecordDetailMapper.selectOne(Wrappers.lambdaQuery(MdlApproveRecordDetail.class).eq(MdlApproveRecordDetail::getApproveRecordId, mdlApproveRecord.getId()), false);
-                    log.error("CrStatus:mdlApproveRecordDetail:{}", mdlApproveRecordDetail);
-                    if (mdlApproveRecordDetail != null) {
-                        String dictId = mdlApproveRecordDetail.getReason();
-                        if (StringUtils.isNotBlank(dictId) && StringUtils.isNotBlank(approveInfo.getReasonCode())) {
-                            DataDictDetail dataDictDetail = dataDictDetailMapper.selectById(dictId);
-                            String label = dataDictDetail.getLabel();
-                            formData.put(approveInfo.getRejectionCode(), label);
-                        }
-                        formData.put(approveInfo.getReasonCode(), mdlApproveRecordDetail.getApproveMsg());
-                    }
-                    formData.put(approveInfo.getStatusCode(), mdlApproveRecord.getApproveResult() == ApproveResultEnum.PASS ? "Approved" : "Rejected");
-                }
-            }
-        }
-
-        //TODO SIGNOFF
-        handleSignoffField(formData, workOrder, extParam);
-
-
-        formData.put("itsmcrnumber", workOrder.getBizKey());
-        formData.put("implementationplan", "https://" + getConfig("CloudwiseDomain") + "/docp/dosm/dosm/orderDetails?showType=handle&id=" + workOrder.getId() + "&isType=&isShowBack=1&type=3d409c4dc7e741539194a528cd9f0d91");
-        formData.put("reversionplan", "https://" + getConfig("CloudwiseDomain") + "/docp/dosm/dosm/orderDetails?showType=handle&id=" + workOrder.getId() + "&isType=&isShowBack=1&type=3d409c4dc7e741539194a528cd9f0d91");
-
-    }
-
-    private void handleSignoffField(ObjectNode formData, WorkOrderBean workOrder, ExtParam param) {
-
-        List<SignoffManager> signoffManagers = jdbcTemplate.query("select * from sign_off_manager where work_order_id = ?", new PreparedStatementSetter() {
-            @Override
-            public void setValues(PreparedStatement ps) throws SQLException {
-                ps.setString(1, workOrder.getBizKey());
-            }
-        }, new RowMapper<SignoffManager>() {
-
-            @Override
-            public SignoffManager mapRow(ResultSet rs, int rowNum) throws SQLException {
-                SignoffManager signoffManager = new SignoffManager();
-                signoffManager.setArtifact(rs.getString("artifact"));
-                signoffManager.setCaseId(rs.getString("case_id"));
-                signoffManager.setSignOffType(rs.getString("sign_off_type"));
-                signoffManager.setSignOffGroup(rs.getString("sign_off_group"));
-                signoffManager.setSignOffUser(rs.getString("sign_off_user"));
-                signoffManager.setStatus(rs.getString("status"));
-                signoffManager.setRejectionReason(rs.getString("rejection_reason"));
-                return signoffManager;
-            }
-        });
-
-        //IDRSIGNOFFCASEID
-        /**
-         * query https://confluence.sgp.dbs.com:8443/dcifcnfl/display/IN/27-+INAA-805+%5BInvensys%5D+API+for+IDR+result
-         */
-
-
-        //datacentersignoff
-        for (SignoffManager signoffManager : signoffManagers) {
-            String signOffType = signoffManager.getSignOffType();
-            List<String> signOffTypes = JsonUtils.parseArray(signOffType, String.class);
-            for (String offType : signOffTypes) {
-                SignoffConstants.SignoffItem signoffItem = SignoffConstants.SignoffItem.fromString(offType);
-                if (signoffItem != null) {
-                    if (signoffItem == IDR_SIGNOFF_PROCUTOVER) {
-                        ArrayNode idrSignoff = JsonUtils.createArrayNode();
-                        String appCode = getConfig("dosm.custom.appCode");
-                        String appKey = getConfig("dosm.custom.appKey");
-                        if (StringUtils.isNotBlank(signoffManager.getCaseId())) {
-                            String caseId = signoffManager.getCaseId();
-                            String[] caseIds = caseId.split(",");
-                            ObjectNode objectNode = JsonUtils.createObjectNode();
-                            objectNode.put("CASEID", caseId);
-                            HttpResponse response = HttpUtil.createPost(param.getIdrUrl()).header("Content-Type", "application/json")
-                                    .header("appCode", appCode).header("appKey", appKey).body(JsonUtils.toJsonString(objectNode)).execute();
-                            String body = response.body();
-                            JsonNode caseIdResp = JsonUtils.parseJsonNode(body);
-                            JsonNode data = caseIdResp.get("data");
-                            Map<String, JsonNode> caseIdMap = new HashMap<>();
-                            for (JsonNode node : data) {
-                                caseIdMap.put(node.get("CASEID").asText(), node);
-                            }
-                            for (String id : caseIds) {
-                                ObjectNode caseIdResult = JsonUtils.createObjectNode();
-                                caseIdResult.put("caseid", id);
-                                if (caseIdMap.containsKey(id)) {
-                                    JsonNode node = caseIdMap.get(id);
-                                    JsonNode node1 = node.get("COMPLETIONDATE");
-                                    if (node1 != null && !(node1 instanceof NullNode)) {
-                                        String text = node1.asText();
-                                        DateTime parse = DateUtil.parse(text);
-                                        long between = DateUtil.between(parse, new Date(), DateUnit.DAY);
-                                        if (between >= 180) {
-                                            caseIdResult.put("remarks", "Signoff Exceed 6 months");
-                                        } else {
-                                            caseIdResult.put("remarks", "Signoff not find");
-                                        }
-                                    } else {
-                                        caseIdResult.put("remarks", "Not approved");
-                                    }
-                                } else {
-                                    caseIdResult.put("remarks", "Signoff not find");
-                                }
-                                idrSignoff.add(caseIdResult);
-                            }
-                            formData.put("idrsignoffcaseid", idrSignoff);
-                        }
-                    }
-                    JsonNode signOffUser = JsonUtils.parseJsonNode(signoffManager.getSignOffUser());
-                    if (signOffUser != null && !signOffUser.isEmpty()) {
-                        if (signoffItem.getSignOffApproverLoginCode() != null) {
-                            String userName = signOffUser.get(0).get("userName").asText();
-                            formData.put(signoffItem.getSignOffApproverLoginCode(), userName.substring(0, userName.indexOf("(")));
-                        }
-                        SignOffStatusEnum signOffStatusEnum = SignOffStatusEnum.valueOf(signoffManager.getStatus());
-                        if (signOffStatusEnum == SignOffStatusEnum.REJECTED || signOffStatusEnum == SignOffStatusEnum.APPROVED) {
-                            if (signoffItem.getSignOffStatusCode() != null) {
-                                formData.put(signoffItem.getSignOffStatusCode(), signOffStatusEnum.getDesc());
-                            }
-                            if (signoffItem.getSignOffRejectionReasonCode() != null) {
-                                formData.put(signoffItem.getSignOffRejectionReasonCode(), signoffManager.getRejectionReason() == null ? "" : signoffManager.getRejectionReason());
-                            }
-                            if (signoffItem.getSignOffUrlCode() != null) {
-                                JsonNode node = JsonUtils.parseJsonNode(signoffManager.getArtifact());
-                                List<String> urls = new ArrayList<>();
-                                for (JsonNode jsonNode : node) {
-                                    JsonNode id = jsonNode.get("id");
-                                    FileInfoPo fileInfoPo = fileInfoService.getById(workOrder.getAccountId(), id.asText());
-                                    String filePath = fileInfoPo.getFilePath();
-                                    String fileName = filePath.substring(filePath.indexOf(File.separator) + 1);
-                                    try {
-                                        String presignedObjectUrl = fileInfoService.getPresignedObjectUrl(fileName.substring(0, filePath.indexOf(File.separator)), fileName, 604800);
-                                        urls.add(presignedObjectUrl);
-                                    } catch (Exception e) {
-
-                                    }
-                                }
-                                formData.put(signoffItem.getSignOffUrlCode(), String.join(",", urls));
-                            }
-                        } else {
-                            if (signoffItem.getSignOffStatusCode() != null) {
-                                formData.put(signoffItem.getSignOffStatusCode(), "");
-                            }
-                            if (signoffItem.getSignOffRejectionReasonCode() != null) {
-                                formData.put(signoffItem.getSignOffRejectionReasonCode(), "");
-                            }
-                            if (signoffItem.getSignOffUrlCode() != null) {
-                                formData.put(signoffItem.getSignOffUrlCode(), "");
-                            }
-                        }
-
-                    }
-                }
-            }
-        }
-    }
-
-    @Data
-    static class SignoffManager {
-        private String signOffType;
-        private String signOffGroup;
-        private String signOffUser;
-        private String caseId;
-        private String artifact;
-        private String rejectionReason;
-        private String status;
-    }
-
-    public void fillFieldMapping(ObjectNode formData, Map<String, String> fieldMapping, Map<String, FieldInfo> formDataMap) {
-        Set<String> ichampFieldCodes = fieldMapping.keySet();
-        for (String ichampFieldCode : ichampFieldCodes) {
-            String itsmFieldCode = fieldMapping.get(ichampFieldCode);
-            if (formDataMap.containsKey(itsmFieldCode)) {
-                FieldInfo fieldInfo = formDataMap.get(itsmFieldCode);
-                log.info("CrStatusSyncTriggermakeParam: fieldCode:{},fieldInfo:{}", itsmFieldCode, fieldInfo);
-                fillIchampValue(formData, fieldInfo, ichampFieldCode);
-            } else {
-                log.error("CrStatusSyncTriggermakeParam: fieldCode:{},noFieldInfo", itsmFieldCode);
-                String[] startAndEndCode = ichampFieldCode.split(",");
-                for (String fieldCode : startAndEndCode) {
-                    formData.put(fieldCode, "");
-                }
-            }
-        }
-    }
-
-    public void fillIchampValue(ObjectNode formData, FieldInfo fieldInfo, String ichampFieldCode) {
-        //codechecker error
-
-        FieldValueTypeEnum fieldType = fieldInfo.getFieldType();
-        switch (fieldType) {
-            case NUMBER:
-                NumberField numberField = (NumberField) fieldInfo.getFieldValueObj();
-                String numberFieldIntValue = numberField.getValue();
-                formData.put(ichampFieldCode, StrUtil.isBlank(numberFieldIntValue) ? "" : numberFieldIntValue);
-                break;
-            case RADIO:
-                RadioField radioField = (RadioField) fieldInfo.getFieldValueObj();
-                String radioFieldLabel = radioField.getLabel();
-                formData.put(ichampFieldCode, StrUtil.isBlank(radioFieldLabel) ? "" : radioFieldLabel);
-                break;
-            case SELECT:
-                SelectField fieldValueObj = (SelectField) fieldInfo.getFieldValueObj();
-                String label = fieldValueObj.getLabel();
-                formData.put(ichampFieldCode, StrUtil.isBlank(label) ? "" : label);
-                break;
-            case CHECKBOX:
-                CheckboxField checkboxField = (CheckboxField) fieldInfo.getFieldValueObj();
-                Collection<String> checkboxFieldLabel = checkboxField.getLabel();
-                formData.put(ichampFieldCode, CollectionUtil.isEmpty(checkboxFieldLabel) ? "" : String.join(",", checkboxFieldLabel));
-                break;
-            case INPUT:
-                InputField inputField = (InputField) fieldInfo.getFieldValueObj();
-                formData.put(ichampFieldCode, StrUtil.isBlank(inputField.getValue()) ? "" : inputField.getValue());
-                break;
-            case TEXTAREA:
-                TextareaField textareaField = (TextareaField) fieldInfo.getFieldValueObj();
-                formData.put(ichampFieldCode, StrUtil.isBlank(textareaField.getValue()) ? "" : textareaField.getValue());
-                break;
-            case SELECT_MANY:
-                SelectManyField selectManyField = (SelectManyField) fieldInfo.getFieldValueObj();
-                Collection<String> labels = selectManyField.getLabel();
-                formData.put(ichampFieldCode, CollectionUtil.isEmpty(labels) ? "" : String.join(",", labels));
-                break;
-            case MULTI_SELECT:
-                MultiSelectField multiSelectField = (MultiSelectField) fieldInfo.getFieldValueObj();
-                Collection<String> labelsM = multiSelectField.getLabel();
-                formData.put(ichampFieldCode, CollectionUtil.isEmpty(labelsM) ? "" : String.join(",", labelsM));
-                break;
-            case GROUP:
-                GroupField groupField = (GroupField) fieldInfo.getFieldValueObj();
-                List<String> arrayNode1 = new ArrayList<>();
-                groupField.getValue().forEach(item -> {
-                    arrayNode1.add(item.getGroupName());
-                });
-                formData.put(ichampFieldCode, CollectionUtil.isEmpty(arrayNode1) ? "" : String.join(",", arrayNode1));
-                break;
-            case MEMBER:
-                MemberField memberField = (MemberField) fieldInfo.getFieldValueObj();
-                List<String> arrayNode2 = new ArrayList<>();
-                List<Long> memberUserIds = new ArrayList<>();
-                memberField.getValue().forEach(item -> {
-                    arrayNode2.add(item.getUserName());
-                    memberUserIds.add(Long.valueOf(item.getUserId()));
-                });
-                String[] userFieldCodes = ichampFieldCode.split(",");
-                List<String> oneBankIds = getUserOneBankIds(memberUserIds);
-                formData.put(userFieldCodes[0], CollectionUtil.isEmpty(oneBankIds) ? "" : String.join(",", oneBankIds));
-                if (userFieldCodes.length > 1) {
-                    formData.put(userFieldCodes[1], CollectionUtil.isEmpty(arrayNode2) ? "" : String.join(",", arrayNode2));
-                }
-                break;
-            case DATERANGE:
-                DateRangeField dateRangeField = (DateRangeField) fieldInfo.getFieldValueObj();
-                String[] startAndEndCode = ichampFieldCode.split(",");
-                if (dateRangeField.getValue() == null) {
-                    formData.put(startAndEndCode[0], "");
-                    formData.put(startAndEndCode[1], "");
-                } else {
-                    formData.put(startAndEndCode[0], DateUtil.format(new Date(dateRangeField.getValue().getStartDate()), "yyyy-MM-dd HH:mm:ss"));
-                    formData.put(startAndEndCode[1], DateUtil.format(new Date(dateRangeField.getValue().getEndDate()), "yyyy-MM-dd HH:mm:ss"));
-                }
-                break;
-            case DATE:
-                DateField dateField = (DateField) fieldInfo.getFieldValueObj();
-                formData.put(ichampFieldCode, dateField.getValue() == null ? "" : DateUtil.format(new Date(dateField.getValue()), "yyyy-MM-dd HH:mm:ss"));
-                break;
-            case TIME:
-                TimeField timeField = (TimeField) fieldInfo.getFieldValueObj();
-                formData.put(ichampFieldCode, timeField.getValue() == null ? "" : DateUtil.format(new Date(timeField.getValue()), "yyyy-MM-dd HH:mm:ss"));
-                break;
-        }
-    }
-
-    private void setRiskValue(ObjectNode formData, Map<String, FieldInfo> formDataMap, String itsmFieldCode, String lowDictId, String ichampFieldCode) {
-        FieldInfo fieldInfo = formDataMap.get(itsmFieldCode);
-        if (fieldInfo == null) {
-            formData.put(ichampFieldCode, "3");
-            return;
-        }
-        FieldValue fieldValueObj = fieldInfo.getFieldValueObj();
-        if (fieldValueObj == null || fieldValueObj.getValue() == null) {
-            formData.put(ichampFieldCode, "3");
-        } else {
-            String value = fieldValueObj.getValue().toString();
-            if (value.equals(lowDictId)) {
-                formData.put(ichampFieldCode, "3");
-            } else {
-                formData.put(ichampFieldCode, "1");
-            }
-        }
-    }
-
-    @NotNull
-    private List<String> getUserOneBankIds(List<Long> memberUserIds) {
-        List<UserInfo> userList = getUsers(memberUserIds);
-        return getUserOneBankIdsByUser(userList);
-    }
-
-    @NotNull
-    public List<String> getUserOneBankIdsByUser(List<UserInfo> userList) {
-        List<String> oneBankIds = new ArrayList<>();
-        userList.forEach(item -> {
-            String onebankId = "";
-            for (BaseExtend baseExtend : item.getExtend()) {
-                if (baseExtend.getAlias().equals("1bankId")) {
-                    onebankId = baseExtend.getValue();
-                }
-            }
-            oneBankIds.add(onebankId);
-        });
-        return oneBankIds;
-    }
-
-
-    @NotNull
-    public List<UserInfo> getUsers(List<Long> userIdList) {
-        RequestDomain requestDomain = UserHolder.get();
-        UserConditionReq condition = new UserConditionReq();
-        condition.setAccountId(Long.valueOf(requestDomain.getTopAccountId()));
-        condition.setUserId(UserUtil.getUserId());
-        condition.setStatus(Constant.DOUC_ENABLE_STATUS);
-        condition.setRespMode(3);
-        condition.setIds(userIdList);
-        condition.setAccountScope(IDosmConstant.ACCOUNT_SCOPE);
-        return userService.getUserByConditionV3(condition);
-    }
-
-    @Data
-    public static class ApproveInfo {
-
-        private String nodeId;
-        private String rejectionCode;
-        private String reasonCode;
-        private String statusCode;
-
-    }
-
-
-    @Data
-    public static class TableFieldMapping {
-        private String ichampTableFieldInfo;
-        private String itsmTableFieldInfo;
-        private Map<String, String> fieldMapping;
-    }
-
-    private void sendApprovalMsg(CrStatusEnums crStatus, TriggerContext ctx, List<UserInfo> createdBys) {
-        if (crStatus == null || crStatus.getNotifyScene() == null) {
-            log.info("workOrderId: {}, crStatus: {}", ctx.getWorkOrder(), crStatus);
-            return;
-        }
-
-        Map properties = nacosConfigLocalCatch.getProperties();
-        if (null == properties) {
-            log.info("RejectBtnTrigger get properties is null, workOrderId: {}, crStatus: {}", ctx.getWorkOrder(), crStatus);
-            return;
-        }
-        Object host = properties.get(CSH);
-        Object prefix = properties.get(CSHPRE);
-        String serviceHost = Optional.ofNullable(host).map(String::valueOf).orElse("");
-        String serviceHostPrefix = Optional.ofNullable(prefix).map(String::valueOf).orElse("http://");
-        log.info("RejectBtnTrigger custom.service.host:{}", serviceHost);
-        if (CharSequenceUtil.isBlank(serviceHost)) {
-            log.info("RejectBtnTrigger get properties [custom.service.host] is null");
-            return;
-        }
-
-        try {
-            String url = serviceHostPrefix + getHost(serviceHost) + PATH_SEND_MSG;
-            Map<String, Object> sendMsgContextMap = getSendMsgContext(crStatus.getNotifyScene(), ctx, createdBys);
-            log.info("RejectBtnTrigger call  url :{},param:{}", url, sendMsgContextMap);
-            String body = HttpRequest.post(url).header("Content-Type", "application/json").body(com.cloudwise.dosm.core.utils.JsonUtils.toJsonString(sendMsgContextMap)).timeout(5000).execute().body();
-            log.info("RejectBtnTrigger call  success:{}", body);
-        } catch (Exception e) {
-            log.error("RejectBtnTrigger call fail:", e);
-        }
-    }
-
-
-    private Map<String, Object> getSendMsgContext(String notifyScence, TriggerContext ctx, List<UserInfo> createdBys) {
-        Map<String, Object> sendMsgContextMap = new HashMap<>();
-
-        Map<String, Object> notifyMap = new HashMap<>();
-        sendMsgContextMap.put("notify", notifyMap);
-        notifyMap.put("channelType", "EMAIL");
-        notifyMap.put("notifyScene", notifyScence);
-
-        Map<String, String> publicFieldsMap = new HashMap<>();
-        sendMsgContextMap.put("publicFields", publicFieldsMap);
-        WorkOrderBean workOrder = ctx.getWorkOrder();
-        UserInfo createdUserInfo = CollectionUtils.isEmpty(createdBys) ? null : createdBys.get(0);
-        // return fieldKey: "title, workOrderId, processInstanceId, orderId, bizDesc, dataStatus, workOrderUri, operator, operatorId, operatorAlias, currentNode, assignName, assignId, assignAlias"
-        publicFieldsMap.put("title", workOrder.getTitle());
-        publicFieldsMap.put("createdById", workOrder.getCreatedBy());
-        publicFieldsMap.put("createdByName", createdUserInfo == null ? "" : createdUserInfo.getName());
-        publicFieldsMap.put("createdByEmail", createdUserInfo == null ? "" : createdUserInfo.getEmail());
-        publicFieldsMap.put("workOrderId", workOrder.getId());
-        publicFieldsMap.put("processInstanceId", workOrder.getProcessInstanceId());
-        publicFieldsMap.put("orderId", workOrder.getId());
-        publicFieldsMap.put("bizDesc", workOrder.getBizDesc());
-        publicFieldsMap.put("mdlDefKey", workOrder.getMdlDefKey());
-        publicFieldsMap.put("bizKey", StringUtils.isBlank(workOrder.getBizKey()) ? workOrder.getId() : workOrder.getBizKey());
-        publicFieldsMap.put("currentNode", workOrder.getCurrentNodeId());
-
-
-        sendMsgContextMap.put("workOrderId", workOrder.getId());
-        sendMsgContextMap.put("nodeId", workOrder.getCurrentNodeId());
-        sendMsgContextMap.put("createdBy", workOrder.getCreatedBy());
-        sendMsgContextMap.put("topAccountId", ctx.getTopAccountId());
-        sendMsgContextMap.put("accountId", ctx.getAccountId());
-        sendMsgContextMap.put("userId", ctx.getUserId());
-
-        return sendMsgContextMap;
-    }
-
-
-    private String getHost(String ips) {
-        String[] split = ips.split(",");
-        int idx = RandomUtil.randomInt(0, split.length);
-        return split[idx];
-    }
-}
-
-
-package com.cloudwise.dosm.dbs.trigger;
-
-import lombok.Data;
-
-import java.util.List;
-import java.util.Map;
-
-@Data
-public class ExtParam {
-    private String pushUrl;
-    private String updateUrl;
-    private String idrUrl;
-    private String pushMethod;
-    private String createNodeId;
-    private String closeNodeId;
-    private String crStatusFieldCode;
-    private String crStatusDictCode = "crStatus";
-    private String closeStatusFieldCode;
-    private String signoffNodeId;
-    private String implementationNodeId;
-    private Map<String, String> fieldMapping;
-    private Map<String, String> riskDictMapping;
-    private Map<String, List<CrStatusSyncTrigger.TableFieldMapping>> tableFieldMapping;
-    private List<CrStatusSyncTrigger.ApproveInfo> approveInfoMapping;
-    private Map<String, String> rcaFieldMapping;
-}
-
-
-
-
-package com.cloudwise.dosm.dbs.trigger;
-
-
-public interface SignoffConstants {
-
-
-    enum SignoffType {
-        TESTING_SIGNOFF("TestingSignoff"),
-        PROCUTOVER_SIGNOFF("ProCutoverSignoff"),
-        OTHER_SIGNOFFS("OtherSignoffs"),
-        OPTIONAL_ARTEFACTS("OptionalArtefacts"),
-        HEIGHTENED_SIGNOFF("HeightenedSignoff");
-
-        private final String type;
-
-        SignoffType(String type) {
-            this.type = type;
-        }
-
-        public String getType() {
-            return type;
-        }
-
-        public static SignoffType fromString(String text) {
-            for (SignoffType signoffType : SignoffType.values()) {
-                if (signoffType.getType().equalsIgnoreCase(text)) {
-                    return signoffType;
-                }
-            }
-            throw new IllegalArgumentException("No constant with text " + text + " found");
-        }
-    }
-
-
-    enum SignoffItem {
-//        USER_ACCEPTANCE_TESTING("UAT", , , , ),
-//        REGRESSION_TESTING("Regression Testing", , , , ),
-//        REVERSION_BACKOUT_ROLLBACK_TESTING("Rollback Testing", , , , ),
-//        PERFORMANCE_TESTING("Performance Testing", , , , ),
-//        PRODUCTION_ASSURANCE_TESTING("PAT", , , , ),
-//        CHAOS_TESTING("Chaos Testing", , , , ),
-
-
-        HA_DR_FLIP_SIGNOFF("HA & DR Flip Signoff", "hasignoffstatus","hasignoffapproverlogin" , "hasignoffrejectionreason", null),
-        MD_DELEGATE_SIGNOFF("MD Delegate Signoff","mddelegatesignoffstatus", "mddelegatesignoffapproverlogin","mddelegatesignoffrejectionreason" , null),
-        BU_APPLICATION_OWNER_SIGNOFF("BU/Application Owner Signoff", "busignoffstatus",null ,"busignoffrejectionreason" ,null ),
-        DATA_CENTER_OPS_BATCH_SIGNOFF("Data Center OPS (Batch) Signoff","datacentersignoffstatus" ,"datacentersignoffapproverlogin" , "datacentersignoffrejectionreason",null ),
-        IMPACT_TO_MAINFRAME_SIGNOFF("Impact To Mainframe Signoff", "impacttomainframestatus", "impacttomainframeapproverlogin", "impacttomainframerejectionreason",null ),
-        DESIGN_FOR_DATA_D4D_SIGNOFF("Design For Data (D4D) Signoff","d4dsignoffstatus" , "d4dsignoffapproverlogin", "d4dsignoffrejectionreason", null),
-        /**
-         * "servicemonitoringsnoctype" : "Approval Required",
-         * 		"servicemonitoringsnocappservicelist" : "text",
-         * 		"servicemonitoringsnocurllist" : "text",
-         */
-//        SERVICE_MONITORING_AT_SNOC("Service Monitoring at SNOC",null ,null , null,null ),
-        CUS_SIGNOFF("CUS Signoff",null ,null , null, "cussignoffurl"),
-        IDR_SIGNOFF_PROCUTOVER("IDR Signoff", null,null ,null , "idrsignoffurl");
-
-//        ISS_SIGNOFF("ISS Signoff", , , , ),
-//        CODE_CHECKER_SIGNOFF("Code Checker Signoff", , , , ),
-//        DR_TEAM_SIGNOFF("DR team Signoff", , , , ),
-//        STORAGE_TEAM_SIGNOFF("Storage team Signoff", , , , ),
-//        DCON_SIGNOFF("DCON Signoff", , , , ),
-//        TECHNICAL_LIVE_VERIFICATIONLV_SIGNOFF("Technical Live Verification (LV) Signoff", , , , ),
-//        BUSINESS_LIVE_VERIFICATIONLV_SIGNOFF("Business Live Verification (LV) Signoff", , , , ),
-//        IMPLEMENTATION_CHECKER_SIGNOFF("Implementation Checker Signoff", , , , ),
-
-
-//        HEIGHTENED_HEIGHTENED_PERIOD_RELATED_ARTEFACTS("Heightened/Heightened Period Related Artefacts", , , , ),
-//        COMPLIANCE_RELATED_ARTEFACTS("Compliance Related Artefacts", , , , ),
-//        UNAUTHORIZED_CHANGE_REPORT_DOCS("Unauthorized Change Report/ Docs", , , , ),
-//
-//        ARC_SIGNOFF("ARC Signoff", , , , ),
-//        LOBT_CHANGE_MANAGERS_CONCURRENCE("LOBT Change managers' concurrence", , , , ),
-//        CTO_S_APPROVALS_INFRA_AND_APP("CTO's approvals (infra and app)", , , , );
-
-        private final String name;
-
-        private final String signOffStatusCode;
-        private final String signOffApproverLoginCode;
-        private final String signOffRejectionReasonCode;
-        private final String signOffUrlCode;
-
-
-
-        SignoffItem(String name, String signOffStatusCode, String signOffApproverLoginCode, String signOffRejectionReasonCode, String signOffUrlCode) {
-            this.name = name;
-            this.signOffStatusCode = signOffStatusCode;
-            this.signOffApproverLoginCode = signOffApproverLoginCode;
-            this.signOffRejectionReasonCode = signOffRejectionReasonCode;
-            this.signOffUrlCode = signOffUrlCode;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public String getSignOffApproverLoginCode() {
-            return signOffApproverLoginCode;
-        }
-
-        public String getSignOffRejectionReasonCode() {
-            return signOffRejectionReasonCode;
-        }
-
-        public String getSignOffStatusCode() {
-            return signOffStatusCode;
-        }
-
-        public String getSignOffUrlCode() {
-            return signOffUrlCode;
-        }
-
-        public static SignoffItem fromString(String signOffType) {
-            for (SignoffItem signoffItem : SignoffItem.values()) {
-                if (signoffItem.getName().equalsIgnoreCase(signOffType)) {
-                    return signoffItem;
-                }
-            }
-            return null;
-        }
-
-
-    }
-}
-
-
-package com.cloudwise.dosm.dbs.trigger;
-
-/**
- * @author abell.wu
- */
-
-public enum SignOffStatusEnum {
-
-
-    WAITSEND("WAITSEND", "Waiting for Send"),
-
-    PENDING("PENDING", "Pending Approval"),
-
-
-    APPROVED("APPROVED", "Approved"),
-
-
-    REJECTED("REJECTED", "Rejected"),
-
-
+package com.cloudwise.dosm.button;
+
+public enum ChangeGroupEnum {
+    BAU("BAU","BAU"),
+    BAU_CUTOVER("BAU  CUT-OVER","BAU Cutover"),
+    DATA_PATCH("DATAPATCH","Data Patch"),
+    PROJECT("PROJECT","Project"),
+    PROJECT_CUTOVER_TECHINICAL("PROJECT CUT OVER","Project Cutover Techinical"),
+    PROJECT_CUTOVER_BUSINESS("PROJECT CUT OVER","Project Cutover Business"),
+    PROJECT_CUTOVER_BUSINESS_TECINICAL("PROJECT CUT OVER","Project Cutover Technical & Business"),
     ;
 
-
-    private String code;
-
-
-    private String desc;
+    private String aimlValue;
+    private String itsmValue;
 
 
-    SignOffStatusEnum(String code, String desc) {
-        this.code = code;
-        this.desc = desc;
+
+    ChangeGroupEnum(String aimlValue,String itsmValue) {
+        this.aimlValue = aimlValue;
+        this.itsmValue = itsmValue;
     }
 
-    public String getDesc() {
-        return desc;
+    public static ChangeGroupEnum ofItsmValue(String itsmValue){
+        for (ChangeGroupEnum value : values()) {
+            if (value.itsmValue.equals(itsmValue)){
+                return value;
+            }
+        }
+        return ChangeGroupEnum.BAU;
+    }
+
+    public String getAimlValue() {
+        return aimlValue;
+    }
+
+    public void setAimlValue(String aimlValue) {
+        this.aimlValue = aimlValue;
+    }
+}
+
+
+package com.cloudwise.dosm.button;
+
+public enum LvEnum {
+    TECHNICAL_LIVE_VERIFICATION("Technical Live Verification (LV)","Technical Live Verification (LV)"),
+    TECHNICAL_UNIT_LIVE_VERIFICATION("Technical & Business Unit Live Verification (LV)","Technical & Business Live Verification (LV)");
+    private String aimlValue;
+    private String itsmValue;
+
+
+    LvEnum(String aimlValue, String itsmValue) {
+        this.aimlValue = aimlValue;
+        this.itsmValue = itsmValue;
+    }
+
+    public static LvEnum ofItsmValue(String itsmValue){
+        for (LvEnum value : values()) {
+            if(value.itsmValue.equals(itsmValue)){
+                return value;
+            }
+        }
+        return TECHNICAL_LIVE_VERIFICATION;
+    }
+
+    public String getAimlValue() {
+        return aimlValue;
+    }
+
+    public void setAimlValue(String aimlValue) {
+        this.aimlValue = aimlValue;
     }
 }
