@@ -1,3 +1,130 @@
+
+
+package com.cloudwise.douc.customization.biz.service.ichampsync;
+
+
+public interface SignoffConstants {
+
+
+    enum SignoffType {
+        TESTING_SIGNOFF("TestingSignoff"),
+        PROCUTOVER_SIGNOFF("ProCutoverSignoff"),
+        OTHER_SIGNOFFS("OtherSignoffs"),
+        OPTIONAL_ARTEFACTS("OptionalArtefacts"),
+        HEIGHTENED_SIGNOFF("HeightenedSignoff");
+
+        private final String type;
+
+        SignoffType(String type) {
+            this.type = type;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public static SignoffType fromString(String text) {
+            for (SignoffType signoffType : SignoffType.values()) {
+                if (signoffType.getType().equalsIgnoreCase(text)) {
+                    return signoffType;
+                }
+            }
+            throw new IllegalArgumentException("No constant with text " + text + " found");
+        }
+    }
+
+
+    enum SignoffItem {
+//        USER_ACCEPTANCE_TESTING("UAT", , , , ),
+//        REGRESSION_TESTING("Regression Testing", , , , ),
+//        REVERSION_BACKOUT_ROLLBACK_TESTING("Rollback Testing", , , , ),
+//        PERFORMANCE_TESTING("Performance Testing", , , , ),
+//        PRODUCTION_ASSURANCE_TESTING("PAT", , , , ),
+//        CHAOS_TESTING("Chaos Testing", , , , ),
+
+
+        HA_DR_FLIP_SIGNOFF("HA & DR Flip Signoff", "hasignoffstatus","hasignoffapproverlogin" , "hasignoffrejectionreason", null),
+        MD_DELEGATE_SIGNOFF("MD Delegate Signoff","mddelegatesignoffstatus", "mddelegatesignoffapproverlogin","mddelegatesignoffrejectionreason" , null),
+        BU_APPLICATION_OWNER_SIGNOFF("BU/Application Owner Signoff", "busignoffstatus",null ,"busignoffrejectionreason" ,null ),
+        DATA_CENTER_OPS_BATCH_SIGNOFF("Data Center OPS (Batch) Signoff","datacentersignoffstatus" ,"datacentersignoffapproverlogin" , "datacentersignoffrejectionreason",null ),
+        IMPACT_TO_MAINFRAME_SIGNOFF("Impact To Mainframe Signoff", "impacttomainframestatus", "impacttomainframeapproverlogin", "impacttomainframerejectionreason",null ),
+        DESIGN_FOR_DATA_D4D_SIGNOFF("Design For Data (D4D) Signoff","d4dsignoffstatus" , "d4dsignoffapproverlogin", "d4dsignoffrejectionreason", null),
+        /**
+         * "servicemonitoringsnoctype" : "Approval Required",
+         * 		"servicemonitoringsnocappservicelist" : "text",
+         * 		"servicemonitoringsnocurllist" : "text",
+         */
+//        SERVICE_MONITORING_AT_SNOC("Service Monitoring at SNOC",null ,null , null,null ),
+        CUS_SIGNOFF("CUS Signoff",null ,null , null, "cussignoffurl"),
+        IDR_SIGNOFF_PROCUTOVER("IDR Signoff", null,null ,null , "idrsignoffurl"),
+
+        ISS_SIGNOFF("ISS Signoff", "issoverduepatchapproverstatus", "issoverduepatchapprover", "issoverduepatchapproverrejectioncode",null );
+//        CODE_CHECKER_SIGNOFF("Code Checker Signoff", , , , ),
+//        DR_TEAM_SIGNOFF("DR team Signoff", , , , ),
+//        STORAGE_TEAM_SIGNOFF("Storage team Signoff", , , , ),
+//        DCON_SIGNOFF("DCON Signoff", , , , ),
+//        TECHNICAL_LIVE_VERIFICATIONLV_SIGNOFF("Technical Live Verification (LV) Signoff", , , , ),
+//        BUSINESS_LIVE_VERIFICATIONLV_SIGNOFF("Business Live Verification (LV) Signoff", , , , ),
+//        IMPLEMENTATION_CHECKER_SIGNOFF("Implementation Checker Signoff", , , , ),
+
+
+//        HEIGHTENED_HEIGHTENED_PERIOD_RELATED_ARTEFACTS("Heightened/Heightened Period Related Artefacts", , , , ),
+//        COMPLIANCE_RELATED_ARTEFACTS("Compliance Related Artefacts", , , , ),
+//        UNAUTHORIZED_CHANGE_REPORT_DOCS("Unauthorized Change Report/ Docs", , , , ),
+//
+//        ARC_SIGNOFF("ARC Signoff", , , , ),
+//        LOBT_CHANGE_MANAGERS_CONCURRENCE("LOBT Change managers' concurrence", , , , ),
+//        CTO_S_APPROVALS_INFRA_AND_APP("CTO's approvals (infra and app)", , , , );
+
+        private final String name;
+
+        private final String signOffStatusCode;
+        private final String signOffApproverLoginCode;
+        private final String signOffRejectionReasonCode;
+        private final String signOffUrlCode;
+
+
+
+        SignoffItem(String name, String signOffStatusCode, String signOffApproverLoginCode, String signOffRejectionReasonCode, String signOffUrlCode) {
+            this.name = name;
+            this.signOffStatusCode = signOffStatusCode;
+            this.signOffApproverLoginCode = signOffApproverLoginCode;
+            this.signOffRejectionReasonCode = signOffRejectionReasonCode;
+            this.signOffUrlCode = signOffUrlCode;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getSignOffApproverLoginCode() {
+            return signOffApproverLoginCode;
+        }
+
+        public String getSignOffRejectionReasonCode() {
+            return signOffRejectionReasonCode;
+        }
+
+        public String getSignOffStatusCode() {
+            return signOffStatusCode;
+        }
+
+        public String getSignOffUrlCode() {
+            return signOffUrlCode;
+        }
+
+        public static SignoffItem fromString(String signOffType) {
+            for (SignoffItem signoffItem : SignoffItem.values()) {
+                if (signoffItem.getName().equalsIgnoreCase(signOffType)) {
+                    return signoffItem;
+                }
+            }
+            return null;
+        }
+
+
+    }
+}
 {
   "pushUrl":              "https://itsm-dev.cmwf.ocp.uat.dbs.com/common-server/ichamp/createCR",
   "updateUrl":            "https://itsm-dev.cmwf.ocp.uat.dbs.com/common-server/ichamp/updateCR",
@@ -70,7 +197,7 @@
     "cyberarkobjects":                                                   "CyberArk_Object",
     "cmcappcodechange":                                                  "AnyapplicationCode",
     "cmcmakerchecker":                                                   "MakerChecker",
-    "maker":                                                             "maker",
+    "cmcmaker":                                                          "maker",
     "cmcchecker":                                                        "checker",
     "cmcrollbackduration":                                               "rollbackDurationInMinutes",
     "cmcdatapatchnumberofrecord":                                        "dataPatchNumberOfRecords",
@@ -148,7 +275,11 @@
     "impacttomainframetype":                                             "ImpactToMainframe",
     "datacentersignofftype":                                             "DataCenterOPSsignoff",
     "mddelegatesignofftype":                                             "MDDelegateSignOff",
-    "hasignofftype":                                                     "HADRFlipsignoff"
+    "hasignofftype":                                                     "HADRFlipsignoff",
+    "designfordatajustification":                                        "justificationReason",
+    "changecount":                                                       "ChangeCountForMainframe",
+    "cmcmajorchange":                                                    "MajorChanges",
+    "state":                                                             "crStatus"
   },
   "riskDictMapping":      {
     "CustomerServices":         "d7b6d17cf02c401a93144a6323915745",
