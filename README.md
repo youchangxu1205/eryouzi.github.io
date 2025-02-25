@@ -7,6 +7,10 @@ import cn.hutool.http.HttpResponse;
 import cn.hutool.http.HttpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.cloudwise.dosm.api.bean.form.FieldInfo;
+import com.cloudwise.dosm.api.bean.form.RowData;
+import com.cloudwise.dosm.api.bean.form.field.DateField;
+import com.cloudwise.dosm.api.bean.form.field.TableFormField;
 import com.cloudwise.dosm.api.bean.utils.JsonUtils;
 import com.cloudwise.douc.customization.biz.dao.DbsApiLogMapper;
 import com.cloudwise.douc.customization.biz.dao.DictMapper;
@@ -46,6 +50,7 @@ import java.nio.charset.Charset;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -87,7 +92,17 @@ public class DataSynchronizer {
 
     public static final int DEFAULT_EXPIRY_TIME = 7 * 24 * 3600;
 
-    public DataSynchronizer(MdlInstanceMapper mdlInstanceMapper, MdlInstanceTableDataMapper mdlInstanceTableDataMapper, SignOffMapper signOffMapper, MdlApproveRecordMapper mdlApproveRecordMapper, MdlApproveRecordDetailMapper mdlApproveRecordDetailMapper, UserSSOClient userSSOClient, DbsApiLogMapper dbsApiLogMapper, DbsProperties dbsProperties, DictMapper dictMapper, FileStorageService fileStorageService, UploadFileMapper uploadFileMapper) {
+    public DataSynchronizer(MdlInstanceMapper mdlInstanceMapper,
+                            MdlInstanceTableDataMapper mdlInstanceTableDataMapper,
+                            SignOffMapper signOffMapper,
+                            MdlApproveRecordMapper mdlApproveRecordMapper,
+                            MdlApproveRecordDetailMapper mdlApproveRecordDetailMapper,
+                            UserSSOClient userSSOClient,
+                            DbsApiLogMapper dbsApiLogMapper,
+                            DbsProperties dbsProperties,
+                            DictMapper dictMapper,
+                            FileStorageService fileStorageService,
+                            UploadFileMapper uploadFileMapper) {
         this.mdlInstanceMapper = mdlInstanceMapper;
         this.mdlInstanceTableDataMapper = mdlInstanceTableDataMapper;
         this.signOffMapper = signOffMapper;
@@ -212,10 +227,48 @@ public class DataSynchronizer {
         }
 
 
+
+
+
+
         List<MdlInstanceTableData> mdlInstanceTableData = mdlInstanceTableDataMapper.selectList(Wrappers.lambdaQuery(MdlInstanceTableData.class).
                 eq(MdlInstanceTableData::getId, workOrderId));
         Map<String, List<MdlInstanceTableData>> mdlInstanceTableMap = mdlInstanceTableData.stream()
                 .collect(Collectors.groupingBy(MdlInstanceTableData::getTableCode));
+
+
+        //Special handling
+        if (mdlInstanceTableMap.containsKey("F_Reversion_Plan")) {
+            List<MdlInstanceTableData> implementInfo = mdlInstanceTableMap.get("F_Reversion_Plan");
+            int cmcrollbackduration = 0;
+            Long minDate = null;
+            Long maxDate = null;
+            for (MdlInstanceTableData mdlInstanceTableData1 : implementInfo) {
+                String rowDataStr = mdlInstanceTableData1.getRowData();
+                JsonNode rowData = JsonUtils.parseJsonNode(rowDataStr);
+                JsonNode startTimeFieldInfo = rowData.get("F_Start_Time");
+                if (minDate == null) {
+                    minDate = startTimeFieldInfo.asLong();
+                } else {
+                    minDate = Math.min(minDate, startTimeFieldInfo.asLong());
+                }
+                JsonNode endTimeFieldInfo = rowData.get("F_End_Time");
+                if (maxDate == null) {
+                    maxDate = endTimeFieldInfo.asLong();
+                } else {
+                    maxDate = Math.max(maxDate, endTimeFieldInfo.asLong());
+                }
+            }
+            if (minDate != null && maxDate != null) {
+                cmcrollbackduration = (int) ((maxDate - minDate) / (1000 * 60 * 60 * 24));
+            }
+
+            formData.put("cmcrollbackduration", cmcrollbackduration);
+        } else {
+            log.error("CrStatusSyncTrigger: implementInfo not found");
+        }
+
+
 
         Map<String, List<TableFieldMapping>> tableFieldMappings = extParam.getTableFieldMapping();
         for (Map.Entry<String, List<TableFieldMapping>> item : tableFieldMappings.entrySet()) {
@@ -482,10 +535,10 @@ public class DataSynchronizer {
                 if (jsonNode instanceof ObjectNode) {
                     JsonNode userId = jsonNode.get("userId");
                     JsonNode groupName = jsonNode.get("groupName");
-                    if (userId != null && !(userId instanceof NullNode) && StringUtils.isNotBlank(userId.asText()) && "null".equalsIgnoreCase(userId.asText())) {
+                    if (userId != null && !(userId instanceof NullNode) && StringUtils.isNotBlank(userId.asText()) && !"null".equalsIgnoreCase(userId.asText())) {
                         isUser = true;
                         values.add(userId.asText());
-                    } else if (groupName != null && !(groupName instanceof NullNode) && StringUtils.isNotBlank(groupName.asText()) && "null".equalsIgnoreCase(groupName.asText())) {
+                    } else if (groupName != null && !(groupName instanceof NullNode) && StringUtils.isNotBlank(groupName.asText()) && !"null".equalsIgnoreCase(groupName.asText())) {
                         values.add(groupName.asText());
                     }
                 } else {
@@ -530,4 +583,378 @@ public class DataSynchronizer {
         return String.join(",", labels);
     }
 
+}
+
+
+
+{
+  "pushUrl":               "https://itsm-dev.cmwf.ocp.uat.dbs.com/common-server/ichamp/createCR",
+  "updateUrl":             "https://itsm-dev.cmwf.ocp.uat.dbs.com/common-server/ichamp/updateCR",
+  "pushMethod":            "POST",
+  "createNodeId":          "UserTask_13ikwht",
+  "closeNodeId":           "UserTask_1gehich",
+  "crStatusFieldCode":     "crStatus",
+  "crStatusDictCode":      "crStatus",
+  "closeStatusFieldCode":  "CloseStatus",
+  "signoffNodeId":         "UserTask_0da3d8t",
+  "implementationNodeId":  "AcceptanceTask_0qba8sk",
+  "fieldMapping":          {
+    "changerequestorgroups":                                             "changeRequestorGroups",
+    "countryoforigin":                                                   "countryOfOrigin",
+    "lob":                                                               "lob",
+    "changetype":                                                        "changeType",
+    "changegroup":                                                       "changeGroup",
+    "changenature":                                                      "changeNature",
+    "cmcmascategory":                                                    "MASCategory",
+    "location":                                                          "location",
+    "countryimpacted":                                                   "CountryImpacte",
+    "applicationimpacted":                                               "applicationImpacte",
+    "otherapplicationimpacted":                                          "otherApplicationImpacted",
+    "changecategory":                                                    "Change_Category",
+    "mainappimpacted":                                                   "mainApplicationRequiringChange",
+    "servicesimpactedandrecoveryplan":                                   "Listtheimpactedbythechange",
+    "lpar":                                                              "lpar",
+    "mainframecrtype":                                                   "mainframeCRType",
+    "codechecker":                                                       "Code_Checker",
+    "sicode":                                                            "standardCode",
+    "majorchangeflag":                                                   "IsMajorChange",
+    "appresiliencyclassification":                                       "appResiliencyClassification",
+    "crclassification":                                                  "crClassification",
+    "implementergroup":                                                  "implementergroup",
+    "schedulestartdatetime,scheduleenddatetime":                         "ChangeSchedule_StartEndTime",
+    "implementationplanschedulestart,implementationplanscheduleenddate": "Implementation_Time",
+    "reversionplanschedulestartdate,reversionplanscheduleenddate":       "Reversion_Time",
+    "downtimestartdatetime,downtimeenddatetime":                         "ScheduledDowntime_Time",
+    "scheduledmaintenancestartdatetime,scheduledmaintenanceenddatetime": "ScheduledMaintenance_Time",
+    "downtimeapprover1_,downtimeapprover1_name":                         "ScheduledApprover1",
+    "downtimeapprover2_,downtimeapprover2_name":                         "ScheduledApprover2",
+    "downtimeapprover3_,downtimeapprover3_name":                         "ScheduledApprover3",
+    "downtimeapprover4_,downtimeapprover4_name":                         "ScheduledApprover4",
+    "downtimeapprover5_,downtimeapprover5_name":                         "ScheduledApprover5",
+    "summary":                                                           "changeSummary",
+    "description":                                                       "changeDescribtion",
+    "implementationplan":                                                "implementationPlan",
+    "reversionplan":                                                     "reversionPlan",
+    "releaseticketslist":                                                "DroneTicket",
+    "liveverification":                                                  "liveVerificationAfterImplementat",
+    "uat":                                                               "uat",
+    "regressiontesting":                                                 "regressiontesting",
+    "rollbacktesting":                                                   "ReversionBackoutRollbackTesting",
+    "relatedincident":                                                   "relatedIncident",
+    "parentchange":                                                      "parentChange",
+    "applicationownername":                                              "ApplicationOwner",
+    "mainframepackagename":                                              "mainframePackageName",
+    "mainframepackagetype":                                              "MainframePackage_Type",
+    "mainframepackagecreatortsoid":                                      "mainframePackageCreatorTSOID",
+    "mainframepackagecreator1bankid":                                    "mainframePackageCreator1BankID",
+    "holdbatchjob":                                                      "Holdbatch_job",
+    "jobtype":                                                           "jobType",
+    "designfordatachoice":                                               "IsthisCRinscope_forD4D",
+    "designfordataowner":                                                "d4dDataOwner",
+    "designfordatarequirements":                                         "dataRequirementsDetails",
+    "ticketprojectmanager":                                              "projectCutOverProjectManager",
+    "ticketprojectmanagermobile":                                        "projectCutOverProjectManagerCont",
+    "projectobjective":                                                  "projectCutOverProjectObjective",
+    "projectscope":                                                      "projectCutOverProjectScope",
+    "cyberarkobjects":                                                   "CyberArk_Object",
+    "cmcappcodechange":                                                  "AnyapplicationCode",
+    "cmcmakerchecker":                                                   "MakerChecker",
+    "cmcmaker":                                                          "maker",
+    "cmcchecker":                                                        "checker",
+    "cmcrollbackduration":                                               "rollbackDurationInMinutes",
+    "cmcdatapatchnumberofrecord":                                        "dataPatchNumberOfRecords",
+    "approvergroup1":                                                    "ApproverGroup1",
+    "approver1":                                                         "Approver01",
+    "approvergroup2":                                                    "ApproverGroup2",
+    "approver2":                                                         "Approver02",
+    "approvergroup3":                                                    "ApproverGroup3",
+    "approver3":                                                         "Approver03",
+    "approvergroup4":                                                    "ApproverGroupfourr",
+    "approver4":                                                         "Approver04",
+    "approvergroup5":                                                    "ApproverGroupfive",
+    "approver5":                                                         "Approver05",
+    "approvergroup6":                                                    "ApproverGroupsix",
+    "approver6":                                                         "Approver06",
+    "mdapprovergroup":                                                   "TechMDApproverGroup",
+    "mdapprover":                                                        "Tech_MDApprover",
+    "releasemanagergroup":                                               "ReleaseManagerGroup",
+    "changemanagergroup":                                                "ChangeManagerGroup_one",
+    "deploymentapproach":                                                "Deployment_Approach",
+    "reversionapproach":                                                 "Reversion_Approach",
+    "resourceengagement":                                                "Resource_Engagement",
+    "potentialblastradius":                                              "blastRadiusDescription",
+    "changeduringonlinebusinesshours":                                   "changeDescriptionDuringBusinessH",
+    "mainframecriticalmonthendbatchimpact":                              "Mainframeritica",
+    "majorinterdependencies":                                            "interdependenciesDescription",
+    "drcapabilitiesimpact":                                              "DRCapabilitiesImpact",
+    "upstreamdownstreaminterfacesimpact":                                "interfaceImpact",
+    "jobneedtoaccessonlinefiles":                                        "JobNeedToAccessOnlineFiles",
+    "closeonlinefilesduringjobrun":                                      "CloseOnlineFilesDuringJobRun",
+    "usehighcpuincreaseworkload":                                        "UseHighCPUIncreaseWorkload",
+    "riskscore":                                                         "riskScore",
+    "featurevalues":                                                     "featureValues",
+    "recommendedrisklevel":                                              "recommendedRisk",
+    "explainability":                                                    "explainability",
+    "explainabilitybase":                                                "explainabilityBase",
+    "explainabilityscores":                                              "explainabilityScores",
+    "riskthreshold":                                                     "riskThreshold",
+    "diffcatselectedfrmaimlreason":                                      "JustificationwhyCategory",
+    "securityriskjustification":                                         "SecurityRiskJustification",
+    "alldocsandartifactsurl":                                            "URLForProjectDocsandArtefac",
+    "cmrmavailablity":                                                   "CustomerServices",
+    "cmrminherentresidualrisks":                                         "InherentandResidualrisks",
+    "cmrmcontinuity":                                                    "BusinessUnitsOperations",
+    "cmrmcomplexity":                                                    "ChangeComplexity",
+    "cmrmimplement":                                                     "BackoutComplexity",
+    "cmrmtraining":                                                      "Documentation",
+    "cmrmsecurity":                                                      "Security",
+    "cmrminterfaces":                                                    "Interfaces",
+    "closedincompletereasoncode":                                        "ClosedLogSummary",
+    "l1changemanagerapprovername":                                       "L1Change_Manager",
+    "riskmanagerapprovername":                                           "L1Risk_Manager",
+    "issoverduepatchapprovalgroup":                                      "ISSGroup",
+    "servicemonitoringsnoctype":                                         "SNOCsignoff",
+    "cussignofftype":                                                    "CUSsignoff",
+    "idrsignofftype":                                                    "IDRsignoff",
+    "servicemonitoringsnocappservicelist":                               "NewApplicationServices",
+    "servicemonitoringsnocurllist":                                      "TheProductionDashboardLinks",
+    "ticketfocalpoint":                                                  "ticketfocalpoint",
+    "ticketfocalpointmobile":                                            "ticketfocalpointmobile",
+    "mccrequesterlogin":                                                 "mccrequesterlogin",
+    "designfordataownername":                                            "d4dDataOwner",
+    "impactriskidentified":                                              "identifiedImpactAndRisks",
+    "riskmitigated":                                                     "riskMitigationPlan",
+    "d4dsignofftype":                                                    "D4Dsignoff",
+    "impacttomainframetype":                                             "ImpactToMainframe",
+    "datacentersignofftype":                                             "DataCenterOPSsignoff",
+    "mddelegatesignofftype":                                             "MDDelegateSignOff",
+    "hasignofftype":                                                     "HADRFlipsignoff",
+    "designfordatajustification":                                        "justificationReason",
+    "changecount":                                                       "ChangeCountForMainframe",
+    "cmcmajorchange":                                                    "MajorChanges",
+    "state":                                                             "crStatus"
+  },
+  "riskDictMapping":       {
+    "CustomerServices":         "d7b6d17cf02c401a93144a6323915745",
+    "InherentandResidualrisks": "f831cb01fd0f43b297a93ead68abc562",
+    "BusinessUnitsOperations":  "2008e9b96d5d413798d119b829648535",
+    "ChangeComplexity":         "845a783c49524348bd5804cfbc0ac06e",
+    "BackoutComplexity":        "c7199dacb70e4a07ad29dd898cf56860",
+    "Documentation":            "ff30d63471b14bc3870b90c849c66f7d",
+    "Security":                 "3240ef33f1bd4dbcbb1ad5ac86bb0b53",
+    "Interfaces":               "aea98f47781147f8a8cb8eae078f7299"
+  },
+  "tableFieldMapping":     {
+    "mainframedata": [
+      {
+        "ichampTableFieldInfo": "Job Details",
+        "itsmTableFieldInfo":   "JobDetailsSection",
+        "fieldMapping":         {
+          "jobname":     "JobDetails",
+          "jobdatetime": "DateTimeModified",
+          "jobduration": "Duration"
+        }
+      },
+      {
+        "ichampTableFieldInfo": "Load Module",
+        "itsmTableFieldInfo":   "LoadModuleDetailsSection",
+        "fieldMapping":         {
+          "modulecompiled": "LoadModuleCompiled",
+          "moduledatetime": "DateTimeCompiled"
+        }
+      },
+      {
+        "ichampTableFieldInfo": "DBRM Members",
+        "itsmTableFieldInfo":   "DBRMMemberDetailsSection",
+        "fieldMapping":         {
+          "dbrmmember": "DBRMMember"
+        }
+      },
+      {
+        "ichampTableFieldInfo": "Input Data",
+        "itsmTableFieldInfo":   "InputDataDetailsSection",
+        "fieldMapping":         {
+          "inputdata":         "InputData",
+          "inputdatadatetime": "DateTimeLastModified"
+        }
+      }
+    ]
+  },
+  "approveInfoMapping":    [
+    {
+      "nodeId":        "SingleApprove_0wb3mla",
+      "nodeName":      "App Govenance1",
+      "rejectionCode": "approver1rejectioncode",
+      "reasonCode":    "approver1statusreason",
+      "statusCode":    "approver1status"
+    },
+    {
+      "nodeId":        "SingleApprove_1y2bas2",
+      "nodeName":      "App Govenance2",
+      "rejectionCode": "approver2rejectioncode",
+      "reasonCode":    "approver2statusreason",
+      "statusCode":    "approver2status"
+    },
+    {
+      "nodeId":        "SingleApprove_09y6ddj",
+      "nodeName":      "App Govenance3",
+      "rejectionCode": "approver3rejectioncode",
+      "reasonCode":    "approver3statusreason",
+      "statusCode":    "approver3status"
+    },
+    {
+      "nodeId":        "SingleApprove_112fawy",
+      "nodeName":      "App Govenance4",
+      "rejectionCode": "approver4rejectioncode",
+      "reasonCode":    "approver4statusreason",
+      "statusCode":    "approver4status"
+    },
+    {
+      "nodeId":        "SingleApprove_01zjgji",
+      "nodeName":      "App Govenance5",
+      "rejectionCode": "approver5rejectioncode",
+      "reasonCode":    "approver5statusreason",
+      "statusCode":    "approver5status"
+    },
+    {
+      "nodeId":        "SingleApprove_0fh11tl",
+      "nodeName":      "App Govenance6",
+      "rejectionCode": "approver6rejectioncode",
+      "reasonCode":    "approver6statusreason",
+      "statusCode":    "approver6status"
+    },
+    {
+      "nodeId":         "SingleApprove_0cntz02",
+      "nodeName":       "Application Owner (For Data Patch)",
+      "rejectionCode":  "",
+      "reasonCode":     "applicationownercomment",
+      "statusTimeCode": "appownerdatapatchapprovalstatustime",
+      "statusCode":     "applicationownerapprovalstatus"
+    },
+    {
+      "nodeId":        "SingleApprove_1tkhamt",
+      "nodeName":      "D4D Data Owner",
+      "rejectionCode": "",
+      "reasonCode":    "designfordatarejectioncomment",
+      "statusCode":    "designfordataapproverstatus"
+    },
+    {
+      "nodeId":        "SingleApprove_10vwuti",
+      "nodeName":      "ISS Overdue Patch",
+      "rejectionCode": "issoverduepatchapproverrejectioncode",
+      "reasonCode":    "",
+      "statusCode":    "issoverduepatchapproverstatus"
+    },
+    {
+      "nodeId":        "SingleApprove_1kslrrp",
+      "nodeName":      "L1 Change Manager",
+      "rejectionCode": "l1changemanagerapproverrejectioncode",
+      "reasonCode":    "l1changemanagerstatusreason",
+      "statusCode":    "l1changemanagerapproverstatus"
+    },
+    {
+      "nodeId":        "SingleApprove_1dv8pri",
+      "nodeName":      "L1 Risk Manager",
+      "rejectionCode": "riskmanagerapproverrejectioncode",
+      "reasonCode":    "riskmanagerstatusreason",
+      "statusCode":    "riskmanagerapproverstatus"
+    },
+    {
+      "nodeId":        "SingleApprove_13119ha",
+      "nodeName":      "L1.5 Release Manager Team",
+      "rejectionCode": "rmapproverrejectioncode",
+      "reasonCode":    "rmapproverrejectionreason",
+      "statusCode":    "rmapproverstatus"
+    },
+    {
+      "nodeId":        "SingleApprove_0fjvryb",
+      "nodeName":      "Scheduled Downtime/Maintenance Approver 1",
+      "rejectionCode": "",
+      "reasonCode":    "downtimeapproverrejectioncomment1",
+      "statusCode":    "downtimeapproverstatus1"
+    },
+    {
+      "nodeId":        "SingleApprove_0uvdhk1",
+      "nodeName":      "Scheduled Downtime/Maintenance Approver 2",
+      "rejectionCode": "",
+      "reasonCode":    "downtimeapproverrejectioncomment2",
+      "statusCode":    "downtimeapproverstatus2"
+    },
+    {
+      "nodeId":        "SingleApprove_0wv160x",
+      "nodeName":      "Scheduled Downtime/Maintenance Approver 3",
+      "rejectionCode": "",
+      "reasonCode":    "downtimeapproverrejectioncomment3",
+      "statusCode":    "downtimeapproverstatus3"
+    },
+    {
+      "nodeId":        "SingleApprove_1lir1bh",
+      "nodeName":      "Scheduled Downtime/Maintenance Approver 4",
+      "rejectionCode": "",
+      "reasonCode":    "downtimeapproverrejectioncomment4",
+      "statusCode":    "downtimeapproverstatus4"
+    },
+    {
+      "nodeId":        "SingleApprove_0zy9gcq",
+      "nodeName":      "Scheduled Downtime/Maintenance Approver 5",
+      "rejectionCode": "",
+      "reasonCode":    "downtimeapproverrejectioncomment5",
+      "statusCode":    "downtimeapproverstatus5"
+    },
+    {
+      "nodeId":        "SingleApprove_0armfga",
+      "nodeName":      "Tech MD",
+      "rejectionCode": "mdapproverrejectioncode",
+      "reasonCode":    "mdstatusreason",
+      "statusCode":    "mdapproverstatus"
+    },
+    {
+      "nodeId":        "SingleApprove_01kn76b",
+      "nodeName":      "L1.5 Change Management Team",
+      "rejectionCode": "changemanagerrejectioncode",
+      "reasonCode":    "changemanagerstatusreason",
+      "statusCode":    "changemanagerapproverstatus"
+    }
+  ],
+  "rcaApproveInfoMapping": [
+    {
+      "nodeId":        "SingleApprove_1ojunx3",
+      "nodeName":      "App Manager Approval",
+      "rejectionCode": "",
+      "reasonCode":    "rcaapprover1statusreason",
+      "statusCode":    "rcaapprover1status"
+    },
+    {
+      "nodeId":        "SingleApprove_1r1kd6y",
+      "nodeName":      "Risk Manager Approval",
+      "rejectionCode": "",
+      "reasonCode":    "rcacmapproverstatusreason",
+      "statusCode":    "rcacmapproverstatus"
+    }
+  ],
+  "rcaFieldMapping":       {
+    "crfailreason":              "whythechangeimplementationfailed",
+    "crfailrootcause":           "whatistherootcause",
+    "crfailcorrectiveaction":    "whatwasthecorrectiveactiontaken",
+    "crfailpreventivemeasure":   "anypreventivemeasuretoavoidthis",
+    "crfailedforappcode":        "impactedapplication",
+    "targetisssuefixdate":       "whenisthetargetdateofcompletion",
+    "relatedincidentfromcrfail": "anyincidentticketraisedduetothe",
+    "rcaincidentsummary":        "IncidentSummary",
+    "failedcrcategory":          "whatisthefailedchangecategor",
+    "rcaapprover1":              "appmanagerapproval",
+    "rcastatus":                 "RCAStatus"
+  },
+  "dictMapping":           {
+    "applicationImpacte":       {
+      "tableCode": "ic_appcode",
+      "idCode":    "id",
+      "labelCode": "app_id"
+    },
+    "otherApplicationImpacted": {
+      "tableCode": "ic_appcode",
+      "idCode":    "id",
+      "labelCode": "app_id"
+    }
+  }
 }
