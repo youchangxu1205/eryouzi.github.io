@@ -1,154 +1,394 @@
-package com.cloudwise.dosm.field;
+package com.cloudwise.dosm.dbs.trigger;
 
-import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONObject;
-import cn.hutool.json.JSONUtil;
+import cn.hutool.core.text.CharSequenceUtil;
+import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.RandomUtil;
+import cn.hutool.http.HttpRequest;
+import cn.hutool.http.HttpResponse;
+import cn.hutool.http.HttpUtil;
 import com.cloudwise.dosm.api.adv.extend.ExtendConfig;
-import com.cloudwise.dosm.api.adv.extend.v2.IFieldLinkExtV2;
+import com.cloudwise.dosm.api.adv.extend.v2.ITriggerExtV2;
 import com.cloudwise.dosm.api.bean.form.FieldInfo;
-import com.cloudwise.dosm.api.bean.form.FieldTriggerRule;
-import com.cloudwise.dosm.api.bean.form.field.FieldValue;
+import com.cloudwise.dosm.api.bean.form.enums.FieldValueTypeEnum;
 import com.cloudwise.dosm.api.bean.form.field.SelectField;
-import com.cloudwise.dosm.api.bean.form.field.SelectManyField;
-import com.cloudwise.dosm.api.bean.instance.entity.FieldLinkContext;
-import com.cloudwise.dosm.constant.CommonFieldEnums;
-import com.cloudwise.dosm.core.utils.JsonUtils;
-import com.cloudwise.dosm.model.FieldInfoEnum;
-import com.cloudwise.dosm.util.CommonUtil;
+import com.cloudwise.dosm.api.bean.instance.entity.WorkOrderBean;
+import com.cloudwise.dosm.api.bean.trigger.entity.FieldTriggerRuleVo;
+import com.cloudwise.dosm.api.bean.trigger.entity.ResultBean;
+import com.cloudwise.dosm.api.bean.trigger.entity.TriggerContext;
+import com.cloudwise.dosm.api.bean.utils.JsonUtils;
+import com.cloudwise.dosm.biz.instance.table.service.MdlInstanceTableDataService;
+import com.cloudwise.dosm.bpm.api.action.enums.EventTypeEnum;
+import com.cloudwise.dosm.bpm.api.trigger.FieldLinkTriggerService;
+import com.cloudwise.dosm.bpm.base.dao.MdlApproveRecordDetailMapper;
+import com.cloudwise.dosm.bpm.base.dao.MdlApproveRecordMapper;
+import com.cloudwise.dosm.core.config.NacosConfigLocalCatch;
+import com.cloudwise.dosm.core.constant.IDosmConstant;
+import com.cloudwise.dosm.core.pojo.bo.RequestDomain;
+import com.cloudwise.dosm.core.utils.UserHolder;
+import com.cloudwise.dosm.dict.dao.DataDictDetailMapper;
+import com.cloudwise.dosm.dict.dao.DataDictMapper;
+import com.cloudwise.dosm.dict.entity.DataDict;
+import com.cloudwise.dosm.dict.entity.DataDictDetail;
+import com.cloudwise.dosm.douc.base.Constant;
+import com.cloudwise.dosm.douc.entity.user.UserInfo;
+import com.cloudwise.dosm.douc.service.UserService;
+import com.cloudwise.dosm.douc.sso.UserSSOClient;
+import com.cloudwise.dosm.douc.util.UserUtil;
+import com.cloudwise.dosm.facewall.extension.base.startup.util.SpringContextUtils;
+import com.cloudwise.dosm.file.service.IFileInfoService;
+import com.cloudwise.dosm.form.biz.service.FormFieldService;
+import com.cloudwise.douc.dto.v3.user.UserConditionReq;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.google.common.collect.Lists;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCallback;
 
-import javax.annotation.Resource;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 /**
- * Rule1: NA is allowed.
- * Rule2: Multi values are allowed in the ‘CyberArk Objects’ field and multi values must be separated by ‘,’.
- * Rule3: All the CyberArk Objects must belong to applications (The range of applications are chosen in ‘Application impacted’). If not, the warning message will be shown as: 'The following CyberArk objects are Invalid for this CR: [‘objectname1’,’objectname2’]'.
- * Rule4: When a requester submits CR for approval, the status of the CyberArk Objects needs to be verified, which means CyberArk Objects in the ‘Pre-Production’ status cannot be included in the CR, except for the following circumstances:
- * LOBs = CES & Change Group when it is any of the following: Project, Project Cutover Technical or Project Cutover Business or Project Cutover Technical & Business, BAU Cutover. CR can contain Objects in the ‘Pre-Production’ state.
- * LOBs = CES & Change Group when it is NOT any of the following: Project, Project Cutover Technical or Project Cutover Business or Project Cutover Technical & Business, BAU Cutover. CR cannot contain Objects in the ‘Pre-Production’ state.
- * LOBs != CES& Change Group is any of the following: Project and Project Cutover Technical or Project Cutover Business or Project Cutover Technical & Business. CR can contain Objects in the ‘Pre-Production’ state
- * LOBs != CES& Change Group is NOT any of the following: Project and Project Cutover Technical or Project Cutover Business or Project Cutover Technical & Business. CR cannot contain Objects in the ‘Pre-Production’ state.
+ * <p>
+ *
+ * </p>
+ *
+ * @author Norval.Xu
+ * @since 2024/12/12
  */
 @Slf4j
-@ExtendConfig(id = "CyberObjectsFieldLink", name = "CyberObjectsFieldLink", desc = "CyberObjectsFieldLink")
-public class CyberObjectsFieldLink implements IFieldLinkExtV2 {
+@ExtendConfig(id = "cr-status-sync-trigger", name = "CR Status Sync to IChamp", desc = "CR Status Sync to IChamp")
+public class CrStatusSyncTrigger implements ITriggerExtV2 {
 
-    String descDefault = "<div style=\"color: red;\"> Important: Please ensure only required CyberArk Objects are requested. Requesting Unit is accountable for all CyberArk Objects requested in CR.</div>";
-    String canContainDesc = "<div style=\"color: black;\"> CR can contain Objects in the ‘Pre-Production’ state. </div>";
+    private static final String CSH = "custom.service.host";
+    private static final String CSHPRE = "custom.service.host.prefix";
+
+
+    private static final String PATH_SEND_MSG = "/dcs/custom/api/sendMessage";
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    private NacosConfigLocalCatch nacosConfigLocalCatch;
+    @Autowired
+    private MdlApproveRecordDetailMapper mdlApproveRecordDetailMapper;
+    @Autowired
+    private MdlApproveRecordMapper mdlApproveRecordMapper;
+    @Autowired
+    private DataDictDetailMapper dataDictDetailMapper;
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+    @Autowired
+    private MdlInstanceTableDataService mdlInstanceTableDataService;
+    @Autowired
+    private FormFieldService formFieldService;
+    @Autowired
+    private IFileInfoService fileInfoService;
+
+
+    @Autowired
+    private FieldLinkTriggerService fieldLinkTriggerService;
+    @Autowired
+    private UserSSOClient userSSOClient;
+
     @Override
-    public void handler(FieldLinkContext ctx) {
-        Long time = System.currentTimeMillis();
-        log.error("CyberObjectsFieldLink:time:{},ctx:{}", time, JSONUtil.toJsonStr(ctx));
-        Map<String, FieldInfo> formData = ctx.getFormData();
-        Map<String, FieldTriggerRule> resultMap = ctx.getResultMap();
+    public void handler(TriggerContext ctx) {
         String extParam = ctx.getExtParam();
-        /**
-         * 1)Cyberark objects are pre-prod status
-         * 2) Change group != Project and Project Cutover Technical or Project Cutover Business or Project Cutover Technical & Business
-         * 3) LOBs !=CES
-         * 4) Change Type != ECR,
-         * CR can contain Objects in the ‘Pre-Production’ state.
-         */
+        ExtParam param = JsonUtils.parseObject(extParam, ExtParam.class);
+        WorkOrderBean workOrder = ctx.getWorkOrder();
+        String originMessage = ctx.getOriginMessage();
+        JsonNode originMessageNode = JsonUtils.parseJsonNode(originMessage);
+        if (originMessageNode == null) {
+            log.error("origin message error:{}", ctx.getOriginMessage());
+            throw new IllegalArgumentException("origin message error");
+        }
 
-        FieldInfo changeGroup = formData.get("changeGroup");
-        FieldInfo lob = formData.get("lob");
-//        FieldInfo changeType = formData.get("changeType");
-        boolean isEqCes = false;
-        if(lob !=null && lob.getFieldValueObj()!=null && lob.getFieldValueObj().getValue()!=null){
-            SelectField lobFieldValueObj = (SelectField) lob.getFieldValueObj();
-            isEqCes =  lobFieldValueObj.getLabel().equals("CES");
+        //判断是否为第一次提交
+        CrStatusEnums crStatus = getCrStatus(ctx, param, workOrder);
+        if (crStatus != null) {
+            updateCrStatus2Form(ctx, crStatus, param);
         }
-        boolean isProjectCutover = false;
-        boolean isBauCutover = false;
-        if(changeGroup!=null && changeGroup.getFieldValueObj()!=null && changeGroup.getFieldValueObj().getValue()!=null){
-            if(changeGroup.getFieldValueObj() instanceof SelectField) {
-                SelectField changeGroupFieldValueObj = (SelectField) changeGroup.getFieldValueObj();
-                isProjectCutover = changeGroupFieldValueObj.getLabel().startsWith("Project");
-                isBauCutover = changeGroupFieldValueObj.getLabel().equals("BAU Cutover");
-            }
-        }
-        String finalNodeMessage = descDefault;
-        if(isEqCes && (isBauCutover|| isProjectCutover )){
-            finalNodeMessage += canContainDesc;
-
-        }
-        if (!isEqCes && isProjectCutover){
-            finalNodeMessage += canContainDesc;
-        }
-        CommonUtil.setNeedSetNodeRuleByMessage(resultMap, null, FieldInfoEnum.CyberArk_Object.name(), finalNodeMessage);
-
-        FieldInfo fieldInfo = formData.get(CommonFieldEnums.CYBERARK_OBJECTS.getFieldCode());
-        Object value = Objects.nonNull(fieldInfo) ? fieldInfo.getFieldValueObj().getValue() : null;
-        log.error("CyberObjectsFieldLink:time:{},value:{}", time, value);
-        if (Objects.isNull(value) || "NA".equals(String.valueOf(value).toUpperCase())) {
-            CommonUtil.setResultMapRuleNoMessage(resultMap, null, FieldInfoEnum.CyberArk_Object.name(), null);
+        JsonNode nodeIdNode = originMessageNode.get("nodeId");
+        String nodeId = nodeIdNode.asText();
+        JsonNode eventTypeNode = originMessageNode.get("eventType");
+        String eventType = eventTypeNode.asText();
+        if (nodeId.equals(param.getCreateNodeId()) && EventTypeEnum.NODE_EXIT.getCode().equals(eventType)) {
             return;
         }
-        FieldInfo applicationImpactedFieldInfo = formData.get(CommonFieldEnums.APPLICATION_IMPACTED.getFieldCode());
-        SelectManyField selectManyField = Objects.nonNull(applicationImpactedFieldInfo) ? (SelectManyField) applicationImpactedFieldInfo.getFieldValueObj() : null;
-        Collection<String> labelList = Objects.nonNull(selectManyField) ? selectManyField.getLabel() : new ArrayList<>();
-        StringBuilder resultAlertInfo = new StringBuilder();
-        if(labelList.size() == 0){
-            resultAlertInfo.append("\nThe following CyberArk objects are Invalid for this CR:[" + value +"].");
-        }else {
-            List<String> notInAppCodeCyberArk = this.getNotInAppCodeCyberArk(value.toString(), labelList);
-            log.error("CyberObjectsFieldLink:time:{},noIncyber:{}", time, notInAppCodeCyberArk);
-            if (notInAppCodeCyberArk.size() > 0) {
-                resultAlertInfo.append("\nThe following CyberArk objects are Invalid for this CR:" + JsonUtils.toJsonString(notInAppCodeCyberArk) + ".");
+
+        Map<String, Object> datas = new HashMap<>();
+        datas.put("workOrder", workOrder);
+        datas.put("originMessage", originMessageNode);
+        String syncUrl = getConfig(CSH, "");
+        String prefix = getConfig(CSHPRE, "http://");
+        String workOrderId = workOrder.getId();
+        String finalUrl = prefix + syncUrl + "/dcs/api/ichamp/sync?workOrderId=" + workOrderId;
+        try {
+            if (crStatus != null) {
+                finalUrl = finalUrl + "&crStatus=" + crStatus.getLabel();
             }
-        }
-        String result = resultAlertInfo.toString();
-        if (StrUtil.length(result) > 0 ){
-            CommonUtil.setResultMapRuleByMessage(resultMap, null, FieldInfoEnum.CyberArk_Object.name(), result);
-        }else{
-            CommonUtil.setResultMapRuleNoMessage(resultMap, null, FieldInfoEnum.CyberArk_Object.name(), null);
+            HttpResponse execute = HttpUtil.createPost(finalUrl).execute();
+            String body = execute.body();
+            log.info("body:{}", body);
+            saveApiLog(finalUrl, "", body, workOrder.getBizKey(), "CALL_CR_STATUS_SYNC", false);
+            List<UserInfo> createdBys = getUsers(Lists.newArrayList(Long.valueOf(workOrder.getCreatedBy())));
+            sendApprovalMsg(crStatus, ctx, createdBys);
+        } catch (Exception e) {
+            log.error("CrStatusSyncTrigger send to ichamp error:{}", e.getMessage(), e);
+            ResultBean resultBean = ctx.getResult();
+            resultBean.setError("Sync data to ichamp fail: data:" + e.getMessage());
+            ctx.setResult(resultBean);
+            saveApiLog(finalUrl, "", e.getMessage(), workOrder.getBizKey(), "CALL_CR_STATUS_SYNC", false);
         }
     }
 
-    @Resource
-    private JdbcTemplate jdbcTemplate;
+    public String getConfig(String configKey) {
+        Environment bean = com.cloudwise.dosm.core.utils.SpringContextUtils.getBean(Environment.class);
+        return bean.getProperty(configKey);
+    }
+
+    public String getConfig(String configKey, String defaultValue) {
+        Environment bean = com.cloudwise.dosm.core.utils.SpringContextUtils.getBean(Environment.class);
+        return bean.getProperty(configKey, defaultValue);
+    }
+
+
+    private CrStatusEnums getCrStatus(TriggerContext ctx, ExtParam extParam, WorkOrderBean workOrder) {
+        String originMessage = ctx.getOriginMessage();
+        JsonNode originMessageNode = JsonUtils.parseJsonNode(originMessage);
+        if (originMessageNode == null) {
+            log.error("origin message error:{}", ctx.getOriginMessage());
+            throw new IllegalArgumentException("origin message error");
+        }
+        JsonNode eventType = originMessageNode.get("eventType");
+        JsonNode nodeIdNode = originMessageNode.get("nodeId");
+        String nodeId = nodeIdNode.asText();
+        JsonNode rollbackToNodeId = originMessageNode.get("rollbackToNodeId");
+        log.info("CrStatusSyncTrigger:eventType:{},nodeId:{},rollbackNodeId:{},workOrder:{}", eventType, nodeIdNode, rollbackToNodeId, workOrder);
+
+        /**
+         * 1.Determine if the work order is submitted
+         *  1.1 Determine if it is the work order creation node
+         *      1.1.1 If it is determined to be Reopen, set the status to Reopen
+         *      1.1.2 If it is determined to be a new work order, set the status to New
+         *  1.2 Determine if it is the CR closure node, the status remains unchanged
+         *  1.3 Determine if it is the signOff node, set the status to Open
+         * 2.Determine if it is entering the implementation node, set the status to Approved
+         * 3.Determine if it is the signOff node retrieval, set the status to Closed Cancel
+         * 4.Determine if it is the signOff node rollback, set the status to Rejected
+         */
+        if ("WORK_COMMIT".equals(eventType.asText())) {
+            if (nodeId.equals(extParam.getCreateNodeId())) {
+                Map<String, FieldInfo> formDataMap = workOrder.getFormDataMap();
+                if (formDataMap.containsKey(extParam.getCrStatusFieldCode())) {
+                    FieldInfo fieldInfo = formDataMap.get(extParam.getCrStatusFieldCode());
+                    SelectField fieldValueObj = (SelectField) fieldInfo.getFieldValueObj();
+                    String label = fieldValueObj.getLabel();
+                    if (label.equals("Closed Cancel") || label.equals("Rejected")) {
+                        return CrStatusEnums.REOPEN;
+                    }
+                } else {
+                    return CrStatusEnums.NEW;
+                }
+
+            } else if (nodeId.equals(extParam.getCloseNodeId())) {
+                Map<String, FieldInfo> formDataMap = workOrder.getFormDataMap();
+                FieldInfo fieldInfo = formDataMap.get(extParam.getCloseStatusFieldCode());
+                SelectField fieldValueObj = (SelectField) fieldInfo.getFieldValueObj();
+                return CrStatusEnums.getByLabel(fieldValueObj.getLabel());
+            } else if (nodeId.equals(extParam.getSignoffNodeId())) {
+                return CrStatusEnums.OPEN;
+            }
+        } else if ("NODE_EXIT".equals(eventType.asText()) && nodeId.equals(extParam.getSignoffNodeId())) {
+            return CrStatusEnums.OPEN;
+        } else if ("NODE_ENTER".equals(eventType.asText()) && (nodeId.equals(extParam.getImplementationNodeId()) || nodeId.equals(extParam.getCloseNodeId()))) {
+            return CrStatusEnums.APPROVED;
+        } else if ("WORK_GET_BACK".equals(eventType.asText()) && rollbackToNodeId != null && rollbackToNodeId.asText().equals(extParam.getSignoffNodeId())) {
+            return CrStatusEnums.CLOSED_CANCEL;
+        } else if ("WORK_ROLLBACK".equals(eventType.asText()) && rollbackToNodeId != null && rollbackToNodeId.asText().equals(extParam.getSignoffNodeId())) {
+            JsonNode addOnMsg = originMessageNode.get("addOnMsg");
+            UserInfo systemUsersByAccountId = userSSOClient.getSystemUsersByAccountId(workOrder.getAccountId());
+            String systemUserId = "3";
+            if (systemUsersByAccountId != null) {
+                systemUserId = String.valueOf(systemUsersByAccountId.getUserId());
+            }
+            log.error("crStatusAddonMsg:{}",originMessage);
+            if (systemUserId.equals(ctx.getUserId()) || (addOnMsg != null && "System auto closed cancel".equalsIgnoreCase(addOnMsg.asText()))) {
+                return CrStatusEnums.CLOSED_CANCEL;
+            }
+            return CrStatusEnums.REJECTED;
+        }
+        return null;
+    }
 
     /**
-     * @param
-     * @return
+     * 更新crStatus至form表单
+     *
+     * @param ctx
+     * @param crStatus
+     * @param param
      */
-    private List<String> getNotInAppCodeCyberArk(String values, Collection<String> appCodes) {
-        if(CollectionUtils.isEmpty(appCodes)){
-            return new ArrayList<>();
-        }
-        String[] split = values.split(",");
-        List<String> targetlist = new ArrayList<>();
-        String appCodeStr =  appCodes.stream().collect(Collectors.joining("','"));
-        if (split != null) {
-            Arrays.stream(split).forEach(one -> {
-                String sql = "select application_code from cyberark_info where password_object = '" + one + "' and application_code in ('"+appCodeStr+"')";
-                log.error("sql:{}", sql);
-                Map<String, String> args = new HashMap<>();
-                NamedParameterJdbcTemplate query = new NamedParameterJdbcTemplate(jdbcTemplate);
-                List<String> list = query.query(sql, args, new RowMapper() {
-                    @Override
-                    public String mapRow(ResultSet rs, int rowNum) throws SQLException {
-                        String appCode = rs.getString("application_code");
-                        return appCode;
-                    }
-                });
-                log.error("CyberObjectsFieldLink:time:{},value:{}", DateUtil.formatDateTime(new Date()), list);
-                if(list.isEmpty()) {
-                    targetlist.add(one);
-                }
-            });
-        }
-        return targetlist;
+    private void updateCrStatus2Form(TriggerContext ctx, CrStatusEnums crStatus, ExtParam param) {
+//        MdlInstanceMapper mdlInstanceMapper = SpringContextUtils.getBean(MdlInstanceMapper.class);
+//        MdlInstance mdlInstance = mdlInstanceMapper.selectById(ctx.getWorkOrder().getId(), ctx.getAccountId());
+//        Object data = mdlInstance.getFormData();
+//        ObjectNode formData = (ObjectNode) JsonUtils.parseJsonNode(data);
 
+        DataDictDetailMapper dataDictDetailMapper = SpringContextUtils.getBean(DataDictDetailMapper.class);
+        DataDictMapper dataDictMapper = SpringContextUtils.getBean(DataDictMapper.class);
+        DataDict dataDict = new DataDict();
+        dataDict.setIsDel(0);
+        dataDict.setDictCode(param.getCrStatusDictCode());
+        DataDict crStatusDataDict = dataDictMapper.selectOneByParam(dataDict);
+        List<DataDictDetail> dataDictDetails = dataDictDetailMapper.selectDetailByDictIdAndLevel(crStatusDataDict.getId(), 1, crStatusDataDict.getAccountId());
+        Optional<DataDictDetail> first = dataDictDetails.stream().filter(item -> item.getData().equals(crStatus.getLabel())).findFirst();
+        if (first.isPresent()) {
+            List<FieldTriggerRuleVo> fieldTriggerRuleVos = org.apache.commons.compress.utils.Lists.newArrayList();
+            FieldTriggerRuleVo fieldTriggerRuleVo = new FieldTriggerRuleVo();
+            fieldTriggerRuleVo.setKey("crStatus");
+            fieldTriggerRuleVo.setType(FieldValueTypeEnum.SELECT.getVal());
+            fieldTriggerRuleVo.setValue(Collections.singletonList(first.get().getId()));
+            fieldTriggerRuleVos.add(fieldTriggerRuleVo);
+            log.info("setGroupFieldValue, FieldTriggerRule:{}", fieldTriggerRuleVo);
+            fieldLinkTriggerService.triggeredUpdateFormData(ctx.getWorkOrder().getProcessInstanceId(), fieldTriggerRuleVos);
+        }
+    }
+
+    public void saveApiLog(String requestUrl, String requestBody, String responseBody, String workOrderNo, String apiModule, boolean requestStatus) {
+        try {
+            jdbcTemplate.execute("insert into dbs_api_log (id,request_url,request_body,response_body,work_order_no,api_module,request_status) values(?,?,?,?,?,?,?)", (PreparedStatementCallback<Integer>) ps -> {
+                ps.setLong(1, IdUtil.getSnowflakeNextId());
+                ps.setString(2, requestUrl);
+                ps.setString(3, requestBody);
+                ps.setString(4, responseBody);
+                ps.setString(5, workOrderNo);
+                ps.setString(6, apiModule);
+                ps.setBoolean(7, requestStatus);
+                return ps.executeUpdate();
+            });
+        } catch (Exception ignore) {
+
+        }
+    }
+
+
+    @NotNull
+    public List<UserInfo> getUsers(List<Long> userIdList) {
+        RequestDomain requestDomain = UserHolder.get();
+        UserConditionReq condition = new UserConditionReq();
+        condition.setAccountId(Long.valueOf(requestDomain.getTopAccountId()));
+        condition.setUserId(UserUtil.getUserId());
+        condition.setStatus(Constant.DOUC_ENABLE_STATUS);
+        condition.setRespMode(3);
+        condition.setIds(userIdList);
+        condition.setAccountScope(IDosmConstant.ACCOUNT_SCOPE);
+        return userService.getUserByConditionV3(condition);
+    }
+
+    @Data
+    public static class ApproveInfo {
+
+        private String nodeId;
+        private String rejectionCode;
+        private String reasonCode;
+        private String statusCode;
+
+    }
+
+
+    @Data
+    public static class TableFieldMapping {
+        private String ichampTableFieldInfo;
+        private String itsmTableFieldInfo;
+        private Map<String, String> fieldMapping;
+    }
+
+    private void sendApprovalMsg(CrStatusEnums crStatus, TriggerContext ctx, List<UserInfo> createdBys) {
+        if (crStatus == null || crStatus.getNotifyScene() == null) {
+            log.info("workOrderId: {}, crStatus: {}", ctx.getWorkOrder(), crStatus);
+            return;
+        }
+
+        Map properties = nacosConfigLocalCatch.getProperties();
+        if (null == properties) {
+            log.info("RejectBtnTrigger get properties is null, workOrderId: {}, crStatus: {}", ctx.getWorkOrder(), crStatus);
+            return;
+        }
+        Object host = properties.get(CSH);
+        Object prefix = properties.get(CSHPRE);
+        String serviceHost = Optional.ofNullable(host).map(String::valueOf).orElse("");
+        String serviceHostPrefix = Optional.ofNullable(prefix).map(String::valueOf).orElse("http://");
+        log.info("RejectBtnTrigger custom.service.host:{}", serviceHost);
+        if (CharSequenceUtil.isBlank(serviceHost)) {
+            log.info("RejectBtnTrigger get properties [custom.service.host] is null");
+            return;
+        }
+
+        try {
+            String url = serviceHostPrefix + getHost(serviceHost) + PATH_SEND_MSG;
+            Map<String, Object> sendMsgContextMap = getSendMsgContext(crStatus.getNotifyScene(), ctx, createdBys);
+            log.info("RejectBtnTrigger call  url :{},param:{}", url, sendMsgContextMap);
+            String body = HttpRequest.post(url).header("Content-Type", "application/json").body(com.cloudwise.dosm.core.utils.JsonUtils.toJsonString(sendMsgContextMap)).timeout(5000).execute().body();
+            log.info("Send email success:{}", body);
+
+            ((Map<String, Object>) sendMsgContextMap.get("notify")).put("channelType", "SMS");
+            body = HttpRequest.post(url).header("Content-Type", "application/json").body(com.cloudwise.dosm.core.utils.JsonUtils.toJsonString(sendMsgContextMap)).timeout(5000).execute().body();
+            log.info("Send SMS success:{}", body);
+        } catch (Exception e) {
+            log.error("RejectBtnTrigger call fail:", e);
+        }
+    }
+
+
+    private Map<String, Object> getSendMsgContext(String notifyScence, TriggerContext ctx, List<UserInfo> createdBys) {
+        Map<String, Object> sendMsgContextMap = new HashMap<>();
+
+        Map<String, Object> notifyMap = new HashMap<>();
+        sendMsgContextMap.put("notify", notifyMap);
+        notifyMap.put("channelType", "EMAIL");
+        notifyMap.put("notifyScene", notifyScence);
+
+        Map<String, String> publicFieldsMap = new HashMap<>();
+        sendMsgContextMap.put("publicFields", publicFieldsMap);
+        WorkOrderBean workOrder = ctx.getWorkOrder();
+        UserInfo createdUserInfo = CollectionUtils.isEmpty(createdBys) ? null : createdBys.get(0);
+        // return fieldKey: "title, workOrderId, processInstanceId, orderId, bizDesc, dataStatus, workOrderUri, operator, operatorId, operatorAlias, currentNode, assignName, assignId, assignAlias"
+        publicFieldsMap.put("title", workOrder.getTitle());
+        publicFieldsMap.put("createdById", workOrder.getCreatedBy());
+        publicFieldsMap.put("createdByName", createdUserInfo == null ? "" : createdUserInfo.getName());
+        publicFieldsMap.put("createdByEmail", createdUserInfo == null ? "" : createdUserInfo.getEmail());
+        publicFieldsMap.put("workOrderId", workOrder.getId());
+        publicFieldsMap.put("processInstanceId", workOrder.getProcessInstanceId());
+        publicFieldsMap.put("orderId", workOrder.getId());
+        publicFieldsMap.put("bizDesc", workOrder.getBizDesc());
+        publicFieldsMap.put("mdlDefKey", workOrder.getMdlDefKey());
+        publicFieldsMap.put("bizKey", StringUtils.isBlank(workOrder.getBizKey()) ? workOrder.getId() : workOrder.getBizKey());
+        publicFieldsMap.put("currentNode", workOrder.getCurrentNodeId());
+
+
+        sendMsgContextMap.put("workOrderId", workOrder.getId());
+        sendMsgContextMap.put("nodeId", workOrder.getCurrentNodeId());
+        sendMsgContextMap.put("createdBy", workOrder.getCreatedBy());
+        sendMsgContextMap.put("topAccountId", ctx.getTopAccountId());
+        sendMsgContextMap.put("accountId", ctx.getAccountId());
+        sendMsgContextMap.put("userId", ctx.getUserId());
+
+        return sendMsgContextMap;
+    }
+
+
+    private String getHost(String ips) {
+        String[] split = ips.split(",");
+        int idx = RandomUtil.randomInt(0, split.length);
+        return split[idx];
     }
 }
