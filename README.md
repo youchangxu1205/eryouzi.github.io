@@ -1,593 +1,591 @@
-SELECT
-JSON_VALUE(mi.form_data,'$.AnyapplicationCode_value') AS cmcappcodechange,
-JSON_VALUE(mi.form_data,'$.AnyapplicationCode') AS cmcappcodechange_id,
-JSON_VALUE(mi.form_data,'$.appResiliencyClassification_value') AS appResiliencyClassification,
-JSON_VALUE(mi.form_data,'$.appResiliencyClassification') AS appResiliencyClassification_id,
-JSON_EXTRACT(mi.form_data,'$.applicationImpacte_value') AS applicationimpacted,
-JSON_EXTRACT(mi.form_data,'$.applicationImpacte') AS applicationimpacted_id,
-JSON_VALUE(JSON_EXTRACT(mi.form_data,'$.ApplicationOwner[0].userName'),'$') AS ApplicationOwner,
-JSON_VALUE(JSON_EXTRACT(mi.form_data,'$.Approver01[0].userName'),'$') AS approver1,
-JSON_VALUE(JSON_EXTRACT(mi.form_data,'$.Approver02[0].userName'),'$') AS approver2,
-JSON_VALUE(JSON_EXTRACT(mi.form_data,'$.Approver03[0].userName'),'$') AS approver3,
-JSON_VALUE(JSON_EXTRACT(mi.form_data,'$.Approver04[0].userName'),'$') AS approver4,
-JSON_VALUE(JSON_EXTRACT(mi.form_data,'$.Approver05[0].userName'),'$') AS approver5,
-JSON_VALUE(JSON_EXTRACT(mi.form_data,'$.Approver06[0].userName'),'$') AS approver6,
-JSON_VALUE(JSON_EXTRACT(mi.form_data,'$.ApproverGroup1[0].groupName'),'$') AS approvergroup1,
-JSON_VALUE(JSON_EXTRACT(mi.form_data,'$.ApproverGroup2[0].groupName'),'$') AS approvergroup2,
-JSON_VALUE(JSON_EXTRACT(mi.form_data,'$.ApproverGroup3[0].groupName'),'$') AS approvergroup3,
-JSON_VALUE(JSON_EXTRACT(mi.form_data,'$.ApproverGroupfour[0].groupName'),'$') AS approvergroup4,
-JSON_VALUE(JSON_EXTRACT(mi.form_data,'$.ApproverGroupfive[0].groupName'),'$') AS approvergroup5,
-JSON_VALUE(JSON_EXTRACT(mi.form_data,'$.ApproverGroupsix[0].groupName'),'$') AS approvergroup6,
-JSON_VALUE(mi.form_data,'$.BackoutComplexity') AS cmrmimplement_id,
-JSON_VALUE(mi.form_data,'$.BackoutComplexity_value') AS cmrmimplement,
-mi.biz_key as itsmcrnumber,
-JSON_VALUE(mi.form_data,'$.blastRadiusDescription_value') AS potentialblastradius,
-JSON_VALUE(mi.form_data,'$.blastRadiusDescription') AS potentialblastradius_id,
-JSON_VALUE(mi.form_data,'$.BusinessUnitsOperations_value') AS cmrmcontinuity,
-JSON_VALUE(mi.form_data,'$.BusinessUnitsOperations') AS cmrmcontinuity_id,
-JSON_VALUE(mi.form_data,'$.Change_Category') AS Change_Category,
-JSON_VALUE(mi.form_data,'$.ChangeComplexity_value') AS cmrmcomplexity,
-JSON_VALUE(mi.form_data,'$.ChangeComplexity') AS cmrmcomplexity_id,
-JSON_VALUE(mi.form_data,'$.ChangeCountForMainframe') AS changecount,
-JSON_VALUE(mi.form_data,'$.changeDescribtion') AS description,
-JSON_VALUE(mi.form_data,'$.changeDescriptionDuringBusinessH_value') AS changeduringonlinebusinesshours,
-JSON_VALUE(mi.form_data,'$.changeDescriptionDuringBusinessH') AS changeduringonlinebusinesshours_id,
-JSON_VALUE(mi.form_data,'$.changeGroup_value') AS changegroup,
-JSON_VALUE(mi.form_data,'$.changeGroup') AS changegroup_id,
-JSON_VALUE(JSON_EXTRACT(mi.form_data,'$.ChangeManagerGroup_one[0].groupName'),'$') AS changemanagergroup,
-JSON_VALUE(mi.form_data,'$.changeNature_value') AS changenature,
-JSON_VALUE(mi.form_data,'$.changeNature') AS changenature_id,
-JSON_VALUE(JSON_EXTRACT(mi.form_data,'$.changeRequestorGroups[0].groupName'),'$') AS changerequestorgroups,
-DATE_FORMAT(FROM_UNIXTIME(CAST(JSON_EXTRACT(mi.form_data,'$.ChangeSchedule_StartEndTime.endDate') AS UNSIGNED )/1000),'%Y-%m-%d %H:%i:%s') AS scheduleenddatetime,
-DATE_FORMAT(FROM_UNIXTIME(CAST(JSON_EXTRACT(mi.form_data,'$.ChangeSchedule_StartEndTime.startDate') AS UNSIGNED )/1000),'%Y-%m-%d %H:%i:%s') AS schedulestartdatetime,
-JSON_VALUE(mi.form_data,'$.changeSummary') AS summary,
-JSON_VALUE(mi.form_data,'$.changeType_value') AS changetype,
-JSON_VALUE(mi.form_data,'$.changeType') AS changetype_id,
-JSON_VALUE(JSON_EXTRACT(mi.form_data,'$.checker[0].userName'),'$') AS cmcchecker,
-JSON_VALUE(mi.form_data,'$.ClosedLogSummary_value') AS closedincompletereasoncode,
-JSON_VALUE(mi.form_data,'$.ClosedLogSummary') AS closedincompletereasoncode_id,
-JSON_VALUE(mi.form_data,'$.CloseOnlineFilesDuringJobRun_value') AS closeonlinefilesduringjobrun,
-JSON_VALUE(mi.form_data,'$.CloseOnlineFilesDuringJobRun') AS closeonlinefilesduringjobrun_id,
-JSON_VALUE(mi.form_data,'$.Code_Checker_value') AS codechecker,
-JSON_VALUE(mi.form_data,'$.Code_Checker') AS codechecker_id,
-JSON_VALUE(mi.form_data,'$.CountryImpacte_value') AS countryimpacted,
-JSON_VALUE(mi.form_data,'$.CountryImpacte') AS countryimpacted_id,
-JSON_VALUE(mi.form_data,'$.countryOfOrigin_value') AS countryoforigin,
-JSON_VALUE(mi.form_data,'$.countryOfOrigin') AS countryoforigin_id,
-JSON_VALUE(mi.form_data,'$.crClassification_value') AS crclassification,
-JSON_VALUE(mi.form_data,'$.crClassification') AS crclassification_id,
-JSON_VALUE(mi.form_data,'$.crStatus_value') AS state,
-JSON_VALUE(mi.form_data,'$.crStatus') AS state_id,
-'crUrl' as implementationplan,
-'crUrl' as reversionplan,
-JSON_VALUE(mi.form_data,'$.CUSsignoff_value') AS cussignofftype,
-JSON_VALUE(mi.form_data,'$.CUSsignoff') AS cussignofftype_id,
-JSON_VALUE(mi.form_data,'$.CustomerServices_value') AS cmrmavailablity,
-JSON_VALUE(mi.form_data,'$.CustomerServices') AS cmrmavailablity_id,
-JSON_VALUE(mi.form_data,'$.CyberArk_Object') AS cyberarkobjects,
-JSON_VALUE(JSON_EXTRACT(mi.form_data,'$.d4dDataOwner[0].userName'),'$') AS designfordataownername,
-JSON_VALUE(mi.form_data,'$.D4Dsignoff_value') AS d4dsignofftype,
-JSON_VALUE(mi.form_data,'$.D4Dsignoff') AS d4dsignofftype_id,
-JSON_VALUE(mi.form_data,'$.DataCenterOPSsignoff_value') AS datacentersignofftype,
-JSON_VALUE(mi.form_data,'$.DataCenterOPSsignoff') AS datacentersignofftype_id,
-JSON_VALUE(mi.form_data,'$.dataPatchNumberOfRecords') AS cmcdatapatchnumberofrecord,
-JSON_VALUE(mi.form_data,'$.dataRequirementsDetails') AS designfordatarequirements,
-JSON_VALUE(mi.form_data,'$.Deployment_Approach_value') AS deploymentapproach,
-JSON_VALUE(mi.form_data,'$.Deployment_Approach') AS deploymentapproach_id,
-JSON_VALUE(mi.form_data,'$.Documentation_value') AS cmrmtraining,
-JSON_VALUE(mi.form_data,'$.Documentation') AS cmrmtraining_id,
-JSON_VALUE(mi.form_data,'$.DRCapabilitiesImpact_value') AS drcapabilitiesimpact,
-JSON_VALUE(mi.form_data,'$.DRCapabilitiesImpact') AS drcapabilitiesimpact_id,
-JSON_VALUE(mi.form_data,'$.DroneTicket') AS releaseticketslist,
-JSON_VALUE(mi.form_data,'$.explainability') AS explainability,
-JSON_VALUE(mi.form_data,'$.explainabilityBase') AS explainabilitybase,
-JSON_VALUE(mi.form_data,'$.explainabilityScores') AS explainabilityscores,
-JSON_VALUE(mi.form_data,'$.featureValues') AS featurevalues,
-JSON_VALUE(mi.form_data,'$.HADRFlipsignoff_value') AS hasignofftype,
-JSON_VALUE(mi.form_data,'$.HADRFlipsignoff') AS hasignofftype_id,
-JSON_VALUE(mi.form_data,'$.Holdbatch_job_value') AS holdbatchjob,
-JSON_VALUE(mi.form_data,'$.Holdbatch_job') AS holdbatchjob_id,
-JSON_VALUE(mi.form_data,'$.identifiedImpactAndRisks_value') AS impactriskidentified,
-JSON_VALUE(mi.form_data,'$.identifiedImpactAndRisks') AS impactriskidentified_id,
-JSON_VALUE(mi.form_data,'$.IDRsignoff_value') AS idrsignofftype,
-JSON_VALUE(mi.form_data,'$.IDRsignoff') AS idrsignofftype_id,
-JSON_VALUE(mi.form_data,'$.ImpactToMainframe_value') AS impacttomainframetype,
-JSON_VALUE(mi.form_data,'$.ImpactToMainframe') AS impacttomainframetype_id,
-DATE_FORMAT(FROM_UNIXTIME(CAST(JSON_EXTRACT(mi.form_data,'$.Implementation_Time.endDate') AS UNSIGNED )/1000),'%Y-%m-%d %H:%i:%s') AS implementationplanscheduleenddate,
-DATE_FORMAT(FROM_UNIXTIME(CAST(JSON_EXTRACT(mi.form_data,'$.Implementation_Time.startDate') AS UNSIGNED )/1000),'%Y-%m-%d %H:%i:%s') AS implementationplanschedulestart,
-JSON_VALUE(JSON_EXTRACT(mi.form_data,'$.implementergroup[*].groupName'),'$') AS implementergroup,
-JSON_VALUE(mi.form_data,'$.InherentandResidualrisks_value') AS cmrminherentresidualrisks,
-JSON_VALUE(mi.form_data,'$.InherentandResidualrisks') AS cmrminherentresidualrisks_id,
-JSON_VALUE(mi.form_data,'$.interdependenciesDescription_value') AS majorinterdependencies,
-JSON_VALUE(mi.form_data,'$.interdependenciesDescription') AS majorinterdependencies_id,
-JSON_VALUE(mi.form_data,'$.interfaceImpact_value') AS interfaceImpact,
-JSON_VALUE(mi.form_data,'$.interfaceImpact') AS interfaceImpact_id,
-JSON_VALUE(mi.form_data,'$.Interfaces_value') AS cmrminterfaces,
-JSON_VALUE(mi.form_data,'$.Interfaces') AS cmrminterfaces_id,
-JSON_VALUE(mi.form_data,'$.IsMajorChange_value') AS majorchangeflag,
-JSON_VALUE(mi.form_data,'$.IsMajorChange') AS majorchangeflag_id,
-JSON_VALUE(JSON_EXTRACT(mi.form_data,'$.ISSGroup[*].groupName'),'$') AS issoverduepatchapprovergroup,
-JSON_VALUE(mi.form_data,'$.IsthisCRinscope_forD4D_value') AS designfordatachoice,
-JSON_VALUE(mi.form_data,'$.IsthisCRinscope_forD4D') AS designfordatachoice_id,
-JSON_VALUE(mi.form_data,'$.JobNeedToAccessOnlineFiles_value') AS jobneedtoaccessonlinefiles,
-JSON_VALUE(mi.form_data,'$.JobNeedToAccessOnlineFiles') AS jobneedtoaccessonlinefiles_id,
-JSON_VALUE(mi.form_data,'$.jobType_value') AS jobtype,
-JSON_VALUE(mi.form_data,'$.jobType') AS jobtype_id,
-JSON_VALUE(mi.form_data,'$.justificationReason_value') AS designfordatajustification,
-JSON_VALUE(mi.form_data,'$.justificationReason') AS designfordatajustification_id,
-JSON_VALUE(mi.form_data,'$.JustificationwhyCategory') AS diffcatselectedfrmaimlreason,
-JSON_VALUE(JSON_EXTRACT(mi.form_data,'$.L1Change_Manager[0].userName'),'$') AS l1changemanagerapprovername,
-JSON_VALUE(JSON_EXTRACT(mi.form_data,'$.L1Risk_Manager[0].userName'),'$') AS riskmanagerapprovername,
-JSON_VALUE(mi.form_data,'$.Listtheimpactedbythechange') AS servicesimpactedandrecoveryplan,
-JSON_VALUE(mi.form_data,'$.liveVerificationAfterImplementat_value') AS liveverification,
-JSON_VALUE(mi.form_data,'$.liveVerificationAfterImplementat') AS liveverification_id,
-JSON_VALUE(mi.form_data,'$.lob_value') AS lob,
-JSON_VALUE(mi.form_data,'$.lob') AS lob_id,
-JSON_VALUE(mi.form_data,'$.location_value') AS location,
-JSON_VALUE(mi.form_data,'$.location') AS location_id,
-JSON_VALUE(mi.form_data,'$.lpar_value') AS lpar,
-JSON_VALUE(mi.form_data,'$.lpar') AS lpar_id,
-JSON_VALUE(mi.form_data,'$.mainApplicationRequiringChange_value') AS mainappimpacted,
-JSON_VALUE(mi.form_data,'$.mainApplicationRequiringChange') AS mainappimpacted_id,
-JSON_VALUE(mi.form_data,'$.mainframeCRType_value') AS mainframecrtype,
-JSON_VALUE(mi.form_data,'$.mainframeCRType') AS mainframecrtype_id,
-JSON_VALUE(mi.form_data,'$.mainframeCRType_value') AS mainframecrtype,
-JSON_VALUE(mi.form_data,'$.mainframeCRType') AS mainframecrtype_id,
-JSON_VALUE(mi.form_data,'$.MainframePackage_Type_value') AS mainframepackagetype,
-JSON_VALUE(mi.form_data,'$.MainframePackage_Type') AS mainframepackagetype_id,
-JSON_VALUE(mi.form_data,'$.mainframePackageCreator1BankID') AS mainframepackagecreator1bankid,
-JSON_VALUE(mi.form_data,'$.mainframePackageCreatorTSOID') AS mainframepackagecreatortsoid,
-JSON_VALUE(mi.form_data,'$.mainframePackageName') AS mainframepackagename,
-JSON_VALUE(mi.form_data,'$.Mainframeritica_value') AS mainframecriticalmonthendbatchimpact,
-JSON_VALUE(mi.form_data,'$.Mainframeritica') AS mainframecriticalmonthendbatchimpact_id,
-JSON_VALUE(mi.form_data,'$.MajorChanges_value') AS cmcmajorchange,
-JSON_VALUE(mi.form_data,'$.MajorChanges') AS cmcmajorchange_id,
-JSON_VALUE(JSON_EXTRACT(mi.form_data,'$.maker[0].userName'),'$') AS cmcmaker,
-JSON_VALUE(mi.form_data,'$.MakerChecker_value') AS cmcmakerchecker,
-JSON_VALUE(mi.form_data,'$.MakerChecker') AS cmcmakerchecker_id,
-JSON_VALUE(mi.form_data,'$.MASCategory_value') AS cmcmascategory,
-JSON_VALUE(mi.form_data,'$.MASCategory') AS cmcmascategory_id,
-JSON_VALUE(mi.form_data,'$.MDDelegateSignOff_value') AS mddelegatesignofftype,
-JSON_VALUE(mi.form_data,'$.MDDelegateSignOff') AS mddelegatesignofftype_id,
-JSON_VALUE(mi.form_data,'$.NewApplicationServices') AS servicemonitoringsnocappservicelist,
-JSON_VALUE(mi.form_data,'$.otherApplicationImpacted_value') AS otherapplicationimpacted,
-JSON_VALUE(mi.form_data,'$.otherApplicationImpacted') AS otherapplicationimpacted_id,
-JSON_VALUE(mi.form_data,'$.parentChange') AS parentchange,
-JSON_VALUE(JSON_EXTRACT(mi.form_data,'$.projectCutOverProjectManager[0].userName'),'$') AS ticketprojectmanager,
-JSON_VALUE(mi.form_data,'$.projectCutOverProjectManagerCont') AS ticketprojectmanagermobile,
-JSON_VALUE(mi.form_data,'$.projectCutOverProjectObjective') AS projectobjective,
-JSON_VALUE(mi.form_data,'$.projectCutOverProjectScope') AS projectscope,
-JSON_VALUE(mi.form_data,'$.recommendedRisk') AS recommendedrisklevel,
-JSON_VALUE(mi.form_data,'$.regressiontesting_value') AS regressiontesting,
-JSON_VALUE(mi.form_data,'$.regressiontesting') AS regressiontesting_id,
-JSON_VALUE(mi.form_data,'$.relatedIncident') AS relatedincident,
-JSON_VALUE(JSON_EXTRACT(mi.form_data,'$.ReleaseManagerGroup[0].groupName'),'$') AS releasemanagergroup,
-JSON_VALUE(mi.form_data,'$.Resource_Engagement_value') AS resourceengagement,
-JSON_VALUE(mi.form_data,'$.Resource_Engagement') AS resourceengagement_id,
-JSON_VALUE(mi.form_data,'$.reversionapproach_value') AS reversionapproach,
-JSON_VALUE(mi.form_data,'$.reversionapproach') AS reversionapproach_id,
-DATE_FORMAT(FROM_UNIXTIME(CAST(JSON_EXTRACT(mi.form_data,'$.Reversion_Time.endDate') AS UNSIGNED )/1000),'%Y-%m-%d %H:%i:%s') AS reversionplanscheduleenddate,
-DATE_FORMAT(FROM_UNIXTIME(CAST(JSON_EXTRACT(mi.form_data,'$.Reversion_Time.startDate') AS UNSIGNED )/1000),'%Y-%m-%d %H:%i:%s') AS reversionplanschedulestartdate,
-JSON_VALUE(mi.form_data,'$.ReversionBackoutRollbackTesting_value') AS rollbacktesting,
-JSON_VALUE(mi.form_data,'$.ReversionBackoutRollbackTesting') AS rollbacktesting_id,
-JSON_VALUE(mi.form_data,'$.riskMitigationPlan_value') AS riskmitigated,
-JSON_VALUE(mi.form_data,'$.riskMitigationPlan') AS riskmitigated_id,
-JSON_VALUE(mi.form_data,'$.riskScore') AS riskscore,
-JSON_VALUE(mi.form_data,'$.riskThreshold') AS riskthreshold,
-DATE_FORMAT(FROM_UNIXTIME(CAST(JSON_EXTRACT(mi.form_data,'$.ScheduledDowntime_Time.endDate') AS UNSIGNED )/1000),'%Y-%m-%d %H:%i:%s') AS downtimeenddatetime,
-DATE_FORMAT(FROM_UNIXTIME(CAST(JSON_EXTRACT(mi.form_data,'$.ScheduledDowntime_Time.startDate') AS UNSIGNED )/1000),'%Y-%m-%d %H:%i:%s') AS downtimestartdatetime,
-DATE_FORMAT(FROM_UNIXTIME(CAST(JSON_EXTRACT(mi.form_data,'$.ScheduledMaintenance_Time.endDate') AS UNSIGNED )/1000),'%Y-%m-%d %H:%i:%s') AS scheduledmaintenanceenddatetime,
-DATE_FORMAT(FROM_UNIXTIME(CAST(JSON_EXTRACT(mi.form_data,'$.ScheduledMaintenance_Time.startDate') AS UNSIGNED )/1000),'%Y-%m-%d %H:%i:%s') AS scheduledmaintenancestartdatetime,
-JSON_VALUE(mi.form_data,'$.Security_value') AS cmrmsecurity,
-JSON_VALUE(mi.form_data,'$.Security') AS cmrmsecurity_id,
-JSON_VALUE(mi.form_data,'$.SNOCsignoff_value') AS servicemonitoringsnoctype,
-JSON_VALUE(mi.form_data,'$.SNOCsignoff') AS servicemonitoringsnoctype_id,
-JSON_VALUE(JSON_EXTRACT(mi.form_data,'$.Tech_MDApprover[0].userName'),'$') AS mdapprover,
-JSON_VALUE(JSON_EXTRACT(mi.form_data,'$.ScheduledApprover1[0].userName'),'$') AS downtimeapprover1_name,
-JSON_VALUE(JSON_EXTRACT(mi.form_data,'$.ScheduledApprover2[0].userName'),'$') AS downtimeapprover2_name,
-JSON_VALUE(JSON_EXTRACT(mi.form_data,'$.ScheduledApprover3[0].userName'),'$') AS downtimeapprover3_name,
-JSON_VALUE(JSON_EXTRACT(mi.form_data,'$.ScheduledApprover4[0].userName'),'$') AS downtimeapprover4_name,
-JSON_VALUE(JSON_EXTRACT(mi.form_data,'$.ScheduledApprover5[0].userName'),'$') AS downtimeapprover5_name,
-JSON_VALUE(JSON_EXTRACT(mi.form_data,'$.TechMDApproverGroup[0].groupName'),'$') AS mdapprovergroup,
-JSON_VALUE(mi.form_data,'$.TheProductionDashboardLinks') AS servicemonitoringsnocurllist,
-JSON_VALUE(mi.form_data,'$.uat_value') AS uat,
-JSON_VALUE(mi.form_data,'$.uat') AS uat_id,
-JSON_VALUE(mi.form_data,'$.URLForProjectDocsandArtefac') AS alldocsandartifactsurl,
-JSON_VALUE(mi.form_data,'$.UseHighCPUIncreaseWorkload_value') AS usehighcpuincreaseworkload,
-JSON_VALUE(mi.form_data,'$.UseHighCPUIncreaseWorkload') AS usehighcpuincreaseworkload_id,
-(SELECT JSON_VALUE(JSON_EXTRACT(sign_off_user,'$[0].userName'),'$') FROM sign_off_manager
-WHERE JSON_SEARCH(sign_off_type,'one','BU/Application Owner Signoff') IS NOT null AND
-work_order_id = mi.id ) AS busignoffapproverlogin  ,
-(SELECT
-case `status`
-when 'APPROVED' then 'Approved'
-when 'REJECTED' then 'Rejected'
-ELSE ''
-END
-FROM sign_off_manager
-WHERE JSON_SEARCH(sign_off_type,'one','BU/Application Owner Signoff') IS NOT null AND
-work_order_id = mi.id ) AS busignoffstatus,
-(SELECT rejection_reason FROM sign_off_manager
-WHERE JSON_SEARCH(sign_off_type,'one','BU/Application Owner Signoff') IS NOT null AND
-work_order_id = mi.id ) AS busignoffrejectionreason,
+package com.cloudwise.douc.customization.biz.service.ichampsync;
 
-(SELECT JSON_VALUE(JSON_EXTRACT(sign_off_user,'$[0].userName'),'$') FROM sign_off_manager
-WHERE JSON_SEARCH(sign_off_type,'one','Design For Data (D4D) Signoff') IS NOT null AND
-work_order_id = mi.id ) AS d4dsignoffapproverlogin  ,
-(SELECT
-case `status`
-when 'APPROVED' then 'Approved'
-when 'REJECTED' then 'Rejected'
-ELSE ''
-END
-FROM sign_off_manager
-WHERE JSON_SEARCH(sign_off_type,'one','Design For Data (D4D) Signoff') IS NOT null AND
-work_order_id = mi.id ) AS d4dsignoffstatus,
-(SELECT rejection_reason FROM sign_off_manager
-WHERE JSON_SEARCH(sign_off_type,'one','Design For Data (D4D) Signoff') IS NOT null AND
-work_order_id = mi.id ) AS d4dsignoffrejectionreason,
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.io.resource.ClassPathResource;
+import cn.hutool.http.HttpResponse;
+import cn.hutool.http.HttpUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.cloudwise.dosm.api.bean.utils.JsonUtils;
+import com.cloudwise.douc.customization.biz.dao.DbsApiLogMapper;
+import com.cloudwise.douc.customization.biz.dao.DictMapper;
+import com.cloudwise.douc.customization.biz.dao.MdlApproveRecordDetailMapper;
+import com.cloudwise.douc.customization.biz.dao.MdlApproveRecordMapper;
+import com.cloudwise.douc.customization.biz.dao.MdlInstanceMapper;
+import com.cloudwise.douc.customization.biz.dao.MdlInstanceTableDataMapper;
+import com.cloudwise.douc.customization.biz.dao.SignOffMapper;
+import com.cloudwise.douc.customization.biz.dao.UploadFileMapper;
+import com.cloudwise.douc.customization.biz.facade.UserSSOClient;
+import com.cloudwise.douc.customization.biz.facade.user.BaseExtend;
+import com.cloudwise.douc.customization.biz.facade.user.UserInfo;
+import com.cloudwise.douc.customization.biz.model.email.dosm.ApproveResultEnum;
+import com.cloudwise.douc.customization.biz.model.log.DbsApiLog;
+import com.cloudwise.douc.customization.biz.model.signoff.SignOffEntity;
+import com.cloudwise.douc.customization.biz.model.table.MdlApproveRecord;
+import com.cloudwise.douc.customization.biz.model.table.MdlApproveRecordDetail;
+import com.cloudwise.douc.customization.biz.model.table.MdlInstance;
+import com.cloudwise.douc.customization.biz.model.table.MdlInstanceTableData;
+import com.cloudwise.douc.customization.common.config.DbsProperties;
+import com.cloudwise.storage.FileStorageService;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.JsonNodeType;
+import com.fasterxml.jackson.databind.node.NullNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.common.collect.Lists;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
 
-(SELECT JSON_VALUE(JSON_EXTRACT(sign_off_user,'$[0].userName'),'$') FROM sign_off_manager
-WHERE JSON_SEARCH(sign_off_type,'one','Data Center OPS (Batch) Signoff') IS NOT null AND
-work_order_id = mi.id ) AS datacentersignoffapproverlogin  ,
-(SELECT
-case `status`
-when 'APPROVED' then 'Approved'
-when 'REJECTED' then 'Rejected'
-ELSE ''
-END
-FROM sign_off_manager
-WHERE JSON_SEARCH(sign_off_type,'one','Data Center OPS (Batch) Signoff') IS NOT null AND
-work_order_id = mi.id ) AS datacentersignoffstatus,
-(SELECT rejection_reason FROM sign_off_manager
-WHERE JSON_SEARCH(sign_off_type,'one','Data Center OPS (Batch) Signoff') IS NOT null AND
-work_order_id = mi.id ) AS datacentersignoffrejectionreason,
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
-(SELECT JSON_VALUE(JSON_EXTRACT(sign_off_user,'$[0].userName'),'$') FROM sign_off_manager
-WHERE JSON_SEARCH(sign_off_type,'one','HA & DR Flip Signoff') IS NOT null AND
-work_order_id = mi.id ) AS hasignoffapproverlogin  ,
-(SELECT
-case `status`
-when 'APPROVED' then 'Approved'
-when 'REJECTED' then 'Rejected'
-ELSE ''
-END
-FROM sign_off_manager
-WHERE JSON_SEARCH(sign_off_type,'one','HA & DR Flip Signoff') IS NOT null AND
-work_order_id = mi.id ) AS hasignoffstatus,
-(SELECT rejection_reason FROM sign_off_manager
-WHERE JSON_SEARCH(sign_off_type,'one','HA & DR Flip Signoff') IS NOT null AND
-work_order_id = mi.id ) AS hasignoffrejectionreason,
+import static com.cloudwise.douc.customization.biz.service.ichampsync.SignoffConstants.SignoffItem.IDR_SIGNOFF_PROCUTOVER;
 
-(SELECT JSON_VALUE(JSON_EXTRACT(sign_off_user,'$[0].userName'),'$') FROM sign_off_manager
-WHERE JSON_SEARCH(sign_off_type,'one','Impact To Mainframe Signoff') IS NOT null AND
-work_order_id = mi.id ) AS impacttomainframeapproverlogin  ,
-(SELECT
-case `status`
-when 'APPROVED' then 'Approved'
-when 'REJECTED' then 'Rejected'
-ELSE ''
-END
-FROM sign_off_manager
-WHERE JSON_SEARCH(sign_off_type,'one','Impact To Mainframe Signoff') IS NOT null AND
-work_order_id = mi.id ) AS impacttomainframestatus,
-(SELECT rejection_reason FROM sign_off_manager
-WHERE JSON_SEARCH(sign_off_type,'one','Impact To Mainframe Signoff') IS NOT null AND
-work_order_id = mi.id ) AS impacttomainframerejectionreason,
+/**
+ * <p>
+ *
+ * </p>
+ *
+ * @author Norval.Xu
+ * @since 2025/2/17
+ */
+@Slf4j
+@Component
+public class DataSynchronizer {
 
---(SELECT JSON_VALUE(JSON_EXTRACT(sign_off_user,'$[0].userName'),'$') FROM sign_off_manager
---WHERE JSON_SEARCH(sign_off_type,'one','ISS Signoff') IS NOT null AND
---work_order_id = mi.id ) AS issoverduepatchapprover  ,
---(SELECT
---case `status`
---when 'APPROVED' then 'Approved'
---when 'REJECTED' then 'Rejected'
---ELSE ''
---END
---FROM sign_off_manager
---WHERE JSON_SEARCH(sign_off_type,'one','ISS Signoff') IS NOT null AND
---work_order_id = mi.id ) AS issoverduepatchapproverstatus,
---(SELECT rejection_reason FROM sign_off_manager
---WHERE JSON_SEARCH(sign_off_type,'one','ISS Signoff') IS NOT null AND
---work_order_id = mi.id ) AS issoverduepatchapproverrejectioncode,
+    private final MdlInstanceMapper mdlInstanceMapper;
+    private final MdlInstanceTableDataMapper mdlInstanceTableDataMapper;
+    private final SignOffMapper signOffMapper;
+
+    private final MdlApproveRecordMapper mdlApproveRecordMapper;
+    private final MdlApproveRecordDetailMapper mdlApproveRecordDetailMapper;
+    private final UserSSOClient userSSOClient;
+    private ExtParam extParam;
+    private final DbsApiLogMapper dbsApiLogMapper;
+
+    private final DbsProperties dbsProperties;
+
+    private final DictMapper dictMapper;
+
+    private final FileStorageService fileStorageService;
+
+    private final UploadFileMapper uploadFileMapper;
+
+    public static final int DEFAULT_EXPIRY_TIME = 7 * 24 * 3600;
+
+    private static final List<String> CLOSE_STATUS_LIST = Lists.newArrayList("Closed Backoutfail", "Closed Issues");
+
+    public DataSynchronizer(MdlInstanceMapper mdlInstanceMapper, MdlInstanceTableDataMapper mdlInstanceTableDataMapper, SignOffMapper signOffMapper, MdlApproveRecordMapper mdlApproveRecordMapper, MdlApproveRecordDetailMapper mdlApproveRecordDetailMapper, UserSSOClient userSSOClient, DbsApiLogMapper dbsApiLogMapper, DbsProperties dbsProperties, DictMapper dictMapper, FileStorageService fileStorageService, UploadFileMapper uploadFileMapper) {
+        this.mdlInstanceMapper = mdlInstanceMapper;
+        this.mdlInstanceTableDataMapper = mdlInstanceTableDataMapper;
+        this.signOffMapper = signOffMapper;
+        this.mdlApproveRecordMapper = mdlApproveRecordMapper;
+        this.mdlApproveRecordDetailMapper = mdlApproveRecordDetailMapper;
+        this.userSSOClient = userSSOClient;
+        this.dbsApiLogMapper = dbsApiLogMapper;
+        this.dbsProperties = dbsProperties;
+        this.dictMapper = dictMapper;
+        this.fileStorageService = fileStorageService;
+        this.uploadFileMapper = uploadFileMapper;
+    }
 
 
+    public void send2Ichamp(ObjectNode resultData, boolean isNew, MdlInstance mdlInstance, ObjectNode formData) {
+        JsonNode lastRequestor = formData.get("LastRequestor");
+        String userId = mdlInstance.getCreatedBy();
+        if (!lastRequestor.isEmpty()) {
+            JsonNode jsonNode = lastRequestor.get(0);
+            JsonNode userIdNode = jsonNode.get("userId");
+            if (!userIdNode.asText().equals(userId)) {
+                userId = userIdNode.asText();
+            }
+        }
+        List<UserInfo> userListByIds = userSSOClient.getUserListByIds(Collections.singletonList(userId), "2", "110");
+        List<String> ibankIds = userListByIds.stream().map(item -> {
+            Optional<BaseExtend> first = item.getExtend().stream().filter(user -> user.getAlias().equalsIgnoreCase("1bankId")).findFirst();
+            if (first.isPresent()) {
+                return first.get().getValue();
+            } else {
+                return "";
+            }
+        }).collect(Collectors.toList());
+        ObjectNode result = JsonUtils.createObjectNode();
+        ObjectNode data = JsonUtils.createObjectNode();
+        result.put("action", isNew ? "Create" : "Modify");
+        resultData.put("changerequestor", ibankIds.get(0));
+        data.set("formData", resultData);
+        data.put("workOrderNo", mdlInstance.getBizKey());
+        data.put("createdBy", ibankIds.get(0));
+        data.put("createdDate", mdlInstance.getCreatedTime().getTime());
+        result.set("data", data);
+        String url = isNew ? dbsProperties.getIchampCreateUrl() : dbsProperties.getIchampUpdateUrl();
+        String jsonString = JsonUtils.toJsonString(result);
+        HttpResponse response = HttpUtil.createPost(url).header("Content-Type", "application/json").header("appCode", dbsProperties.getAppCode()).header("appKey", dbsProperties.getAppKey()).body(jsonString).execute();
+        String body = response.body();
+        log.info("CrStatusSyncTriggermakeResult:{}", body);
+        JsonNode node = JsonUtils.parseJsonNode(body);
+        DbsApiLog dbsApiLog = new DbsApiLog();
+        dbsApiLog.setCreatedTime(new Date());
+        dbsApiLog.setRequestStatus(true);
+        dbsApiLog.setRequestUrl(url);
+        dbsApiLog.setRequestBody(jsonString);
+        dbsApiLog.setResponseBody(body);
+        dbsApiLog.setWorkOrderNo(mdlInstance.getBizKey());
+        dbsApiLog.setApiModule("crStatusSync");
+        if ("200".equals(node.get("code").asText())) {
+            JsonNode dataNode = node.get("data");
+            JsonNode status = dataNode.get("Status");
+            if ("FAILED".equals(status.asText())) {
+                dbsApiLog.setRequestStatus(false);
+                dbsApiLogMapper.insert(dbsApiLog);
+            } else {
+                dbsApiLog.setRequestStatus(true);
+                dbsApiLogMapper.insert(dbsApiLog);
+            }
+        } else {
+            dbsApiLog.setRequestStatus(false);
+            dbsApiLogMapper.insert(dbsApiLog);
+        }
+    }
 
-(SELECT JSON_VALUE(JSON_EXTRACT(sign_off_user,'$[0].userName'),'$') FROM sign_off_manager
-WHERE JSON_SEARCH(sign_off_type,'one','MD Delegate Signoff') IS NOT null AND
-work_order_id = mi.id ) AS mddelegatesignoffapproverlogin  ,
-(SELECT
-case `status`
-when 'APPROVED' then 'Approved'
-when 'REJECTED' then 'Rejected'
-ELSE ''
-END
-FROM sign_off_manager
-WHERE JSON_SEARCH(sign_off_type,'one','MD Delegate Signoff') IS NOT null AND
-work_order_id = mi.id ) AS mddelegatesignoffstatus,
-(SELECT rejection_reason FROM sign_off_manager
-WHERE JSON_SEARCH(sign_off_type,'one','MD Delegate Signoff') IS NOT null AND
-work_order_id = mi.id ) AS mddelegatesignoffrejectionreason,
+    private void setRiskValue(ObjectNode formData, String itsmFieldCode, String ichampFieldCode, ObjectNode resultNode) {
+        JsonNode fieldInfo = formData.get(itsmFieldCode + "_value");
+        if (fieldInfo == null) {
+            resultNode.put(ichampFieldCode, "3");
+            return;
+        }
+        String value = fieldInfo.asText();
+        if (value.equalsIgnoreCase("low")) {
+            resultNode.put(ichampFieldCode, "3");
+        } else {
+            resultNode.put(ichampFieldCode, "1");
+        }
+    }
 
-JSON_VALUE(rca.form_data,'$.whatwasthecorrectiveactiontaken') as crfailcorrectiveaction,
-JSON_VALUE(rca.form_data,'$.impactedapplication') as crfailedforappcode,
-JSON_VALUE(rca.form_data,'$.anypreventivemeasuretoavoidthis') as crfailpreventivemeasure,
-JSON_VALUE(rca.form_data,'$.anyincidentticketraisedduetothe') as relatedincidentfromcrfail,
-JSON_VALUE(rca.form_data,'$.whythechangeimplementationfailed') as crfailreason,
-JSON_VALUE(rca.form_data,'$.whatistherootcause') as crfailrootcause,
-JSON_VALUE(rca.form_data,'$.RCAStatus') as rcastatus_id,
-JSON_VALUE(rca.form_data,'$.RCAStatus_value') as rcastatus_id,
-JSON_VALUE(rca.form_data,'$.IncidentSummary') as rcaincidentsummary,
-JSON_VALUE(rca.form_data,'$.whatisthefailedchangecategor') as failedcrcategory,
-JSON_VALUE(rca.form_data,'$.whenisthetargetdateofcompletion') as targetisssuefixdate,
-JSON_VALUE(JSON_EXTRACT(rca.form_data,'$.appmanagerapproval[0].userName'),'$') as rcaapprover1,
+    public void convertFormData2ResultData(String workOrderId, String rcaWorkOrderId, ObjectNode resultData, String crStatus, String rcaStatus, Boolean isNew) {
+        if (extParam == null) {
+            ClassPathResource resource = new ClassPathResource("classpath:ichamp/extParam.json");
+            String readString = FileUtil.readString(resource.getFile(), Charset.defaultCharset());
+            extParam = JsonUtils.parseObject(readString, ExtParam.class);
+        }
+        MdlInstance mdlInstance = null;
+        if (StringUtils.isNotBlank(rcaWorkOrderId)) {
+            MdlInstance rcaMdlInstance = mdlInstanceMapper.selectMdlInstanceById(rcaWorkOrderId);
+            String formData = rcaMdlInstance.getFormData();
+            ObjectNode rcaFormData = (ObjectNode) JsonUtils.parseJsonNode(formData);
+            JsonNode crTicketNumber = rcaFormData.get("CRTicketNumber");
+            if (crTicketNumber == null) {
+                return;
+            }
+            String crTicketNumberValue = crTicketNumber.asText();
+            if (StringUtils.isBlank(crTicketNumberValue)) {
+                return;
+            }
+            mdlInstance = mdlInstanceMapper.selectMdlInstanceByBizKey(crTicketNumberValue);
+            if (mdlInstance == null) {
+                return;
+            }
+            workOrderId = mdlInstance.getId();
+            Map<String, String> rcaFieldMapping = extParam.getRcaFieldMapping();
+            for (Map.Entry<String, String> stringStringEntry : rcaFieldMapping.entrySet()) {
+                String ichampFieldCode = stringStringEntry.getKey();
+                String itsmFieldCode = stringStringEntry.getValue();
+                fillIChampValue(ichampFieldCode, rcaFormData, itsmFieldCode, resultData);
+            }
+        } else {
+            mdlInstance = mdlInstanceMapper.selectMdlInstanceById(workOrderId);
+        }
 
-
-(select reason from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_0wb3mla' order by updated_time desc limit 1  ) as approver1rejectioncode,
-(select approve_msg from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_0wb3mla' order by updated_time desc limit 1  ) as approver1statusreason,
-(select
-case  approve_type
-when 'PASS' then 'Approved'
-when 'REJECT' then 'Rejected'
-else null
-end
-from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_0wb3mla' order by updated_time desc limit 1  ) as approver1status,
-
-(select reason from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_1y2bas2' order by updated_time desc limit 1  ) as approver2rejectioncode,
-(select approve_msg from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_1y2bas2' order by updated_time desc limit 1  ) as approver2statusreason,
-(select
-case  approve_type
-when 'PASS' then 'Approved'
-when 'REJECT' then 'Rejected'
-else null
-end
-from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_1y2bas2' order by updated_time desc limit 1  ) as approver2status,
-
-(select reason from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_09y6ddj' order by updated_time desc limit 1  ) as approver3rejectioncode,
-(select approve_msg from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_09y6ddj' order by updated_time desc limit 1  ) as approver3statusreason,
-(select
-case  approve_type
-when 'PASS' then 'Approved'
-when 'REJECT' then 'Rejected'
-else null
-end
-from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_09y6ddj' order by updated_time desc limit 1  ) as approver3status,
-
-(select reason from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_112fawy' order by updated_time desc limit 1  ) as approver4rejectioncode,
-(select approve_msg from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_112fawy' order by updated_time desc limit 1  ) as approver4statusreason,
-(select
-case  approve_type
-when 'PASS' then 'Approved'
-when 'REJECT' then 'Rejected'
-else null
-end
-from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_112fawy' order by updated_time desc limit 1  ) as approver5status,
-
-(select reason from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_01zjgji' order by updated_time desc limit 1  ) as approver5rejectioncode,
-(select approve_msg from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_01zjgji' order by updated_time desc limit 1  ) as approver5statusreason,
-(select
-case  approve_type
-when 'PASS' then 'Approved'
-when 'REJECT' then 'Rejected'
-else null
-end
-from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_01zjgji' order by updated_time desc limit 1  ) as approver6status,
-
-(select reason from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_0fh11tl' order by updated_time desc limit 1  ) as approver6rejectioncode,
-(select approve_msg from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_0fh11tl' order by updated_time desc limit 1  ) as approver6statusreason,
-(select
-case  approve_type
-when 'PASS' then 'Approved'
-when 'REJECT' then 'Rejected'
-else null
-end
-from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_0fh11tl' order by updated_time desc limit 1  ) as approver6status,
-
-(select reason from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_0fh11tl' order by updated_time desc limit 1  ) as approver6rejectioncode,
-(select approve_msg from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_0fh11tl' order by updated_time desc limit 1  ) as approver6statusreason,
-(select
-case  approve_type
-when 'PASS' then 'Approved'
-when 'REJECT' then 'Rejected'
-else null
-end
-from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_0fh11tl' order by updated_time desc limit 1  ) as approver6status,
+        String formDataStr = mdlInstance.getFormData();
+        ObjectNode formData = (ObjectNode) JsonUtils.parseJsonNode(formDataStr);
+        Map<String, String> fieldMapping = extParam.getFieldMapping();
+        for (Map.Entry<String, String> stringStringEntry : fieldMapping.entrySet()) {
+            String ichampFieldCode = stringStringEntry.getKey();
+            String itsmFieldCode = stringStringEntry.getValue();
+            fillIChampValue(ichampFieldCode, formData, itsmFieldCode, resultData);
+        }
+        JsonNode crStatusValue = formData.get("crStatus_value");
+        JsonNode rcastatus = resultData.get("rcastatus");
+        if ((rcastatus == null || StringUtils.isBlank(rcastatus.asText())) && CLOSE_STATUS_LIST.contains(crStatusValue.asText())) {
+            resultData.put("rcastatus", "RCA Pending");
+        }
 
 
-(select reason from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_01kn76b' order by updated_time desc limit 1  ) as changemanagerrejectioncode,
-(select approve_msg from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_01kn76b' order by updated_time desc limit 1  ) as changemanagerstatusreason,
-(select
-case  approve_type
-when 'PASS' then 'Approved'
-when 'REJECT' then 'Rejected'
-else null
-end
-from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_01kn76b' order by updated_time desc limit 1  ) as changemanagerapproverstatus,
+        List<MdlInstanceTableData> mdlInstanceTableData = mdlInstanceTableDataMapper.selectList(Wrappers.lambdaQuery(MdlInstanceTableData.class).eq(MdlInstanceTableData::getId, workOrderId));
+        Map<String, List<MdlInstanceTableData>> mdlInstanceTableMap = mdlInstanceTableData.stream().collect(Collectors.groupingBy(MdlInstanceTableData::getTableCode));
 
 
-(select approve_msg from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_1tkhamt' order by updated_time desc limit 1  ) as designfordatarejectioncomment,
-(select
-case  approve_type
-when 'PASS' then 'Approved'
-when 'REJECT' then 'Rejected'
-else null
-end
-from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_1tkhamt' order by updated_time desc limit 1  ) as designfordataapproverstatus,
+        //Special handling
+        if (mdlInstanceTableMap.containsKey("F_Reversion_Plan")) {
+            List<MdlInstanceTableData> implementInfo = mdlInstanceTableMap.get("F_Reversion_Plan");
+            int cmcrollbackduration = 0;
+            Long minDate = null;
+            Long maxDate = null;
+            for (MdlInstanceTableData mdlInstanceTableData1 : implementInfo) {
+                String rowDataStr = mdlInstanceTableData1.getRowData();
+                JsonNode rowData = JsonUtils.parseJsonNode(rowDataStr);
+                JsonNode startTimeFieldInfo = rowData.get("F_Start_Time");
+                if (minDate == null) {
+                    minDate = startTimeFieldInfo.asLong();
+                } else {
+                    minDate = Math.min(minDate, startTimeFieldInfo.asLong());
+                }
+                JsonNode endTimeFieldInfo = rowData.get("F_End_Time");
+                if (maxDate == null) {
+                    maxDate = endTimeFieldInfo.asLong();
+                } else {
+                    maxDate = Math.max(maxDate, endTimeFieldInfo.asLong());
+                }
+            }
+            if (minDate != null && maxDate != null) {
+                cmcrollbackduration = (int) ((maxDate - minDate) / (1000 * 60 * 60 * 24));
+            }
 
-(select approve_msg from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_0fjvryb' order by updated_time desc limit 1  ) as downtimeapproverrejectioncomment1,
-(select
-case  approve_type
-when 'PASS' then 'Approved'
-when 'REJECT' then 'Rejected'
-else null
-end
-from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_0fjvryb' order by updated_time desc limit 1  ) as downtimeapproverstatus1,
-
-(select approve_msg from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_0uvdhk1' order by updated_time desc limit 1  ) as downtimeapproverrejectioncomment2,
-(select
-case  approve_type
-when 'PASS' then 'Approved'
-when 'REJECT' then 'Rejected'
-else null
-end
-from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_0uvdhk1' order by updated_time desc limit 1  ) as downtimeapproverstatus2,
-
-(select approve_msg from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_0wv160x' order by updated_time desc limit 1  ) as downtimeapproverrejectioncomment3,
-(select
-case  approve_type
-when 'PASS' then 'Approved'
-when 'REJECT' then 'Rejected'
-else null
-end
-from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_0wv160x' order by updated_time desc limit 1  ) as downtimeapproverstatus3,
-
-(select approve_msg from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_1lir1bh' order by updated_time desc limit 1  ) as downtimeapproverrejectioncomment4,
-(select
-case  approve_type
-when 'PASS' then 'Approved'
-when 'REJECT' then 'Rejected'
-else null
-end
-from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_1lir1bh' order by updated_time desc limit 1  ) as downtimeapproverstatus4,
-
-(select approve_msg from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_0zy9gcq' order by updated_time desc limit 1  ) as downtimeapproverrejectioncomment5,
-(select
-case  approve_type
-when 'PASS' then 'Approved'
-when 'REJECT' then 'Rejected'
-else null
-end
-from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_0zy9gcq' order by updated_time desc limit 1  ) as downtimeapproverstatus5,
-
-(select reason from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_10vwuti' order by updated_time desc limit 1  ) as issoverduepatchapproverrejectioncode,
-(select approve_msg from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_10vwuti' order by updated_time desc limit 1  ) as issoverduepatchapproverstatusreason,
-(select
-case  approve_type
-when 'PASS' then 'Approved'
-when 'REJECT' then 'Rejected'
-else null
-end
-from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_10vwuti' order by updated_time desc limit 1  ) as issoverduepatchapproverstatus,
-
-(select reason from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_1kslrrp' order by updated_time desc limit 1  ) as l1changemanagerapproverrejectioncode,
-(select approve_msg from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_1kslrrp' order by updated_time desc limit 1  ) as l1changemanagerstatusreason,
-(select
-case  approve_type
-when 'PASS' then 'Approved'
-when 'REJECT' then 'Rejected'
-else null
-end
-from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_1kslrrp' order by updated_time desc limit 1  ) as l1changemanagerapproverstatus,
-
-(select reason from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_0armfga' order by updated_time desc limit 1  ) as mdapproverrejectioncode,
-(select approve_msg from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_0armfga' order by updated_time desc limit 1  ) as mdstatusreason,
-(select
-case  approve_type
-when 'PASS' then 'Approved'
-when 'REJECT' then 'Rejected'
-else null
-end
-from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_0armfga' order by updated_time desc limit 1  ) as mdapproverstatus,
-
-(select reason from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_1dv8pri' order by updated_time desc limit 1  ) as riskmanagerapproverrejectioncode,
-(select approve_msg from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_1dv8pri' order by updated_time desc limit 1  ) as riskmanagerstatusreason,
-(select
-case  approve_type
-when 'PASS' then 'Approved'
-when 'REJECT' then 'Rejected'
-else null
-end
-from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_1dv8pri' order by updated_time desc limit 1  ) as riskmanagerapproverstatus,
+            formData.put("cmcrollbackduration", cmcrollbackduration);
+        } else {
+            log.error("CrStatusSyncTrigger: implementInfo not found");
+        }
 
 
-(select reason from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_13119ha' order by updated_time desc limit 1  ) as rmapproverrejectioncode,
-(select approve_msg from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_13119ha' order by updated_time desc limit 1  ) as rmapproverrejectionreason,
-(select
-case  approve_type
-when 'PASS' then 'Approved'
-when 'REJECT' then 'Rejected'
-else null
-end
-from mdl_approve_record_detail mard
-where mard.work_order_id = mi.id and mard.node_id = 'SingleApprove_13119ha' order by updated_time desc limit 1  ) as rmapproverstatus,
+        Map<String, List<TableFieldMapping>> tableFieldMappings = extParam.getTableFieldMapping();
+        for (Map.Entry<String, List<TableFieldMapping>> item : tableFieldMappings.entrySet()) {
+            String key = item.getKey();
+            ObjectNode itemResult = JsonUtils.createObjectNode();
+            List<TableFieldMapping> itemValue = item.getValue();
+            for (TableFieldMapping tableFieldMapping : itemValue) {
+                String itsmTableFieldInfo = tableFieldMapping.getItsmTableFieldInfo();
+                List<MdlInstanceTableData> jobDetailsSection = mdlInstanceTableMap.get(itsmTableFieldInfo);
+                if (jobDetailsSection != null) {
+                    log.error("CrStatusSyncTrigger find table info:{}", itsmTableFieldInfo);
+                    ArrayNode jobDetailResult = JsonUtils.createArrayNode();
+                    Map<String, String> fieldMapping1 = tableFieldMapping.getFieldMapping();
+                    for (MdlInstanceTableData rowData : jobDetailsSection) {
+                        ObjectNode jobDetailItem = JsonUtils.createObjectNode();
+                        String rowDataRowData = rowData.getRowData();
+                        ObjectNode jsonNode = (ObjectNode) JsonUtils.parseJsonNode(rowDataRowData);
+                        for (Map.Entry<String, String> stringStringEntry : fieldMapping1.entrySet()) {
+                            fillIChampValue(stringStringEntry.getKey(), jsonNode, stringStringEntry.getValue(), jobDetailItem);
+                        }
+                        jobDetailResult.add(jobDetailItem);
+                    }
+                    itemResult.put(tableFieldMapping.getIchampTableFieldInfo(), jobDetailResult);
+                } else {
+                    log.error("CrStatusSyncTrigger not find table info:{}", itsmTableFieldInfo);
+                }
+            }
+            if (!itemResult.isEmpty()) {
+                resultData.put(key, itemResult);
+            }
+        }
 
 
-(select approve_msg from mdl_approve_record_detail mard
-where mard.work_order_id = rca.id and mard.node_id = 'SingleApprove_1ojunx3' order by updated_time desc limit 1  ) as rcaapprover1statusreason,
-(select
-case  approve_type
-when 'PASS' then 'Approved'
-when 'REJECT' then 'Rejected'
-else null
-end
-from mdl_approve_record_detail mard
-where mard.work_order_id = rca.id and mard.node_id = 'SingleApprove_1ojunx3' order by updated_time desc limit 1  ) as rcaapprover1status,
+        List<SignOffEntity> signOffEntities = signOffMapper.selectList(Wrappers.lambdaQuery(SignOffEntity.class).eq(SignOffEntity::getWorkOrderId, workOrderId));
+        for (SignOffEntity signoffManager : signOffEntities) {
+            String signOffType = signoffManager.getSignOffType();
+            JsonNode signOffTypes = JsonUtils.parseJsonNode(signOffType);
+            for (JsonNode offType : signOffTypes) {
+                SignoffConstants.SignoffItem signoffItem = SignoffConstants.SignoffItem.fromString(offType.asText());
+                if (signoffItem != null) {
+                    if (signoffItem == IDR_SIGNOFF_PROCUTOVER) {
+                        ArrayNode caseIdsResult = JsonUtils.createArrayNode();
+                        JsonNode caseIds = JsonUtils.parseJsonNode(signoffManager.getCaseId());
+                        if (caseIds != null && !caseIds.isEmpty()) {
+                            for (JsonNode caseId : caseIds) {
+                                ObjectNode caseIdResult = JsonUtils.createObjectNode();
+                                caseIdResult.put("caseid", caseId.get("caseId").asText());
+                                caseIdResult.put("remarks", caseId.get("showStatus").asText());
+                                caseIdsResult.add(caseIdsResult);
+                            }
+                        }
+                        resultData.put("idrsignoffcaseid", caseIdsResult);
+                    }
+                    JsonNode signOffUser = JsonUtils.parseJsonNode(signoffManager.getSignOffUser());
+                    if (signOffUser != null && !signOffUser.isEmpty()) {
+                        if (signoffItem.getSignOffApproverLoginCode() != null) {
+                            String userId = signOffUser.get(0).get("userId").asText();
+                            UserInfo userInfo = userSSOClient.getUserById(userId);
+                            List<BaseExtend> extend = userInfo.getExtend();
+                            extend.stream().filter(item -> item.getAlias().equalsIgnoreCase("1bankid")).findFirst().ifPresent(item -> {
+                                String ibankId = item.getValue();
+                                resultData.put(signoffItem.getSignOffApproverLoginCode(), ibankId);
+                            });
+                        }
+                        SignOffStatusEnum signOffStatusEnum = SignOffStatusEnum.valueOf(signoffManager.getStatus());
+                        if (signOffStatusEnum == SignOffStatusEnum.REJECTED || signOffStatusEnum == SignOffStatusEnum.APPROVED) {
+                            if (StringUtils.isNotBlank(signoffItem.getSignOffStatusCode())) {
+                                resultData.put(signoffItem.getSignOffStatusCode(), signOffStatusEnum.getDesc());
+                            }
+                            if (StringUtils.isNotBlank(signoffItem.getSignOffRejectionReasonCode())) {
+                                resultData.put(signoffItem.getSignOffRejectionReasonCode(), signoffManager.getRejectionReason() == null ? "" : signoffManager.getRejectionReason());
+                            }
+                            if (StringUtils.isNotBlank(signoffItem.getSignOffUrlCode())) {
+                                JsonNode node = JsonUtils.parseJsonNode(signoffManager.getArtifact());
+                                List<String> urls = new ArrayList<>();
+                                for (JsonNode jsonNode : node) {
+                                    JsonNode id = jsonNode.get("id");
+
+                                }
+                                formData.put(signoffItem.getSignOffUrlCode(), String.join(",", urls));
+                            }
+                        } else {
+                            if (StringUtils.isNotBlank(signoffItem.getSignOffStatusCode())) {
+                                handleEmptyField(signoffItem.getSignOffStatusCode(), resultData);
+                            }
+                            if (StringUtils.isNotBlank(signoffItem.getSignOffRejectionReasonCode())) {
+                                handleEmptyField(signoffItem.getSignOffRejectionReasonCode(), resultData);
+                            }
+                            if (StringUtils.isNotBlank(signoffItem.getSignOffUrlCode())) {
+                                JsonNode node = JsonUtils.parseJsonNode(signoffManager.getArtifact());
+                                List<String> urls = new ArrayList<>();
+                                for (JsonNode jsonNode : node) {
+                                    JsonNode id = jsonNode.get("id");
+                                    //
+                                }
+                                formData.put(signoffItem.getSignOffUrlCode(), String.join(",", urls));
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+        //查询审批数据
+        List<ApproveInfo> approveInfoMapping = extParam.getApproveInfoMapping();
+        for (ApproveInfo approveInfo : approveInfoMapping) {
+            //if cr Status is not New ,need query approver status
+            LambdaQueryWrapper<MdlApproveRecord> wrapper = Wrappers.lambdaQuery(MdlApproveRecord.class).eq(MdlApproveRecord::getWorkOrderId, workOrderId).eq(MdlApproveRecord::getNodeId, approveInfo.getNodeId()).orderByDesc(MdlApproveRecord::getCreatedTime);
+            MdlApproveRecord mdlApproveRecord = mdlApproveRecordMapper.selectOne(wrapper, false);
+            log.error("CrStatus:queryApprove:{}", mdlApproveRecord);
+            if (mdlApproveRecord != null) {
+                if (mdlApproveRecord.getApproveStatus().equals(ApproveStatusEnum.FINISHED.getCode() + "")) {
+                    MdlApproveRecordDetail mdlApproveRecordDetail = mdlApproveRecordDetailMapper.selectOne(Wrappers.lambdaQuery(MdlApproveRecordDetail.class).eq(MdlApproveRecordDetail::getApproveRecordId, mdlApproveRecord.getId()), false);
+                    log.error("CrStatus:mdlApproveRecordDetail:{}", mdlApproveRecordDetail);
+                    if (mdlApproveRecordDetail != null) {
+                        String dictId = mdlApproveRecordDetail.getReason();
+                        if (StringUtils.isNotBlank(dictId) && StringUtils.isNotBlank(approveInfo.getRejectionCode())) {
+                            String dataDictLableById = mdlApproveRecordMapper.getDataDictLableById(dictId);
+                            formData.put(approveInfo.getRejectionCode(), dataDictLableById);
+                        }
+
+                        if (StringUtils.isNotBlank(approveInfo.getStatusTimeCode())) {
+                            formData.put(approveInfo.getStatusTimeCode(), DateUtil.formatDateTime(mdlApproveRecord.getUpdatedTime()));
+                        }
+                        resultData.put(approveInfo.getReasonCode(), mdlApproveRecordDetail.getApproveMsg());
+                    }
+                    resultData.put(approveInfo.getStatusCode(), mdlApproveRecord.getApproveResult() == ApproveResultEnum.PASS ? "Approved" : "Rejected");
+                }
+            }
+        }
+
+        if (StringUtils.isNotBlank(rcaWorkOrderId)) {
+            //查询审批数据
+            List<ApproveInfo> rcaApproveInfoMapping = extParam.getRcaApproveInfoMapping();
+            for (ApproveInfo approveInfo : rcaApproveInfoMapping) {
+                //if cr Status is not New ,need query approver status
+                LambdaQueryWrapper<MdlApproveRecord> wrapper = Wrappers.lambdaQuery(MdlApproveRecord.class).eq(MdlApproveRecord::getWorkOrderId, rcaWorkOrderId).eq(MdlApproveRecord::getNodeId, approveInfo.getNodeId()).orderByDesc(MdlApproveRecord::getCreatedTime);
+                MdlApproveRecord mdlApproveRecord = mdlApproveRecordMapper.selectOne(wrapper, false);
+                log.error("CrStatus:queryApprove:{}", mdlApproveRecord);
+                if (mdlApproveRecord != null) {
+                    if (mdlApproveRecord.getApproveStatus().equals(ApproveStatusEnum.FINISHED.getCode() + "")) {
+                        MdlApproveRecordDetail mdlApproveRecordDetail = mdlApproveRecordDetailMapper.selectOne(Wrappers.lambdaQuery(MdlApproveRecordDetail.class).eq(MdlApproveRecordDetail::getApproveRecordId, mdlApproveRecord.getId()), false);
+                        log.error("CrStatus:mdlApproveRecordDetail:{}", mdlApproveRecordDetail);
+                        if (mdlApproveRecordDetail != null) {
+                            String dictId = mdlApproveRecordDetail.getReason();
+                            if (StringUtils.isNotBlank(dictId) && StringUtils.isNotBlank(approveInfo.getReasonCode())) {
+                                String dataDictLableById = mdlApproveRecordMapper.getDataDictLableById(dictId);
+                                formData.put(approveInfo.getRejectionCode(), dataDictLableById);
+                            }
+                            resultData.put(approveInfo.getReasonCode(), mdlApproveRecordDetail.getApproveMsg());
+                        }
+                        resultData.put(approveInfo.getStatusCode(), mdlApproveRecord.getApproveResult() == ApproveResultEnum.PASS ? "Approved" : "Rejected");
+                    }
+                }
+            }
+        }
+
+        setRiskValue(formData, "CustomerServices", "cmrmavailablity", resultData);
+        setRiskValue(formData, "InherentandResidualrisks", "cmrminherentresidualrisks", resultData);
+        setRiskValue(formData, "BusinessUnitsOperations", "cmrmcontinuity", resultData);
+        setRiskValue(formData, "ChangeComplexity", "cmrmcomplexity", resultData);
+        setRiskValue(formData, "BackoutComplexity", "cmrmimplement", resultData);
+        setRiskValue(formData, "Documentation", "cmrmtraining", resultData);
+        setRiskValue(formData, "Security", "cmrmsecurity", resultData);
+        setRiskValue(formData, "Interfaces", "cmrminterfaces", resultData);
+
+        resultData.put("itsmcrnumber", mdlInstance.getBizKey());
+        resultData.put("implementationplan", "https://" + dbsProperties.getCloudwiseDomain() + "/docp/dosm/dosm/orderDetails?showType=handle&id=" + workOrderId + "&isType=&isShowBack=1&type=3d409c4dc7e741539194a528cd9f0d91");
+        resultData.put("reversionplan", "https://" + dbsProperties.getCloudwiseDomain() + "/docp/dosm/dosm/orderDetails?showType=handle&id=" + workOrderId + "&isType=&isShowBack=1&type=3d409c4dc7e741539194a528cd9f0d91");
+        if (StringUtils.isNotBlank(crStatus)) {
+            resultData.put("state", crStatus);
+        }
+        if (StringUtils.isNotBlank(rcaStatus)) {
+            resultData.put("rcastatus", rcaStatus);
+        }
+
+        handleClarificationsection(resultData, formData, mdlInstance);
+
+        send2Ichamp(resultData, isNew, mdlInstance, formData);
+    }
+
+    private void handleClarificationsection(ObjectNode resultData, ObjectNode formData, MdlInstance mdlInstance) {
+        JsonNode anyDataMigrationQuestion = formData.get("Any_data_migration_question");
+        JsonNode whyCRCATisNotPatchToAppCAT = formData.get("WhyCRCATisNotPatchToAppCAT");
+        ArrayNode arrayNode = JsonUtils.createArrayNode();
 
 
-(select approve_msg from mdl_approve_record_detail mard
-where mard.work_order_id = rca.id and mard.node_id = 'SingleApprove_1ojunx3' order by updated_time desc limit 1  ) as rcacmapproverstatusreason,
-(select
-case  approve_type
-when 'PASS' then 'Approved'
-when 'REJECT' then 'Rejected'
-else null
-end
-from mdl_approve_record_detail mard
-where mard.work_order_id = rca.id and mard.node_id = 'SingleApprove_1ojunx3' order by updated_time desc limit 1  ) as rcacmapproverstatus
+        if (anyDataMigrationQuestion != null && StringUtils.isNotBlank(anyDataMigrationQuestion.asText())) {
+            ObjectNode objectNode = JsonUtils.createObjectNode();
+            objectNode.put("seekclarification", "Any data migration/loading? What happened to the data if reversion? ");
+            objectNode.put("clarification", anyDataMigrationQuestion.asText());
+            arrayNode.add(objectNode);
+        }
+        if (whyCRCATisNotPatchToAppCAT != null && StringUtils.isNotBlank(whyCRCATisNotPatchToAppCAT.asText())) {
+            ObjectNode objectNode1 = JsonUtils.createObjectNode();
+            objectNode1.put("seekclarification", "Any data migration/loading? What happened to the data if reversion? ");
+            objectNode1.put("clarification", whyCRCATisNotPatchToAppCAT.asText());
+            arrayNode.add(objectNode1);
+        }
+        resultData.put("clarificationsection", arrayNode);
+    }
+
+    private void fillIChampValue(String ichampFieldCode, ObjectNode formData, String itsmFieldCode, ObjectNode resultData) {
+        if (formData.has(itsmFieldCode)) {
+            JsonNode itsmValue = formData.get(itsmFieldCode);
+            JsonNodeType nodeType = itsmValue.getNodeType();
+            switch (nodeType) {
+                case NULL:
+                case MISSING:
+                    handleEmptyField(ichampFieldCode, resultData);
+                    break;
+                case POJO:
+                case BINARY:
+                    log.error("not support");
+                    break;
+                case ARRAY:
+                    fillIChamValueWithArrary(ichampFieldCode, formData, itsmFieldCode, resultData);
+                    break;
+                case BOOLEAN:
+                    resultData.put(ichampFieldCode, itsmValue.asBoolean());
+                    break;
+                case OBJECT:
+                    if (itsmValue.has("startDate")) {
+                        String[] startAndEnd = ichampFieldCode.split(",");
+                        resultData.put(startAndEnd[0], DateUtil.format(new Date(itsmValue.get("startDate").asLong()), "yyyy-MM-dd HH:mm:ss"));
+                        resultData.put(startAndEnd[1], DateUtil.format(new Date(itsmValue.get("endDate").asLong()), "yyyy-MM-dd HH:mm:ss"));
+                    } else {
+                        log.error("not support");
+                    }
+                    break;
+                default:
+                    if (formData.has(itsmFieldCode + "_value")) {
+                        String label = formData.get(itsmFieldCode + "_value").asText();
+                        String text = itsmValue.asText();
+                        if (StringUtils.isNotBlank(text) && StringUtils.isBlank(label)) {
+                            resultData.put(ichampFieldCode, queryDictLabel(Collections.singletonList(text), getDictMapping(itsmFieldCode)));
+                        } else {
+                            resultData.put(ichampFieldCode, label);
+                        }
+
+                    } else {
+                        resultData.put(ichampFieldCode, itsmValue.asText());
+                    }
+                    break;
+            }
+        } else {
+            handleEmptyField(ichampFieldCode, resultData);
+        }
+    }
+
+    private static void handleEmptyField(String ichampFieldCode, ObjectNode resultData) {
+        if (ichampFieldCode.contains(",")) {
+            String[] fieldCode = ichampFieldCode.split(",");
+            for (String field : fieldCode) {
+                resultData.put(field, "");
+            }
+        } else {
+            resultData.put(ichampFieldCode, "");
+        }
+    }
+
+    private void fillIChamValueWithArrary(String ichampFieldCode, ObjectNode formData, String itsmFieldCode, ObjectNode resultData) {
+        if (formData.has(itsmFieldCode + "_value")) {
+            JsonNode itsmLabel = formData.get(itsmFieldCode + "_value");
+            JsonNode itsmValue = formData.get(itsmFieldCode);
+            if (itsmValue.size() > 0 && itsmLabel.size() == 0) {
+                List<String> values = new ArrayList<>();
+                for (JsonNode jsonNode : itsmValue) {
+                    values.add(jsonNode.asText());
+                }
+                resultData.put(ichampFieldCode, queryDictLabel(values, getDictMapping(itsmFieldCode)));
+            } else {
+                List<String> values = new ArrayList<>();
+                for (JsonNode jsonNode : itsmLabel) {
+                    values.add(jsonNode.asText());
+                }
+                resultData.put(ichampFieldCode, String.join(",", values));
+            }
+        } else {
+            JsonNode itsmValue = formData.get(itsmFieldCode);
+            List<String> values = new ArrayList<>();
+            boolean isUser = false;
+            for (JsonNode jsonNode : itsmValue) {
+                if (jsonNode instanceof ObjectNode) {
+                    JsonNode userId = jsonNode.get("userId");
+                    JsonNode groupName = jsonNode.get("groupName");
+                    if (userId != null && !(userId instanceof NullNode) && StringUtils.isNotBlank(userId.asText()) && !"null".equalsIgnoreCase(userId.asText())) {
+                        isUser = true;
+                        values.add(userId.asText());
+                    } else if (groupName != null && !(groupName instanceof NullNode) && StringUtils.isNotBlank(groupName.asText()) && !"null".equalsIgnoreCase(groupName.asText())) {
+                        values.add(groupName.asText());
+                    }
+                } else {
+                    values.add(jsonNode.asText());
+                }
+            }
+            if (isUser) {
+                List<UserInfo> userListByIds = userSSOClient.getUserListByIds(values, "2", "110");
+                List<String> userNames = userListByIds.stream().map(UserInfo::getName).collect(Collectors.toList());
+                List<String> ibankIds = userListByIds.stream().map(item -> {
+                    Optional<BaseExtend> first = item.getExtend().stream().filter(user -> user.getAlias().equalsIgnoreCase("1bankId")).findFirst();
+                    if (first.isPresent()) {
+                        return first.get().getValue();
+                    } else {
+                        return "";
+                    }
+                }).collect(Collectors.toList());
+                String[] fieldCodes = ichampFieldCode.split(",");
+                resultData.put(fieldCodes[0], String.join(",", ibankIds));
+                if (fieldCodes.length > 1) {
+                    resultData.put(fieldCodes[1], String.join(",", userNames));
+                }
+
+            } else {
+                resultData.put(ichampFieldCode, String.join(",", values));
+            }
+        }
+    }
+
+    private DictMapping getDictMapping(String itsmFieldCode) {
+        Map<String, DictMapping> dictMapping = extParam.getDictMapping();
+        if (dictMapping.containsKey(itsmFieldCode)) {
+            return dictMapping.get(itsmFieldCode);
+        }
+        return DictMapping.builder().idCode("id").tableCode("data_dict_detail").labelCode("label").build();
+
+    }
 
 
+    public String queryDictLabel(List<String> values, DictMapping dictMapping) {
+        List<String> labels = dictMapper.queryLabelByValues(values, dictMapping.getTableCode(), dictMapping.getIdCode(), dictMapping.getLabelCode());
+        return String.join(",", labels);
+    }
 
-FROM mdl_instance mi
-LEFT JOIN mdl_instance rca ON rca.biz_key = CONCAT('RCA-',mi.biz_key)
-WHERE mi.biz_key LIKE 'CR20250225%';
-
+}
