@@ -1,317 +1,601 @@
-{
-  "itsmcrnumber":                         "CR202502189922029",
-  "state":                                "New",
-  "changerequestorgroups":                "PSG_DBSAPP_ICHAMP",
-  "changerequestor":                      "muhammadhazim",
-  "countryoforigin":                      "SG",
-  "lob":                                  "IBGT",
-  "changetype":                           "Normal",
-  "changegroup":                          "Project Cutover Technical",
-  "changenature":                         "Business Enhancement",
-  "changecategory":                       "High",
-  "countryimpacted":                      "SG,CN",
-  "schedulestartdatetime":                "2025-02-18 15:17:00",
-  "scheduleenddatetime":                  "2025-02-20 15:17:00",
-  "applicationimpacted":                  "OTRS",
-  "summary":                              "This is the change summary of this CR",
-  "description":                          "This is the change description of this CR",
-  "implementationplan":                   "This is the implementation plan of this CR",
-  "implementationplanschedulestart":      "2025-02-18 15:17:00",
-  "implementationplanscheduleenddate":    "2025-02-20 15:17:00",
-  "reversionplan":                        "This is the reversion plan of this CR",
-  "reversionplanschedulestartdate":       "2025-02-18 15:17:00",
-  "reversionplanscheduleenddate":         "2025-02-20 15:17:00",
-  "uat":                                  "Yes - UAT Signed-off",
-  "regressiontesting":                    "Yes - Regression Testing Singed-off",
-  "rollbacktesting":                      "Yes - Reversion/Backout/Rollback Testing",
-  "relatedincident":                      "",
-  "implementergroup":                     "PSG_DBSAPP_ICHAMP",
-  "cmrmavailablity":                      "3",
-  "cmrmcontinuity":                       "3",
-  "cmrmtraining":                         "3",
-  "cmrmcomplexity":                       "3",
-  "cmrmimplement":                        "3",
-  "cmrminterfaces":                       "3",
-  "cmrmsecurity":                         "3",
-  "cmrminherentresidualrisks":            "3",
-  "cyberarkobjects":                      "NA",
-  "changecount":                          "3",
-  "crclassification":                     "Heightened",
-  "appresiliencyclassification":          "Red",
-  "potentialblastradius":                 "Yes -  downtime / maintenance has been declared",
-  "changeduringonlinebusinesshours":      "Yes - But is application change window",
-  "upstreamdownstreaminterfacesimpact":   "All Upstream/Downstream application code app in App impacted field and Other App impacted field. Upstream/Downstream will rollback if this change rollback.",
-  "mainframecriticalmonthendbatchimpact": "Yes - Jobs will be on hold and have informed Mainframe DC Ops team",
-  "drcapabilitiesimpact":                 "Yes - DR Capabilities Impact and have informed DR team",
-  "resourceengagement":                   "App LV,Infra LV",
-  "majorinterdependencies":               "Yes - Major interdependences have been evaluated, local for regional or external related dependencies e.g. interface to external party MAS for interface file.",
-  "deploymentapproach":                   "Manual with Maker/Checker",
-  "reversionapproach":                    "CICD Reversion",
-  "cmcappcodechange":                     "YES - more than 3 apps",
-  "cmcmakerchecker":                      "Yes",
-  "cmcmaker":                             "muhammadhazim",
-  "cmcchecker":                           "angelatang",
-  "cmcdatapatchnumberofrecord":           "",
-  "liveverification":                     "Technical Live Verification (LV)",
-  "mainappimpacted":                      "OTRS",
-  "releaseticketslist":                   "D-OTRS-1",
-  "cmcmajorchange":                       "",
-  "cmcmascategory":                       "Business Enhancement",
-  "location":                             "Prod",
-  "lpar":                                 "CPE2",
-  "mainframecrtype":                      "Mainframe Adhoc Job Request",
-  "majorchangeflag":                      "Yes",
-  "parentchange":                         "CR202501289900025",
-  "otherapplicationimpacted":             "ADA",
-  "mdapproverrejectioncode":              "",
-  "mdapprovergroup":                      "PSG_DBSGOV_EASRE",
-  "mdapprover":                           "angelatang",
-  "mdstatusreason":                       "",
-  "mdapproverstatus":                     "Rejected",
-  "codechecker":                          "Yes",
-  "servicesimpactedandrecoveryplan":      "",
-  "mainframepackagecreator1bankid":       "",
-  "mainframepackagecreatortsoid":         "",
-  "mainframepackagename":                 "",
-  "mainframepackagetype":                 "",
-  "holdbatchjob":                         "",
-  "jobtype":                              "",
-  "riskmitigated":                        "",
-  "impactriskidentified":                 "will revert to snapshot if required",
-  "explainability":                       "Location,High event rate over past 6 months for an Implementer Group of this CR,Live Verification level,Change group,Location",
-  "explainabilityscores":                 "0.0117063091516502,0.00549994589724406,0.00528509627367384,0.00435705022556363,0.00199262166785502,0.00182364646432688",
-  "explainabilitybase":                   "0.27770148619202",
-  "featurevalues":                        "1,0.0566037735849057,1,1,0,0,0,0,1,0",
-  "diffcatselectedfrmaimlreason":         "This is the reason",
-  "recommendedrisklevel":                 "low_businessrule",
-  "riskscore":                            "0.155307951248087",
-  "riskthreshold":                        "0.5",
-  "jobneedtoaccessonlinefiles":           "",
-  "closeonlinefilesduringjobrun":         "",
-  "usehighcpuincreaseworkload":           "",
-  "closedincompletereasoncode":           "",
-  "approvergroup1":                       "PSG_DBSGOV_TEST",
-  "approver1":                            "Mark Anthony U Quinto",
-  "approver1status":                      "Rejected",
-  "approver1rejectioncode":               "Missed Approval Cutoff",
-  "approver1statusreason":                "This is the reason",
-  "approvergroup2":                       "PSG_DBSGOV_ICHAMP",
-  "approver2":                            "Huei Ching EE",
-  "approver2status":                      "Rejected",
-  "approver2rejectioncode":               "Missed Approval Cutoff",
-  "approver2statusreason":                "This is the reason",
-  "approvergroup3":                       "SG_DBSGOV_ICHAMP",
-  "approver3":                            "Huei Ching EE",
-  "approver3status":                      "Rejected",
-  "approver3rejectioncode":               "Missed Approval Cutoff",
-  "approver3statusreason":                "This is the reason",
-  "approvergroup4":                       "PSG_DBSGOV_OPENSYS",
-  "approver4":                            "Karthikeyan PADMANABAN",
-  "approver4status":                      "Rejected",
-  "approver4rejectioncode":               "Missed Approval Cutoff",
-  "approver4statusreason":                "This is the reason",
-  "approvergroup5":                       "CN_DBSGOV_CNUT",
-  "approver5":                            "Karthikeyan PADMANABAN",
-  "approver5status":                      "Rejected",
-  "approver5rejectioncode":               "Missed Approval Cutoff",
-  "approver5statusreason":                "This is the reason",
-  "approvergroup6":                       "",
-  "approver6":                            "",
-  "approver6status":                      "",
-  "approver6rejectioncode":               "",
-  "approver6statusreason":                "",
-  "changemanagergroup":                   "PSG_DBSGOV_MTOIS",
-  "changemanagerapproverstatus":          "Rejected",
-  "changemanagerrejectioncode":           "Incorrect Change Data",
-  "changemanagerstatusreason":            "incorrect change data",
-  "releasemanagergroup":                  "PSG_DBSGOV_APPRLSE",
-  "rmapproverstatus":                     "Rejected",
-  "rmapproverrejectioncode":              "Change Not Ready",
-  "rmapproverrejectionreason":            "This CR is not ready",
-  "downtimeapprover1_name":               "Huei Ching EE",
-  "downtimeapprover2_name":               "Huei Ching EE",
-  "downtimeapprover3_name":               "Huei Ching EE",
-  "downtimeapprover4_name":               "Huei Ching EE",
-  "downtimeapprover5_name":               "Huei Ching EE",
-  "downtimeapprover1_":                   "hueiching",
-  "downtimeapprover2_":                   "hueiching",
-  "downtimeapprover3_":                   "hueiching",
-  "downtimeapprover4_":                   "hueiching",
-  "downtimeapprover5_":                   "hueiching",
-  "downtimestartdatetime":                "2025-02-18 15:17:00",
-  "downtimeenddatetime":                  "2025-02-20 15:17:00",
-  "scheduledmaintenancestartdatetime":    "2025-02-18 15:17:00",
-  "scheduledmaintenanceenddatetime":      "2025-02-20 15:17:00",
-  "downtimeapproverstatus1":              "Rejected",
-  "downtimeapproverstatus2":              "Rejected",
-  "downtimeapproverstatus3":              "Rejected",
-  "downtimeapproverstatus4":              "Rejected",
-  "downtimeapproverstatus5":              "Rejected",
-  "downtimeapproverrejectioncomment1":    "Downtime rejected",
-  "downtimeapproverrejectioncomment2":    "Downtime rejected",
-  "downtimeapproverrejectioncomment3":    "Downtime rejected",
-  "downtimeapproverrejectioncomment4":    "Downtime rejected",
-  "downtimeapproverrejectioncomment5":    "Downtime rejected",
-  "l1changemanagerapprovername":          "Kavan Lee",
-  "l1changemanagerapproverstatus":        "Rejected",
-  "l1changemanagerapproverrejectioncode": "To Reschedule",
-  "l1changemanagerstatusreason":          "please reschedule",
-  "riskmanagerapprovername":              "Kelvin Lee",
-  "riskmanagerapproverstatus":            "Rejected",
-  "riskmanagerapproverrejectioncode":     "To Reschedule",
-  "riskmanagerstatusreason":              "please reschedule",
-  "applicationownername":                 "Huei Ching EE",
-  "applicationownerapprovalstatus":       "Rejected",
-  "appownerdatapatchapprovalstatustime":  "2025-02-17 15:17:00",
-  "applicationownercomment":              "This is my comment",
-  "designfordatachoice":                  "Yes",
-  "designfordatajustification":           "",
-  "designfordataowner":                   "kavanlee",
-  "designfordatarequirements":            "requirement1",
-  "designfordataownername":               "Kavan Lee",
-  "designfordataapproverstatus":          "Rejected",
-  "designfordatarejectioncomment":        "rejectioncomment1",
-  "issoverduepatchapprover":              "Kelvin Lee",
-  "issoverduepatchapprovergroup":         "PSG_DBSGOV_ISSOVERDUE",
-  "issoverduepatchapproverstatus":        "Rejected",
-  "issoverduepatchapproverrejectioncode": "To Reschedule",
-  "issoverduepatchapproverstatusreason":  "please reschedule",
-  "relatedincidentfromcrfail":            "IN202502038800280",
-  "crfailpreventivemeasure":              "preventive measure1",
-  "crfailedforappcode":                   "OTRS",
-  "crfailrootcause":                      "rootcause",
-  "crfailcorrectiveaction":               "here is the corrective action",
-  "targetisssuefixdate":                  "2025-02-20 15:17:00",
-  "crfailreason":                         "This is the reason",
-  "failedcrcategory":                     "Human/Operator Error,Inadequate Planning",
-  "rcastatus":                            "RCA Open",
-  "rcacmapproverstatus":                  "Rejected",
-  "rcacmapproverstatusreason":            "This is the reason",
-  "rcaapprover1statusreason":             "Rejected",
-  "rcaapprover1status":                   "This is the reason",
-  "rcaapprover1":                         "Mark Anthony U Quinto",
-  "ticketprojectmanager":                 "Mark Anthony U Quinto",
-  "ticketprojectmanagermobile":           "+6598765432",
-  "projectobjective":                     "This is the project objective",
-  "projectscope":                         "This is the project scope",
-  "idrsignofftype":                       "",
-  "idrsignoffurl":                        "",
-  "cussignofftype":                       "SignOff Attachment Required",
-  "cussignoffurl":                        "www.example.com",
-  "servicemonitoringsnoctype":            "Service Monitoring Dashboard URL Required",
-  "servicemonitoringsnocappservicelist":  "applicationservice1,applicationservice2,applicationservice3",
-  "servicemonitoringsnocurllist":         "www.example.com",
-  "hasignofftype":                        "Approval Required",
-  "hasignoffapproverlogin":               "hueiching",
-  "hasignoffstatus":                      "Rejected",
-  "hasignoffrejectionreason":             "reason1",
-  "datacentersignofftype":                "Approval Required",
-  "datacentersignoffapproverlogin":       "hueiching",
-  "datacentersignoffstatus":              "Rejected",
-  "datacentersignoffrejectionreason":     "reason2",
-  "mddelegatesignofftype":                "Approver Same as CR",
-  "mddelegatesignoffapproverlogin":       "hueiching",
-  "mddelegatesignoffstatus":              "Rejected",
-  "mddelegatesignoffrejectionreason":     "reason3",
-  "busignoffapproverlogin":               "hueiching",
-  "busignoffstatus":                      "Rejected",
-  "busignoffrejectionreason":             "reason4",
-  "impacttomainframetype":                "Approval Required",
-  "impacttomainframeapproverlogin":       "hueiching",
-  "impacttomainframestatus":              "Rejected",
-  "impacttomainframerejectionreason":     "reason5",
-  "d4dsignofftype":                       "Approval Required",
-  "d4dsignoffapproverlogin":              "hueiching",
-  "d4dsignoffstatus":                     "Rejected",
-  "d4dsignoffrejectionreason":            "reason6",
-  "alldocsandartifactsurl":               "www.example.com",
-  "changeriskupgradeddowngraded":         "AI Low-Upgrade",
-  "crsubmissiondatetime":                 "2025-02-10 15:17:00",
-  "cmcrollbackduration":                  "120",
-  "clarificationsection":                 [
-    {
-      "seekclarification": "Question 1",
-      "clarification":     "clarification 1"
-    },
-    {
-      "seekclarification": "Question 2",
-      "clarification":     "clarification 2"
+package com.cloudwise.douc.customization.biz.service.ichampsync;
+
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.io.resource.ClassPathResource;
+import cn.hutool.http.HttpResponse;
+import cn.hutool.http.HttpUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.cloudwise.dosm.api.bean.utils.JsonUtils;
+import com.cloudwise.douc.customization.biz.dao.DbsApiLogMapper;
+import com.cloudwise.douc.customization.biz.dao.DictMapper;
+import com.cloudwise.douc.customization.biz.dao.MdlApproveRecordDetailMapper;
+import com.cloudwise.douc.customization.biz.dao.MdlApproveRecordMapper;
+import com.cloudwise.douc.customization.biz.dao.MdlInstanceMapper;
+import com.cloudwise.douc.customization.biz.dao.MdlInstanceTableDataMapper;
+import com.cloudwise.douc.customization.biz.dao.SignOffMapper;
+import com.cloudwise.douc.customization.biz.dao.UploadFileMapper;
+import com.cloudwise.douc.customization.biz.facade.UserSSOClient;
+import com.cloudwise.douc.customization.biz.facade.user.BaseExtend;
+import com.cloudwise.douc.customization.biz.facade.user.UserInfo;
+import com.cloudwise.douc.customization.biz.model.email.dosm.ApproveResultEnum;
+import com.cloudwise.douc.customization.biz.model.log.DbsApiLog;
+import com.cloudwise.douc.customization.biz.model.signoff.SignOffEntity;
+import com.cloudwise.douc.customization.biz.model.table.MdlApproveRecord;
+import com.cloudwise.douc.customization.biz.model.table.MdlApproveRecordDetail;
+import com.cloudwise.douc.customization.biz.model.table.MdlInstance;
+import com.cloudwise.douc.customization.biz.model.table.MdlInstanceTableData;
+import com.cloudwise.douc.customization.common.config.DbsProperties;
+import com.cloudwise.storage.FileStorageService;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.JsonNodeType;
+import com.fasterxml.jackson.databind.node.NullNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.common.collect.Lists;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
+
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import static com.cloudwise.douc.customization.biz.service.ichampsync.SignoffConstants.SignoffItem.IDR_SIGNOFF_PROCUTOVER;
+
+/**
+ * <p>
+ *
+ * </p>
+ *
+ * @author Norval.Xu
+ * @since 2025/2/17
+ */
+@Slf4j
+@Component
+public class DataSynchronizer {
+
+    private final MdlInstanceMapper mdlInstanceMapper;
+    private final MdlInstanceTableDataMapper mdlInstanceTableDataMapper;
+    private final SignOffMapper signOffMapper;
+
+    private final MdlApproveRecordMapper mdlApproveRecordMapper;
+    private final MdlApproveRecordDetailMapper mdlApproveRecordDetailMapper;
+    private final UserSSOClient userSSOClient;
+    private ExtParam extParam;
+    private final DbsApiLogMapper dbsApiLogMapper;
+
+    private final DbsProperties dbsProperties;
+
+    private final DictMapper dictMapper;
+
+    private final FileStorageService fileStorageService;
+
+    private final UploadFileMapper uploadFileMapper;
+
+    public static final int DEFAULT_EXPIRY_TIME = 7 * 24 * 3600;
+
+    private static final List<String> CLOSE_STATUS_LIST = Lists.newArrayList("Closed Backoutfail", "Closed Issues");
+
+    public DataSynchronizer(MdlInstanceMapper mdlInstanceMapper, MdlInstanceTableDataMapper mdlInstanceTableDataMapper, SignOffMapper signOffMapper, MdlApproveRecordMapper mdlApproveRecordMapper, MdlApproveRecordDetailMapper mdlApproveRecordDetailMapper, UserSSOClient userSSOClient, DbsApiLogMapper dbsApiLogMapper, DbsProperties dbsProperties, DictMapper dictMapper, FileStorageService fileStorageService, UploadFileMapper uploadFileMapper) {
+        this.mdlInstanceMapper = mdlInstanceMapper;
+        this.mdlInstanceTableDataMapper = mdlInstanceTableDataMapper;
+        this.signOffMapper = signOffMapper;
+        this.mdlApproveRecordMapper = mdlApproveRecordMapper;
+        this.mdlApproveRecordDetailMapper = mdlApproveRecordDetailMapper;
+        this.userSSOClient = userSSOClient;
+        this.dbsApiLogMapper = dbsApiLogMapper;
+        this.dbsProperties = dbsProperties;
+        this.dictMapper = dictMapper;
+        this.fileStorageService = fileStorageService;
+        this.uploadFileMapper = uploadFileMapper;
     }
-  ],
-  "idrsignoffcaseid":                     [
-    {
-      "caseid":  "aa1",
-      "remarks": "Signoff Exceed 6 months"
-    },
-    {
-      "caseid":  "aa2",
-      "remarks": "Not approved"
-    },
-    {
-      "caseid":  "aa3",
-      "remarks": "Signoff not found"
-    },
-    {
-      "caseid":  "aa4",
-      "remarks": "Ok"
+
+
+    public void send2Ichamp(ObjectNode resultData, boolean isNew, MdlInstance mdlInstance, ObjectNode formData, List<MdlInstanceTableData> mdlInstanceTableData) {
+        JsonNode lastRequestor = formData.get("LastRequestor");
+        String userId = mdlInstance.getCreatedBy();
+        if (lastRequestor !=null && !lastRequestor.isEmpty()) {
+            JsonNode jsonNode = lastRequestor.get(0);
+            JsonNode userIdNode = jsonNode.get("userId");
+            if (!userIdNode.asText().equals(userId)) {
+                userId = userIdNode.asText();
+            }
+        }
+        List<UserInfo> userListByIds = userSSOClient.getUserListByIds(Collections.singletonList(userId), "2", "110");
+        List<String> ibankIds = userListByIds.stream().map(item -> {
+            Optional<BaseExtend> first = item.getExtend().stream().filter(user -> user.getAlias().equalsIgnoreCase("1bankId")).findFirst();
+            if (first.isPresent()) {
+                return first.get().getValue();
+            } else {
+                return "";
+            }
+        }).collect(Collectors.toList());
+        ObjectNode result = JsonUtils.createObjectNode();
+        ObjectNode data = JsonUtils.createObjectNode();
+        result.put("action", isNew ? "Create" : "Modify");
+        resultData.put("changerequestor", ibankIds.get(0));
+        data.set("formData", resultData);
+        data.put("workOrderNo", mdlInstance.getBizKey());
+        data.put("createdBy", ibankIds.get(0));
+        data.put("createdDate", mdlInstance.getCreatedTime().getTime());
+        result.set("data", data);
+        String url = isNew ? dbsProperties.getIchampCreateUrl() : dbsProperties.getIchampUpdateUrl();
+        String jsonString = JsonUtils.toJsonString(result);
+        HttpResponse response = HttpUtil.createPost(url).header("Content-Type", "application/json").header("appCode", dbsProperties.getAppCode()).header("appKey", dbsProperties.getAppKey()).body(jsonString).execute();
+        String body = response.body();
+        log.info("CrStatusSyncTriggermakeResult:{}", body);
+        JsonNode node = JsonUtils.parseJsonNode(body);
+        Map<String,Object> origin = new HashMap<>();
+        origin.put("mdlInstance",mdlInstance);
+        origin.put("mdlInstanceTableData",mdlInstanceTableData);
+        origin.put("reqBody",body);
+        DbsApiLog dbsApiLog = new DbsApiLog();
+        dbsApiLog.setCreatedTime(new Date());
+        dbsApiLog.setRequestStatus(true);
+        dbsApiLog.setRequestUrl(url);
+        dbsApiLog.setRequestBody(jsonString);
+        dbsApiLog.setResponseBody(JsonUtils.toJsonString(origin));
+        dbsApiLog.setWorkOrderNo(mdlInstance.getBizKey());
+        dbsApiLog.setApiModule("crStatusSync");
+        if ("200".equals(node.get("code").asText())) {
+            JsonNode dataNode = node.get("data");
+            JsonNode status = dataNode.get("Status");
+            if ("FAILED".equals(status.asText())) {
+                dbsApiLog.setRequestStatus(false);
+                dbsApiLogMapper.insert(dbsApiLog);
+            } else {
+                dbsApiLog.setRequestStatus(true);
+                dbsApiLogMapper.insert(dbsApiLog);
+            }
+        } else {
+            dbsApiLog.setRequestStatus(false);
+            dbsApiLogMapper.insert(dbsApiLog);
+        }
     }
-  ],
-  "mainframedata":                        {
-    "Job Details":  [
-      {
-        "jobname":     "job1",
-        "jobdatetime": "2025-01-17 11:07:00",
-        "jobduration": "100"
-      },
-      {
-        "jobname":     "job2",
-        "jobdatetime": "2025-01-16 11:07:00",
-        "jobduration": "200"
-      },
-      {
-        "jobname":     "job3",
-        "jobdatetime": "2025-01-18 11:07:00",
-        "jobduration": "300"
-      }
-    ],
-    "Load Module":  [
-      {
-        "modulecompiled": "load1",
-        "moduledatetime": "2025-01-17 11:08:00"
-      },
-      {
-        "modulecompiled": "load2",
-        "moduledatetime": "2025-01-23 11:07:00"
-      },
-      {
-        "modulecompiled": "load3",
-        "moduledatetime": "2025-01-10 11:07:00"
-      }
-    ],
-    "DBRM Members": [
-      {
-        "dbrmmember": "dbrm1"
-      },
-      {
-        "dbrmmember": "dbrm2"
-      },
-      {
-        "dbrmmember": "dbrm3"
-      }
-    ],
-    "Input Data":   [
-      {
-        "inputdata":         "input1",
-        "inputdatadatetime": "2025-01-16 11:09:00"
-      },
-      {
-        "inputdata":         "input2",
-        "inputdatadatetime": "2025-01-17 11:09:00"
-      },
-      {
-        "inputdata":         "input 3",
-        "inputdatadatetime": "2025-01-17 11:07:00"
-      }
-    ]
-  }
+
+    private void setRiskValue(ObjectNode formData, String itsmFieldCode, String ichampFieldCode, ObjectNode resultNode) {
+        JsonNode fieldInfo = formData.get(itsmFieldCode + "_value");
+        if (fieldInfo == null) {
+            resultNode.put(ichampFieldCode, "3");
+            return;
+        }
+        String value = fieldInfo.asText();
+        if (value.equalsIgnoreCase("low")) {
+            resultNode.put(ichampFieldCode, "3");
+        } else {
+            resultNode.put(ichampFieldCode, "1");
+        }
+    }
+
+    public void convertFormData2ResultData(String workOrderId, String rcaWorkOrderId, ObjectNode resultData, String crStatus, String rcaStatus, Boolean isNew) {
+        if (extParam == null) {
+            ClassPathResource resource = new ClassPathResource("classpath:ichamp/extParam.json");
+            String readString = FileUtil.readString(resource.getFile(), Charset.defaultCharset());
+            extParam = JsonUtils.parseObject(readString, ExtParam.class);
+        }
+        MdlInstance mdlInstance = null;
+        if (StringUtils.isNotBlank(rcaWorkOrderId)) {
+            MdlInstance rcaMdlInstance = mdlInstanceMapper.selectMdlInstanceById(rcaWorkOrderId);
+            String formData = rcaMdlInstance.getFormData();
+            ObjectNode rcaFormData = (ObjectNode) JsonUtils.parseJsonNode(formData);
+            JsonNode crTicketNumber = rcaFormData.get("CRTicketNumber");
+            if (crTicketNumber == null) {
+                return;
+            }
+            String crTicketNumberValue = crTicketNumber.asText();
+            if (StringUtils.isBlank(crTicketNumberValue)) {
+                return;
+            }
+            mdlInstance = mdlInstanceMapper.selectMdlInstanceByBizKey(crTicketNumberValue);
+            if (mdlInstance == null) {
+                return;
+            }
+            workOrderId = mdlInstance.getId();
+            Map<String, String> rcaFieldMapping = extParam.getRcaFieldMapping();
+            for (Map.Entry<String, String> stringStringEntry : rcaFieldMapping.entrySet()) {
+                String ichampFieldCode = stringStringEntry.getKey();
+                String itsmFieldCode = stringStringEntry.getValue();
+                fillIChampValue(ichampFieldCode, rcaFormData, itsmFieldCode, resultData);
+            }
+        } else {
+            mdlInstance = mdlInstanceMapper.selectMdlInstanceById(workOrderId);
+        }
+
+        String formDataStr = mdlInstance.getFormData();
+        ObjectNode formData = (ObjectNode) JsonUtils.parseJsonNode(formDataStr);
+        Map<String, String> fieldMapping = extParam.getFieldMapping();
+        for (Map.Entry<String, String> stringStringEntry : fieldMapping.entrySet()) {
+            String ichampFieldCode = stringStringEntry.getKey();
+            String itsmFieldCode = stringStringEntry.getValue();
+            fillIChampValue(ichampFieldCode, formData, itsmFieldCode, resultData);
+        }
+        JsonNode crStatusValue = formData.get("crStatus_value");
+        JsonNode rcastatus = resultData.get("rcastatus");
+        if ((rcastatus == null || StringUtils.isBlank(rcastatus.asText())) && CLOSE_STATUS_LIST.contains(crStatusValue.asText())) {
+            resultData.put("rcastatus", "RCA Pending");
+        }
+
+
+        List<MdlInstanceTableData> mdlInstanceTableData = mdlInstanceTableDataMapper.selectList(Wrappers.lambdaQuery(MdlInstanceTableData.class).eq(MdlInstanceTableData::getWorkOrderId, workOrderId));
+        Map<String, List<MdlInstanceTableData>> mdlInstanceTableMap = mdlInstanceTableData.stream().collect(Collectors.groupingBy(MdlInstanceTableData::getTableCode));
+
+
+        //Special handling
+        if (mdlInstanceTableMap.containsKey("F_Reversion_Plan")) {
+            List<MdlInstanceTableData> implementInfo = mdlInstanceTableMap.get("F_Reversion_Plan");
+            int cmcrollbackduration = 0;
+            Long minDate = null;
+            Long maxDate = null;
+            for (MdlInstanceTableData mdlInstanceTableData1 : implementInfo) {
+                String rowDataStr = mdlInstanceTableData1.getRowData();
+                JsonNode rowData = JsonUtils.parseJsonNode(rowDataStr);
+                JsonNode startTimeFieldInfo = rowData.get("F_Start_Time");
+                if (minDate == null) {
+                    minDate = startTimeFieldInfo.asLong();
+                } else {
+                    minDate = Math.min(minDate, startTimeFieldInfo.asLong());
+                }
+                JsonNode endTimeFieldInfo = rowData.get("F_End_Time");
+                if (maxDate == null) {
+                    maxDate = endTimeFieldInfo.asLong();
+                } else {
+                    maxDate = Math.max(maxDate, endTimeFieldInfo.asLong());
+                }
+            }
+            if (minDate != null && maxDate != null) {
+                cmcrollbackduration = (int) ((maxDate - minDate) / (1000 * 60 * 60 * 24));
+            }
+
+            resultData.put("cmcrollbackduration", cmcrollbackduration);
+        } else {
+            log.error("CrStatusSyncTrigger: implementInfo not found");
+        }
+
+
+        Map<String, List<TableFieldMapping>> tableFieldMappings = extParam.getTableFieldMapping();
+        for (Map.Entry<String, List<TableFieldMapping>> item : tableFieldMappings.entrySet()) {
+            String key = item.getKey();
+            ObjectNode itemResult = JsonUtils.createObjectNode();
+            List<TableFieldMapping> itemValue = item.getValue();
+            for (TableFieldMapping tableFieldMapping : itemValue) {
+                String itsmTableFieldInfo = tableFieldMapping.getItsmTableFieldInfo();
+                List<MdlInstanceTableData> jobDetailsSection = mdlInstanceTableMap.get(itsmTableFieldInfo);
+                if (jobDetailsSection != null) {
+                    log.error("CrStatusSyncTrigger find table info:{}", itsmTableFieldInfo);
+                    ArrayNode jobDetailResult = JsonUtils.createArrayNode();
+                    Map<String, String> fieldMapping1 = tableFieldMapping.getFieldMapping();
+                    for (MdlInstanceTableData rowData : jobDetailsSection) {
+                        ObjectNode jobDetailItem = JsonUtils.createObjectNode();
+                        String rowDataRowData = rowData.getRowData();
+                        ObjectNode jsonNode = (ObjectNode) JsonUtils.parseJsonNode(rowDataRowData);
+                        for (Map.Entry<String, String> stringStringEntry : fieldMapping1.entrySet()) {
+                            fillIChampValue(stringStringEntry.getKey(), jsonNode, stringStringEntry.getValue(), jobDetailItem);
+                        }
+                        jobDetailResult.add(jobDetailItem);
+                    }
+                    itemResult.put(tableFieldMapping.getIchampTableFieldInfo(), jobDetailResult);
+                } else {
+                    log.error("CrStatusSyncTrigger not find table info:{}", itsmTableFieldInfo);
+                }
+            }
+            if (!itemResult.isEmpty()) {
+                resultData.put(key, itemResult);
+            }
+        }
+
+
+        List<SignOffEntity> signOffEntities = signOffMapper.selectList(Wrappers.lambdaQuery(SignOffEntity.class).eq(SignOffEntity::getWorkOrderId, workOrderId));
+        for (SignOffEntity signoffManager : signOffEntities) {
+            String signOffType = signoffManager.getSignOffType();
+            JsonNode signOffTypes = JsonUtils.parseJsonNode(signOffType);
+            for (JsonNode offType : signOffTypes) {
+                SignoffConstants.SignoffItem signoffItem = SignoffConstants.SignoffItem.fromString(offType.asText());
+                if (signoffItem != null) {
+                    if (signoffItem == IDR_SIGNOFF_PROCUTOVER) {
+                        ArrayNode caseIdsResult = JsonUtils.createArrayNode();
+                        JsonNode caseIds = JsonUtils.parseJsonNode(signoffManager.getCaseId());
+                        if (caseIds != null && !caseIds.isEmpty()) {
+                            for (JsonNode caseId : caseIds) {
+                                ObjectNode caseIdResult = JsonUtils.createObjectNode();
+                                caseIdResult.put("caseid", caseId.get("caseId").asText());
+                                caseIdResult.put("remarks", caseId.get("showStatus").asText());
+                                caseIdsResult.add(caseIdsResult);
+                            }
+                        }
+                        resultData.put("idrsignoffcaseid", caseIdsResult);
+                    }
+                    JsonNode signOffUser = JsonUtils.parseJsonNode(signoffManager.getSignOffUser());
+                    if (signOffUser != null && !signOffUser.isEmpty()) {
+                        if (signoffItem.getSignOffApproverLoginCode() != null) {
+                            String userId = signOffUser.get(0).get("userId").asText();
+                            UserInfo userInfo = userSSOClient.getUserById(userId);
+                            List<BaseExtend> extend = userInfo.getExtend();
+                            extend.stream().filter(item -> item.getAlias().equalsIgnoreCase("1bankid")).findFirst().ifPresent(item -> {
+                                String ibankId = item.getValue();
+                                resultData.put(signoffItem.getSignOffApproverLoginCode(), ibankId);
+                            });
+                        }
+                        SignOffStatusEnum signOffStatusEnum = SignOffStatusEnum.valueOf(signoffManager.getStatus());
+                        if (signOffStatusEnum == SignOffStatusEnum.REJECTED || signOffStatusEnum == SignOffStatusEnum.APPROVED) {
+                            if (StringUtils.isNotBlank(signoffItem.getSignOffStatusCode())) {
+                                resultData.put(signoffItem.getSignOffStatusCode(), signOffStatusEnum.getDesc());
+                            }
+                            if (StringUtils.isNotBlank(signoffItem.getSignOffRejectionReasonCode())) {
+                                resultData.put(signoffItem.getSignOffRejectionReasonCode(), signoffManager.getRejectionReason() == null ? "" : signoffManager.getRejectionReason());
+                            }
+                            handleSignoffUrl(formData, signoffManager, signoffItem,resultData);
+                        } else {
+                            if (StringUtils.isNotBlank(signoffItem.getSignOffStatusCode())) {
+                                handleEmptyField(signoffItem.getSignOffStatusCode(), resultData);
+                            }
+                            if (StringUtils.isNotBlank(signoffItem.getSignOffRejectionReasonCode())) {
+                                handleEmptyField(signoffItem.getSignOffRejectionReasonCode(), resultData);
+                            }
+                            handleSignoffUrl(formData, signoffManager, signoffItem,resultData);
+                        }
+
+                    }
+                }
+            }
+        }
+        //查询审批数据
+        List<ApproveInfo> approveInfoMapping = extParam.getApproveInfoMapping();
+        for (ApproveInfo approveInfo : approveInfoMapping) {
+            //if cr Status is not New ,need query approver status
+            LambdaQueryWrapper<MdlApproveRecord> wrapper = Wrappers.lambdaQuery(MdlApproveRecord.class).eq(MdlApproveRecord::getWorkOrderId, workOrderId).eq(MdlApproveRecord::getNodeId, approveInfo.getNodeId()).orderByDesc(MdlApproveRecord::getCreatedTime);
+            MdlApproveRecord mdlApproveRecord = mdlApproveRecordMapper.selectOne(wrapper, false);
+            log.error("CrStatus:queryApprove:{}", mdlApproveRecord);
+            if (mdlApproveRecord != null) {
+                if (mdlApproveRecord.getApproveStatus().equals(ApproveStatusEnum.FINISHED.getCode() + "")) {
+                    MdlApproveRecordDetail mdlApproveRecordDetail = mdlApproveRecordDetailMapper.selectOne(Wrappers.lambdaQuery(MdlApproveRecordDetail.class).eq(MdlApproveRecordDetail::getApproveRecordId, mdlApproveRecord.getId()), false);
+                    log.error("CrStatus:mdlApproveRecordDetail:{}", mdlApproveRecordDetail);
+                    if (mdlApproveRecordDetail != null) {
+                        String dictId = mdlApproveRecordDetail.getReason();
+                        if (StringUtils.isNotBlank(dictId) && StringUtils.isNotBlank(approveInfo.getRejectionCode())) {
+                            String dataDictLableById = mdlApproveRecordMapper.getDataDictLableById(dictId);
+                            resultData.put(approveInfo.getRejectionCode(), dataDictLableById);
+                        }
+
+                        if (StringUtils.isNotBlank(approveInfo.getStatusTimeCode())) {
+                            resultData.put(approveInfo.getStatusTimeCode(), DateUtil.formatDateTime(mdlApproveRecord.getUpdatedTime()));
+                        }
+                        resultData.put(approveInfo.getReasonCode(), mdlApproveRecordDetail.getApproveMsg());
+                    }
+                    resultData.put(approveInfo.getStatusCode(), mdlApproveRecord.getApproveResult() == ApproveResultEnum.PASS ? "Approved" : "Rejected");
+                }
+            }
+        }
+
+        if (StringUtils.isNotBlank(rcaWorkOrderId)) {
+            //查询审批数据
+            List<ApproveInfo> rcaApproveInfoMapping = extParam.getRcaApproveInfoMapping();
+            for (ApproveInfo approveInfo : rcaApproveInfoMapping) {
+                //if cr Status is not New ,need query approver status
+                LambdaQueryWrapper<MdlApproveRecord> wrapper = Wrappers.lambdaQuery(MdlApproveRecord.class).eq(MdlApproveRecord::getWorkOrderId, rcaWorkOrderId).eq(MdlApproveRecord::getNodeId, approveInfo.getNodeId()).orderByDesc(MdlApproveRecord::getCreatedTime);
+                MdlApproveRecord mdlApproveRecord = mdlApproveRecordMapper.selectOne(wrapper, false);
+                log.error("CrStatus:queryApprove:{}", mdlApproveRecord);
+                if (mdlApproveRecord != null) {
+                    if (mdlApproveRecord.getApproveStatus().equals(ApproveStatusEnum.FINISHED.getCode() + "")) {
+                        MdlApproveRecordDetail mdlApproveRecordDetail = mdlApproveRecordDetailMapper.selectOne(Wrappers.lambdaQuery(MdlApproveRecordDetail.class).eq(MdlApproveRecordDetail::getApproveRecordId, mdlApproveRecord.getId()), false);
+                        log.error("CrStatus:mdlApproveRecordDetail:{}", mdlApproveRecordDetail);
+                        if (mdlApproveRecordDetail != null) {
+                            String dictId = mdlApproveRecordDetail.getReason();
+                            if (StringUtils.isNotBlank(dictId) && StringUtils.isNotBlank(approveInfo.getRejectionCode())) {
+                                String dataDictLableById = mdlApproveRecordMapper.getDataDictLableById(dictId);
+                                resultData.put(approveInfo.getRejectionCode(), dataDictLableById);
+                            }
+                            resultData.put(approveInfo.getReasonCode(), mdlApproveRecordDetail.getApproveMsg());
+                        }
+                        resultData.put(approveInfo.getStatusCode(), mdlApproveRecord.getApproveResult() == ApproveResultEnum.PASS ? "Approved" : "Rejected");
+                    }
+                }
+            }
+        }
+
+        setRiskValue(formData, "CustomerServices", "cmrmavailablity", resultData);
+        setRiskValue(formData, "InherentandResidualrisks", "cmrminherentresidualrisks", resultData);
+        setRiskValue(formData, "BusinessUnitsOperations", "cmrmcontinuity", resultData);
+        setRiskValue(formData, "ChangeComplexity", "cmrmcomplexity", resultData);
+        setRiskValue(formData, "BackoutComplexity", "cmrmimplement", resultData);
+        setRiskValue(formData, "Documentation", "cmrmtraining", resultData);
+        setRiskValue(formData, "Security", "cmrmsecurity", resultData);
+        setRiskValue(formData, "Interfaces", "cmrminterfaces", resultData);
+
+        resultData.put("itsmcrnumber", mdlInstance.getBizKey());
+        resultData.put("implementationplan", "https://" + dbsProperties.getCloudwiseDomain() + "/docp/dosm/dosm/orderDetails?showType=handle&id=" + workOrderId + "&isType=&isShowBack=1&type=3d409c4dc7e741539194a528cd9f0d91");
+        resultData.put("reversionplan", "https://" + dbsProperties.getCloudwiseDomain() + "/docp/dosm/dosm/orderDetails?showType=handle&id=" + workOrderId + "&isType=&isShowBack=1&type=3d409c4dc7e741539194a528cd9f0d91");
+        if (StringUtils.isNotBlank(crStatus)) {
+            resultData.put("state", crStatus);
+        }
+        if (StringUtils.isNotBlank(rcaStatus)) {
+            resultData.put("rcastatus", rcaStatus);
+        }
+
+        handleClarificationsection(resultData, formData, mdlInstance);
+
+        send2Ichamp(resultData, isNew, mdlInstance, formData,mdlInstanceTableData);
+    }
+
+    private void handleSignoffUrl(ObjectNode formData, SignOffEntity signoffManager, SignoffConstants.SignoffItem signoffItem, ObjectNode resultData) {
+        if (StringUtils.isNotBlank(signoffItem.getSignOffUrlCode())) {
+            JsonNode node = JsonUtils.parseJsonNode(signoffManager.getArtifact());
+            List<String> urls = new ArrayList<>();
+            for (JsonNode jsonNode : node) {
+                JsonNode id = jsonNode.get("id");
+                //
+            }
+            resultData.put(signoffItem.getSignOffUrlCode(), String.join(",", urls));
+        }
+    }
+
+    private void handleClarificationsection(ObjectNode resultData, ObjectNode formData, MdlInstance mdlInstance) {
+        JsonNode anyDataMigrationQuestion = formData.get("Any_data_migration_question");
+        JsonNode whyCRCATisNotPatchToAppCAT = formData.get("WhyCRCATisNotPatchToAppCAT");
+        ArrayNode arrayNode = JsonUtils.createArrayNode();
+
+
+        if (anyDataMigrationQuestion != null && StringUtils.isNotBlank(anyDataMigrationQuestion.asText())) {
+            ObjectNode objectNode = JsonUtils.createObjectNode();
+            objectNode.put("seekclarification", "Any data migration/loading? What happened to the data if reversion? ");
+            objectNode.put("clarification", anyDataMigrationQuestion.asText());
+            arrayNode.add(objectNode);
+        }
+        if (whyCRCATisNotPatchToAppCAT != null && StringUtils.isNotBlank(whyCRCATisNotPatchToAppCAT.asText())) {
+            ObjectNode objectNode1 = JsonUtils.createObjectNode();
+            objectNode1.put("seekclarification", "Any data migration/loading? What happened to the data if reversion? ");
+            objectNode1.put("clarification", whyCRCATisNotPatchToAppCAT.asText());
+            arrayNode.add(objectNode1);
+        }
+        resultData.put("clarificationsection", arrayNode);
+    }
+
+    private void fillIChampValue(String ichampFieldCode, ObjectNode formData, String itsmFieldCode, ObjectNode resultData) {
+        String[] itsmFieldCodeAndType = itsmFieldCode.split(":");
+        if (formData.has(itsmFieldCodeAndType[0])) {
+            JsonNode itsmValue = formData.get(itsmFieldCodeAndType[0]);
+            JsonNodeType nodeType = itsmValue.getNodeType();
+            switch (nodeType) {
+                case NULL:
+                case MISSING:
+                    handleEmptyField(ichampFieldCode, resultData);
+                    break;
+                case POJO:
+                case BINARY:
+                    log.error("not support");
+                    break;
+                case ARRAY:
+                    fillIChamValueWithArrary(ichampFieldCode, formData, itsmFieldCodeAndType[0], resultData);
+                    break;
+                case BOOLEAN:
+                    resultData.put(ichampFieldCode, itsmValue.asBoolean());
+                    break;
+                case OBJECT:
+                    if (itsmValue.has("startDate")) {
+                        String[] startAndEnd = ichampFieldCode.split(",");
+                        resultData.put(startAndEnd[0], DateUtil.format(new Date(itsmValue.get("startDate").asLong()), "yyyy-MM-dd HH:mm:ss"));
+                        resultData.put(startAndEnd[1], DateUtil.format(new Date(itsmValue.get("endDate").asLong()), "yyyy-MM-dd HH:mm:ss"));
+                    } else {
+                        log.error("not support");
+                    }
+                    break;
+                default:
+                    if (formData.has(itsmFieldCodeAndType[0] + "_value")) {
+                        String label = formData.get(itsmFieldCodeAndType[0] + "_value").asText();
+                        String text = itsmValue.asText();
+                        if (StringUtils.isNotBlank(text) && StringUtils.isBlank(label)) {
+                            resultData.put(ichampFieldCode, queryDictLabel(Collections.singletonList(text), getDictMapping(itsmFieldCodeAndType[0])));
+                        } else {
+                            resultData.put(ichampFieldCode, label);
+                        }
+
+                    } else {
+                        if(itsmFieldCodeAndType.length > 1){
+                            if("DATE".equalsIgnoreCase(itsmFieldCodeAndType[1])){
+                                resultData.put(ichampFieldCode, DateUtil.format(new Date(itsmValue.asLong()), "yyyy-MM-dd HH:mm:ss"));
+                            }else{
+                                resultData.put(ichampFieldCode, itsmValue.asText());
+                            }
+                        }else{
+                            resultData.put(ichampFieldCode, itsmValue.asText());
+                        }
+
+                    }
+                    break;
+            }
+        } else {
+            handleEmptyField(ichampFieldCode, resultData);
+        }
+    }
+
+    private static void handleEmptyField(String ichampFieldCode, ObjectNode resultData) {
+        if (ichampFieldCode.contains(",")) {
+            String[] fieldCode = ichampFieldCode.split(",");
+            for (String field : fieldCode) {
+                resultData.put(field, "");
+            }
+        } else {
+            resultData.put(ichampFieldCode, "");
+        }
+    }
+
+    private void fillIChamValueWithArrary(String ichampFieldCode, ObjectNode formData, String itsmFieldCode, ObjectNode resultData) {
+        if (formData.has(itsmFieldCode + "_value")) {
+            JsonNode itsmLabel = formData.get(itsmFieldCode + "_value");
+            JsonNode itsmValue = formData.get(itsmFieldCode);
+            if (itsmValue.size() > 0 && itsmLabel.size() == 0) {
+                List<String> values = new ArrayList<>();
+                for (JsonNode jsonNode : itsmValue) {
+                    values.add(jsonNode.asText());
+                }
+                resultData.put(ichampFieldCode, queryDictLabel(values, getDictMapping(itsmFieldCode)));
+            } else {
+                List<String> values = new ArrayList<>();
+                for (JsonNode jsonNode : itsmLabel) {
+                    values.add(jsonNode.asText());
+                }
+                resultData.put(ichampFieldCode, String.join(",", values));
+            }
+        } else {
+            JsonNode itsmValue = formData.get(itsmFieldCode);
+            List<String> values = new ArrayList<>();
+            boolean isUser = false;
+            for (JsonNode jsonNode : itsmValue) {
+                if (jsonNode instanceof ObjectNode) {
+                    JsonNode userId = jsonNode.get("userId");
+                    JsonNode groupName = jsonNode.get("groupName");
+                    if (userId != null && !(userId instanceof NullNode) && StringUtils.isNotBlank(userId.asText()) && !"null".equalsIgnoreCase(userId.asText())) {
+                        isUser = true;
+                        values.add(userId.asText());
+                    } else if (groupName != null && !(groupName instanceof NullNode) && StringUtils.isNotBlank(groupName.asText()) && !"null".equalsIgnoreCase(groupName.asText())) {
+                        values.add(groupName.asText());
+                    }
+                } else {
+                    values.add(jsonNode.asText());
+                }
+            }
+            if (isUser) {
+                List<UserInfo> userListByIds = userSSOClient.getUserListByIds(values, "2", "110");
+                List<String> userNames = userListByIds.stream().map(UserInfo::getName).collect(Collectors.toList());
+                List<String> ibankIds = userListByIds.stream().map(item -> {
+                    Optional<BaseExtend> first = item.getExtend().stream().filter(user -> user.getAlias().equalsIgnoreCase("1bankId")).findFirst();
+                    if (first.isPresent()) {
+                        return first.get().getValue();
+                    } else {
+                        return "";
+                    }
+                }).collect(Collectors.toList());
+                String[] fieldCodes = ichampFieldCode.split(",");
+                resultData.put(fieldCodes[0], String.join(",", ibankIds));
+                if (fieldCodes.length > 1) {
+                    resultData.put(fieldCodes[1], String.join(",", userNames));
+                }
+            } else {
+                resultData.put(ichampFieldCode, String.join(",", values));
+            }
+        }
+    }
+
+    private DictMapping getDictMapping(String itsmFieldCode) {
+        Map<String, DictMapping> dictMapping = extParam.getDictMapping();
+        if (dictMapping.containsKey(itsmFieldCode)) {
+            return dictMapping.get(itsmFieldCode);
+        }
+        return DictMapping.builder().idCode("id").tableCode("data_dict_detail").labelCode("label").build();
+
+    }
+
+
+    public String queryDictLabel(List<String> values, DictMapping dictMapping) {
+        List<String> labels = dictMapper.queryLabelByValues(values, dictMapping.getTableCode(), dictMapping.getIdCode(), dictMapping.getLabelCode());
+        return String.join(",", labels);
+    }
+
 }
