@@ -1,107 +1,89 @@
-package com.cloudwise.dosm.extend.btn;
+package com.cloudwise.dosm.button;
 
-import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.map.MapUtil;
-import cn.hutool.core.text.CharSequenceUtil;
-import cn.hutool.core.util.RandomUtil;
-import cn.hutool.http.HttpRequest;
 import com.cloudwise.dosm.api.adv.extend.ExtendConfig;
 import com.cloudwise.dosm.api.adv.extend.IButtonActionExt;
 import com.cloudwise.dosm.api.bean.adv.extend.BtnActionBo;
 import com.cloudwise.dosm.api.bean.adv.extend.BtnCallResultBo;
-import com.cloudwise.dosm.api.bean.core.pojo.bo.RequestDomain;
 import com.cloudwise.dosm.api.bean.enums.BtnTypeEnum;
-import com.cloudwise.dosm.api.bean.vo.dbs.DbsButtonConfig;
-import com.cloudwise.dosm.core.config.NacosConfigLocalCatch;
-import com.cloudwise.dosm.core.utils.JsonUtils;
-import com.cloudwise.dosm.core.utils.SpringContextUtils;
+import com.cloudwise.dosm.api.bean.enums.ResultCodeEnum;
+import com.cloudwise.dosm.api.bean.utils.JsonUtils;
+import com.cloudwise.dosm.biz.instance.dao.MdlInstanceMapper;
+import com.cloudwise.dosm.biz.instance.entity.MdlInstance;
+import com.cloudwise.dosm.core.pojo.bo.RequestDomain;
+import com.cloudwise.dosm.core.utils.UserHolder;
 import com.cloudwise.dosm.dict.dao.DataDictDetailMapper;
 import com.cloudwise.dosm.dict.dao.DataDictMapper;
 import com.cloudwise.dosm.dict.entity.DataDict;
 import com.cloudwise.dosm.dict.entity.DataDictDetail;
-import com.cloudwise.dosm.douc.entity.user.UserInfo;
-import com.cloudwise.dosm.douc.sso.UserSSOClient;
-import com.cloudwise.dosm.plugin.msgcommon.bo.VariableContext;
-import com.cloudwise.dosm.plugin.msgcommon.service.WorkOrderVariableParserContextService;
+import com.cloudwise.dosm.douc.entity.user.UserGroupInfo;
+import com.cloudwise.dosm.douc.service.UserService;
+import com.cloudwise.dosm.facewall.extension.base.startup.util.SpringContextUtils;
+import com.cloudwise.douc.dto.DubboCommonResp;
+import com.cloudwise.douc.dto.DubboUserIdAccountIdRequest;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
- * Rejection button interception function:
- * 1. Return to the current node based on the conditions (only applicable to single person approval scenarios)
- * 2. Ordinary node rejection requires filling in the rejection reason and person for the first rejection in the form
- *
- * @author ming.ma
- * @since 2025-01-15  17:04
- **/
+ * @ClassName ClosedCancelBannerButton
+ * @Description 注释
+ * @Author Gray Li
+ * @Date 2025/2/8 2:26 PM
+ * @Version 1.0
+ */
 @Slf4j
-@Component
-@ExtendConfig(id = "RejectBtnTrigger", name = "RejectBtnTrigger", desc = "RejectBtnTrigger")
-public class RejectBtnTrigger implements IButtonActionExt {
+@ExtendConfig(id = "ClosedCancelBannerButton", name = "ClosedCancelBannerButton", desc = "commitButton")
+public class ClosedCancelBannerButton implements IButtonActionExt {
 
-    private static final String APP_OWNER = "ApplicationOwnerType";
-    private static final String REJECTION_REASON = "RejectionReason";
-    private static final String REJECTED_BY = "Rejectedby";
-    private static final String APP_OWNER_VALUE = "PrimaryOrSecondaryApplicationOwner";
-    private static final String CURRENT_NODE = "CURRENT_NODE";
-    private static final String REJECTED = "rejected";
+    private final static String Select_CR_Status="crStatus";
 
-    private static final String PATH_SEND_MSG = "/dcs/custom/api/sendMessage";
+    private static final String Select_MainframeCRType="mainframeCRType";
 
-    private static final String CSH = "custom.service.host";
-    private static final String CSHPRE = "custom.service.host.prefix";
+    private static final String Select_ChangeType="changeType";
 
-
-
-    private static final List<String> COMM_FIELD = Lists.newArrayList("title", "workOrderId", "processInstanceId", "orderId", "bizDesc", "dataStatus", "workOrderUri", "operator", "operatorId", "operatorAlias", "currentNode", "assignName", "assignId", "assignAlias");
-
-
-    private static final String CR_REJECTED_SCHEDULE_DOWNTIME = "CR_REJECTED_SCHEDULE_DOWNTIME";
-    private static final String CR_REJECTED_SCHEDULE_MAINTENANCE = "CR_REJECTED_SCHEDULE_MAINTENANCE";
-    private static final List<String> CR_REJECTED_SCHEDULE_DOWNTIME_MAINTENANCE = Lists.newArrayList(CR_REJECTED_SCHEDULE_DOWNTIME, CR_REJECTED_SCHEDULE_MAINTENANCE);
-
-    private static final String FK_SCHEDULE_DOWNTIME_START_END_TIME = "SCHEDULE_DOWNTIME_START_END_TIME";
-
+    private static final String Group_ChangeRequestorGroups="changeRequestorGroups";
     @Autowired
-    private NacosConfigLocalCatch nacosConfigLocalCatch;
-
-    @Autowired
-    DbsButtonConfig dbsButtonConfig;
-
-    @Autowired
-    UserSSOClient userSSOClient;
-
-    @Autowired
-    DataDictDetailMapper dataDictDetailMapper;
-
-    @Autowired
-    WorkOrderVariableParserContextService parserContextService;
+    private MdlInstanceMapper mdlInstanceMapper;
 
     @Override
     public List<BtnTypeEnum> getActionList() {
-        return Lists.newArrayList(BtnTypeEnum.APPROVE_REJECT, BtnTypeEnum.APPROVE_PASS);
+        List<BtnTypeEnum> button = new ArrayList<>();
+        button.add(BtnTypeEnum.GETBACK);
+        return button;
     }
 
     @Override
     public void before(BtnActionBo btnActionBo, BtnCallResultBo resultBo) {
-        BtnTypeEnum btnType = btnActionBo.getBtnType();
-        if (BtnTypeEnum.APPROVE_REJECT == btnType) {
-            this.approveReject(btnActionBo, resultBo);
+
+        String bizKey = btnActionBo.getBizKey();
+
+        resultBo.setSkipSysExecutor(false);
+        resultBo.setCode(ResultCodeEnum.SUCCESS);
+
+        // Only the users of L1.5 Change Team can closed cancel such CRs (Except ECR):
+        if (!bizKey.startsWith("ECR")) {
+
+            BtnCallResultBo btnCallResultBo =  handleCrAction(btnActionBo);
+
+            if (btnCallResultBo.getCode().equals(ResultCodeEnum.FAILURE)) {
+                resultBo.setSkipSysExecutor(true);
+                resultBo.setCode(btnCallResultBo.getCode());
+                resultBo.setMsg(btnCallResultBo.getMsg());
+                return;
+            }
         }
     }
 
+
     @Override
     public void after(BtnActionBo btnActionBo, Object sysResultData, BtnCallResultBo resultBo) {
-        sendRejectedEmail(btnActionBo, resultBo);
+
     }
 
     @Override
@@ -109,244 +91,105 @@ public class RejectBtnTrigger implements IButtonActionExt {
 
     }
 
-    private UserInfo getUserInfoById(String userId) {
-        List<UserInfo> userInfos = userSSOClient.getUserListByIds(Lists.newArrayList(Long.valueOf(userId)));
-        if (CollUtil.isNotEmpty(userInfos)) {
-            return userInfos.get(0);
+    private BtnCallResultBo handleCrAction(BtnActionBo btnActionBo){
+        BtnCallResultBo resultBo = new BtnCallResultBo();
+        resultBo.setSkipSysExecutor(true);
+        resultBo.setCode(ResultCodeEnum.FAILURE);
+        resultBo.setMsg("Once the CR is Approved, only user(s) from L1.5 Change Team can 'Closed Cancel' CRs related to Mainframe Package Deployment. Please contact them (dbschg@dbs.com) for cancelling CR.");
+        JsonNode formData = null;
+        MdlInstance mdlInstance = mdlInstanceMapper.selectByWorkOrderId(btnActionBo.getTopAccountId(), btnActionBo.getWorkOrderId());
+        if(btnActionBo.getFormData() == null){
+            formData = JsonUtils.parseJsonNode(mdlInstance.getFormData());
+        }else {
+            formData = JsonUtils.parseJsonNode(btnActionBo.getFormData());
         }
-        return null;
-    }
 
-    public void approveReject(BtnActionBo btnActionBo, BtnCallResultBo resultBo) {
 
-        String mdlDefKey = btnActionBo.getMdlDefKey();
-        String nodeId = btnActionBo.getNodeId();
-        Object formData = btnActionBo.getFormData();
-        JsonNode formDataNode = JsonUtils.parseJsonNode(formData);
-        ObjectNode formDataNodeOb = (ObjectNode) formDataNode;
-        RequestDomain requestDomain = btnActionBo.getRequestDomain();
-        Map<String, List<DbsButtonConfig.NodeConfig>> processConfig = dbsButtonConfig.getProcessConfig();
-        if (processConfig == null) {
-            log.error("RejectBtnTrigger get processConfig is empty");
-            return;
-        }
-        log.error("RejectBtnTrigger get processConfig is:{}", processConfig);
-        List<DbsButtonConfig.NodeConfig> nodeConfigs = processConfig.get(mdlDefKey);
-        if (nodeConfigs == null) {
-            log.error("RejectBtnTrigger get nodeConfigs is empty,mdlDefKey:{}", mdlDefKey);
-            return;
-        }
-        List<String> nodes = new ArrayList<>();
-        boolean flag = false;
-        DbsButtonConfig.NodeConfig currNodeConfig = null;
-        for (DbsButtonConfig.NodeConfig nodeConfig : nodeConfigs) {
-            String configNodeId = nodeConfig.getNodeId();
-            nodes.add(configNodeId);
-            String rejectKey = nodeConfig.getRejectKey();
-            boolean judge = nodeConfig.isJudge();
-            if (CharSequenceUtil.equals(nodeId, configNodeId)) {
-                currNodeConfig = nodeConfig;
-                if (judge) {
-                    log.error("RejectBtnTrigger judge:{},configNodeId:{}", judge, configNodeId);
-                    JsonNode appOwner = formDataNodeOb.get(APP_OWNER);
-                    JsonNode appOwnerValue = formDataNodeOb.get(APP_OWNER + "_value");
-                    if (appOwnerValue != null && CharSequenceUtil.isNotBlank(appOwnerValue.asText())) {
-                        String value = appOwnerValue.asText();
-                        List<String> judgeValue = nodeConfig.getJudgeValue();
-                        if (CollUtil.isNotEmpty(judgeValue)) {
-                            if (judgeValue.contains(value)) {
-                                //驳回到当前节点
-                                btnActionBo.setRejectTo(CURRENT_NODE);
-                                formDataNodeOb.put(rejectKey, REJECTED);
-                            } else {
-                                flag = true;
-                            }
-                        } else {
-                            if (APP_OWNER_VALUE.equals(value)) {
-                                //驳回到当前节点
-                                btnActionBo.setRejectTo(CURRENT_NODE);
-                                formDataNodeOb.put(rejectKey, REJECTED);
-                            } else {
-                                flag = true;
-                            }
-                        }
+        RequestDomain requestDomain = UserHolder.get();
 
-                    } else {
-                        if (appOwner != null && CharSequenceUtil.isNotBlank(appOwner.asText())) {
-                            List<String> judgeValue = nodeConfig.getJudgeValue();
-                            String value = appOwner.asText();
-                            if (CollUtil.isNotEmpty(judgeValue)) {
-                                if (judgeValue.contains(value)) {
-                                    //驳回到当前节点
-                                    btnActionBo.setRejectTo(CURRENT_NODE);
-                                    formDataNodeOb.put(rejectKey, REJECTED);
-                                } else {
-                                    flag = true;
-                                }
-                            } else {
-                                if (APP_OWNER_VALUE.equals(value)) {
-                                    //驳回到当前节点
-                                    btnActionBo.setRejectTo(CURRENT_NODE);
-                                    formDataNodeOb.put(rejectKey, REJECTED);
-                                } else {
-                                    flag = true;
-                                }
-                            }
+        UserService userService = SpringContextUtils.getBean(UserService.class);
 
-                        }
+        boolean status=false;
+
+        //L1.5 Change Team
+        DubboUserIdAccountIdRequest req2 = new DubboUserIdAccountIdRequest();
+        req2.setUserId(Long.valueOf(requestDomain.getUserId()));
+        req2.setAccountId(Long.valueOf(requestDomain.getAccountId()));
+        req2.setAccountScope("all");
+        req2.setGroupScope("all");
+        DubboCommonResp<List<UserGroupInfo>> userGroupInfosByUserId = userService.getUserGroupInfosByUserId(req2);
+        Long loginUserGroupId=null;
+        if (Objects.nonNull(userGroupInfosByUserId) && Objects.nonNull(userGroupInfosByUserId.getData())) {
+            List<UserGroupInfo> userGroupInfoList = userGroupInfosByUserId.getData();
+            if (userGroupInfoList != null && userGroupInfoList.size() > 0) {
+                //Is Member of CR Requestor Group
+                for (int i = 0; i < userGroupInfoList.size(); i++) {
+                    UserGroupInfo item = userGroupInfoList.get(i);
+                    loginUserGroupId= item.getGroupId();
+                    if ("L1.5 Change Management Group".equals(item.getGroupName())) {
+                        status = true;
+                        break;
                     }
-                } else {
-                    //驳回到当前节点
-                    btnActionBo.setRejectTo(CURRENT_NODE);
-                    formDataNodeOb.put(rejectKey, REJECTED);
                 }
-                break;
             }
         }
-        String reason = btnActionBo.getReason();
-        JsonNode rejectionReasonNode = formDataNodeOb.get(REJECTION_REASON);
-        JsonNode rejectedByNode = formDataNodeOb.get(REJECTED_BY);
-        log.error("RejectBtnTrigger start set reason and rejected by:rejectionReasonNode:{},rejectedByNode:{}", rejectionReasonNode, rejectedByNode);
-        // 驳回节点首次驳回 设置驳回理由和驳回人
-        if ((rejectionReasonNode == null || rejectionReasonNode.isNull() || CharSequenceUtil.isBlank(rejectionReasonNode.asText())) && (rejectedByNode == null || rejectedByNode.isNull() || CharSequenceUtil.isBlank(rejectedByNode.asText()))) {
-            log.error("RejectBtnTrigger set reason and rejected by flag:{}", flag);
-            //驳回设置字段
-            if (!nodes.contains(nodeId) || (nodes.contains(nodeId) && flag)) {
-                List<DataDictDetail> dataDictDetails = dataDictDetailMapper.getDetailsByIds(Lists.newArrayList(reason), null, null);
-                if (CollUtil.isNotEmpty(dataDictDetails)) {
-                    String label = dataDictDetails.get(0).getLabel();
-                    log.error("RejectBtnTrigger dataDictDetailsy label:{}", label);
-                    formDataNodeOb.put(REJECTION_REASON, label);
-                }
-                ArrayNode arrayNode = JsonUtils.createArrayNode();
-                ObjectNode objectNode = JsonUtils.createObjectNode();
-                String userId = requestDomain.getUserId();
-                UserInfo userInfo = getUserInfoById(userId);
-                if (userInfo != null) {
-                    objectNode.put("userId", userId);
-                    String userAlias = userInfo.getUserAlias();
-                    String userName = userInfo.getName();
-                    objectNode.put("userName", userName + "(" + userAlias + ")");
-                    arrayNode.add(objectNode);
-                    log.error("RejectBtnTrigger userInfo :{}", arrayNode);
-                    formDataNodeOb.put(REJECTED_BY, arrayNode);
-                }
 
-                resultBo.setResultData(SendRejectedEmailResult.builder().send(Boolean.TRUE).currNodeConfig(currNodeConfig).formDataNode(formDataNodeOb).build());
-            }
-        }
-        if(!CURRENT_NODE.equals(btnActionBo.getRejectTo())) {
-            DataDictDetailMapper dataDictDetailMapper = SpringContextUtils.getBean(DataDictDetailMapper.class);
-            DataDictMapper dataDictMapper = SpringContextUtils.getBean(DataDictMapper.class);
-            DataDict dataDict = new DataDict();
-            dataDict.setIsDel(0);
-            dataDict.setDictCode("crStatus");
-            DataDict crStatusDataDict = dataDictMapper.selectOneByParam(dataDict);
-            List<DataDictDetail> dataDictDetails = dataDictDetailMapper.selectDetailByDictIdAndLevel(crStatusDataDict.getId(), 1, crStatusDataDict.getAccountId());
-            Optional<DataDictDetail> first = dataDictDetails.stream().filter(item -> item.getData().equals("Rejected")).findFirst();
-            if (first.isPresent()) {
-                formDataNodeOb.put("crStatus", first.get().getId());
-                formDataNodeOb.put("crStatus_value", "Rejected");
-            }
-            btnActionBo.setFormData(formDataNodeOb);
-        }
-    }
-
-    private String getHost(String ips) {
-        String[] split = ips.split(",");
-        int idx = RandomUtil.randomInt(0, split.length);
-        return split[idx];
-    }
-
-
-    private void sendRejectedEmail(BtnActionBo btnActionBo, BtnCallResultBo resultBo) {
-        SendRejectedEmailResult sendRejectedEmail = null;
-        if(resultBo == null || (sendRejectedEmail = (SendRejectedEmailResult) resultBo.getResultData())== null || !Boolean.TRUE.equals(sendRejectedEmail.getSend())) {
-            log.info("not send rejected email, work workOrderId: {}, nodeId: {}", btnActionBo.getWorkOrderId(), btnActionBo.getNodeId());
-            return;
+        if(status){
+            resultBo.setSkipSysExecutor(false);
+            resultBo.setCode(ResultCodeEnum.SUCCESS);
+            handleStatus2CloseCancel(mdlInstance);
+            return resultBo;
         }
 
-
-
-        if (sendRejectedEmail==null|| sendRejectedEmail.getCurrNodeConfig() == null) {
-            log.info("not config notifyScences for workOrderId: {}, nodeId: {}", btnActionBo.getWorkOrderId(), btnActionBo.getNodeId());
-            return;
-        }
-        List<String> notifyScences = sendRejectedEmail.getCurrNodeConfig().getNotifyScences();
-        if(CollectionUtils.isEmpty(notifyScences)) {
-            log.info("not config notifyScences for workOrderId: {}, nodeId: {}", btnActionBo.getWorkOrderId(), btnActionBo.getNodeId());
-            return;
+        String crStatus=null,mainframeCRType=null,changeType=null, groupId=null;
+        if(formData.has(Select_CR_Status+"_value") && formData.get(Select_CR_Status+"_value") !=null){
+            crStatus = formData.get(Select_CR_Status+"_value").asText("");
         }
 
-        String notifyScence = CR_REJECTED_SCHEDULE_DOWNTIME;
-        if(notifyScences.containsAll(CR_REJECTED_SCHEDULE_DOWNTIME_MAINTENANCE) && MapUtil.isNotEmpty(dbsButtonConfig.getFormFieldRefs())) {
-            String formFieldCode = dbsButtonConfig.getFormFieldRefs().get(FK_SCHEDULE_DOWNTIME_START_END_TIME);
-            JsonNode jsonNode = sendRejectedEmail.getFormDataNode().get(formFieldCode);
-            notifyScence = JsonUtils.isNotEmpty(jsonNode)? CR_REJECTED_SCHEDULE_DOWNTIME: CR_REJECTED_SCHEDULE_MAINTENANCE;
+        if(formData.has(Select_MainframeCRType+"_value") && formData.get(Select_MainframeCRType+"_value") !=null){
+            mainframeCRType = formData.get(Select_MainframeCRType+"_value").asText("");
         }
 
-        Map properties = nacosConfigLocalCatch.getProperties();
-        if (null == properties) {
-            log.info("RejectBtnTrigger get properties is null");
-            return;
-        }
-        Object host = properties.get(CSH);
-        Object prefix = properties.get(CSHPRE);
-        String serviceHost = Optional.ofNullable(host).map(String::valueOf).orElse("");
-        String serviceHostPrefix = Optional.ofNullable(prefix).map(String::valueOf).orElse("http://");
-        log.info("RejectBtnTrigger custom.service.host:{}", serviceHost);
-        if (CharSequenceUtil.isBlank(serviceHost)) {
-            log.info("RejectBtnTrigger get properties [custom.service.host] is null");
-            return;
+        if(formData.has(Select_ChangeType+"_value") && formData.get(Select_ChangeType+"_value") !=null){
+            changeType = formData.get(Select_ChangeType+"_value").asText("");
         }
 
         try {
-            String url = serviceHostPrefix + getHost(serviceHost) + PATH_SEND_MSG;
-            Map<String, Object> sendMsgContextMap = getSendMsgContext(notifyScence, btnActionBo, resultBo);
-            log.info("RejectBtnTrigger call  url :{},param:{}", url, sendMsgContextMap);
-            String body = HttpRequest.post(url).header("Content-Type", "application/json")
-                    .body(JsonUtils.toJsonString(sendMsgContextMap))
-                    .timeout(5000).execute().body();
-            log.info("RejectBtnTrigger call  success:{}", body);
-        } catch (Exception e) {
-            log.error("RejectBtnTrigger call  fail:", e);
+        if(formData.has(Group_ChangeRequestorGroups) && formData.get(Group_ChangeRequestorGroups) !=null){
+            JsonNode jsonNode = formData.get(Group_ChangeRequestorGroups);
+            groupId = jsonNode.get(0).get("groupId").asText("");
+            }
+        }catch (Exception e){
+            log.error("ClosedCancelBannerButton Group_ChangeRequestorGroups error:{}",formData);
         }
 
+        if(!"ECR".equals(changeType) && "Approved".equals(crStatus) && "Mainframe Package Deployment".equals(mainframeCRType) && (groupId != null && loginUserGroupId != null && groupId.equals(String.valueOf(loginUserGroupId)))){
+            log.info("ClosedCancelBannerButton handleCrAction changeType:{}",changeType);
+            return resultBo;
+        }else {
+            resultBo.setSkipSysExecutor(false);
+            resultBo.setCode(ResultCodeEnum.SUCCESS);
+            handleStatus2CloseCancel(mdlInstance);
+            return resultBo;
+        }
     }
 
-
-    private Map<String, Object> getSendMsgContext(String notifyScence, BtnActionBo btnActionBo, BtnCallResultBo resultBo) {
-        Map<String, Object> sendMsgContextMap = new HashMap<>();
-
-        Map<String, Object> notifyMap = new HashMap<>();
-        sendMsgContextMap.put("notify", notifyMap);
-        notifyMap.put("channelType", "EMAIL");
-        notifyMap.put("notifyScene", notifyScence);
-
-        RequestDomain requestDomain = btnActionBo.getRequestDomain();
-
-        Map<String, String> publicFieldsMap = new HashMap<>();
-        sendMsgContextMap.put("publicFields", publicFieldsMap);
-        // return fieldKey: "title, workkkOrderId, processInstanceId, orderId, bizDesc, dataStatus, workOrderUri, operator, workOrderUri, operator, operatorId, operatorAlias, currentNode, assignName, assignId, assignAlias"
-        Map<String, Object> workOrderBindingFieldMap = parserContextService.buildWorkOrderVariableContext(btnActionBo.getProcessInstanceId(), requestDomain.getUserId(), btnActionBo.getNodeId(), new VariableContext());
-        COMM_FIELD.forEach(fieldKey -> publicFieldsMap.put(fieldKey, workOrderBindingFieldMap.getOrDefault(fieldKey, "").toString()));
-
-        UserInfo createdUserInfo = getUserInfoById(btnActionBo.getCreatedBy());
-        publicFieldsMap.put("createdById", btnActionBo.getCreatedBy());
-        publicFieldsMap.put("createdByName", createdUserInfo == null? "": createdUserInfo.getName());
-        publicFieldsMap.put("createdByEmail", createdUserInfo == null? "": createdUserInfo.getEmail());
-        publicFieldsMap.put("workOrderId", btnActionBo.getWorkOrderId());
-        publicFieldsMap.put("mdlDefKey", btnActionBo.getMdlDefKey());
-        publicFieldsMap.put("bizKey", StringUtils.isBlank(btnActionBo.getBizKey())? btnActionBo.getWorkOrderId(): btnActionBo.getBizKey());
-
-        sendMsgContextMap.put("workOrderId", btnActionBo.getWorkOrderId());
-        sendMsgContextMap.put("nodeId", btnActionBo.getNodeId());
-        sendMsgContextMap.put("createdBy", requestDomain.getUserId());
-        sendMsgContextMap.put("topAccountId", requestDomain.getTopAccountId());
-        sendMsgContextMap.put("accountId", requestDomain.getAccountId());
-        sendMsgContextMap.put("userId", requestDomain.getUserId());
-
-        return sendMsgContextMap;
+    public void handleStatus2CloseCancel(MdlInstance mdlInstance){
+        JsonNode formData = com.cloudwise.dosm.core.utils.JsonUtils.parseJsonNode(mdlInstance.getFormData());
+        ObjectNode formDataResult = (ObjectNode) formData;
+        DataDictDetailMapper dataDictDetailMapper = com.cloudwise.dosm.core.utils.SpringContextUtils.getBean(DataDictDetailMapper.class);
+        DataDictMapper dataDictMapper = com.cloudwise.dosm.core.utils.SpringContextUtils.getBean(DataDictMapper.class);
+        DataDict dataDict = new DataDict();
+        dataDict.setIsDel(0);
+        dataDict.setDictCode("crStatus");
+        DataDict crStatusDataDict = dataDictMapper.selectOneByParam(dataDict);
+        List<DataDictDetail> dataDictDetails = dataDictDetailMapper.selectDetailByDictIdAndLevel(crStatusDataDict.getId(), 1, crStatusDataDict.getAccountId());
+        Optional<DataDictDetail> first = dataDictDetails.stream().filter(item -> item.getData().equals("Closed Cancel")).findFirst();
+        if (first.isPresent()) {
+            formDataResult.put("crStatus", first.get().getId());
+            formDataResult.put("crStatus_value", "Closed Cancel");
+        }
+        mdlInstance.setFormData(com.cloudwise.dosm.core.utils.JsonUtils.toJsonString(formDataResult));
+        mdlInstanceMapper.updateByIdSelective(mdlInstance);
     }
-
 }
