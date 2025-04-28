@@ -1,195 +1,655 @@
-package com.cloudwise.dosm.button;
+Sync CR 
 
-import com.cloudwise.dosm.api.adv.extend.ExtendConfig;
-import com.cloudwise.dosm.api.adv.extend.IButtonActionExt;
-import com.cloudwise.dosm.api.bean.adv.extend.BtnActionBo;
-import com.cloudwise.dosm.api.bean.adv.extend.BtnCallResultBo;
-import com.cloudwise.dosm.api.bean.enums.BtnTypeEnum;
-import com.cloudwise.dosm.api.bean.enums.ResultCodeEnum;
-import com.cloudwise.dosm.api.bean.utils.JsonUtils;
-import com.cloudwise.dosm.biz.instance.dao.MdlInstanceMapper;
-import com.cloudwise.dosm.biz.instance.entity.MdlInstance;
-import com.cloudwise.dosm.core.pojo.bo.RequestDomain;
-import com.cloudwise.dosm.core.utils.UserHolder;
-import com.cloudwise.dosm.dict.dao.DataDictDetailMapper;
-import com.cloudwise.dosm.dict.dao.DataDictMapper;
-import com.cloudwise.dosm.dict.entity.DataDict;
-import com.cloudwise.dosm.dict.entity.DataDictDetail;
-import com.cloudwise.dosm.douc.entity.user.UserGroupInfo;
-import com.cloudwise.dosm.douc.service.UserService;
-import com.cloudwise.dosm.facewall.extension.base.startup.util.SpringContextUtils;
-import com.cloudwise.douc.dto.DubboCommonResp;
-import com.cloudwise.douc.dto.DubboUserIdAccountIdRequest;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+JSON Section Legend 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+Section highlighted in yellow belongs to Project Cutover CR. 
 
-/**
- * @ClassName ClosedCancelBannerButton
- * @Description 注释
- * @Author Gray Li
- * @Date 2025/2/8 2:26 PM
- * @Version 1.0
- */
-@Slf4j
-@ExtendConfig(id = "ClosedCancelBannerButton", name = "ClosedCancelBannerButton", desc = "commitButton")
-public class ClosedCancelBannerButton implements IButtonActionExt {
+Section highlighted in light blue belongs to Mainframe Adhoc Job Request CR. 
 
-    private final static String Select_CR_Status="crStatus";
+Section highlighted in pink belongs to RCA. 
 
-    private static final String Select_MainframeCRType="mainframeCRType";
+When Sync API call is sent, iCHAMP to check if the CR number exists.  
 
-    private static final String Select_ChangeType="changeType";
+If CR does not exist, iCHAMP to create a new CR ticket with that CR number. 
 
-    private static final String Group_ChangeRequestorGroups="changeRequestorGroups";
-    @Autowired
-    private MdlInstanceMapper mdlInstanceMapper;
+{ 
 
-    @Override
-    public List<BtnTypeEnum> getActionList() {
-        List<BtnTypeEnum> button = new ArrayList<>();
-        button.add(BtnTypeEnum.GETBACK);
-        return button;
-    }
+    "APITokenID": "ITSMSYSTOICHAMPFORCR", 
 
-    @Override
-    public void before(BtnActionBo btnActionBo, BtnCallResultBo resultBo) {
+    "Action": " SYNCCR ", 
 
-        String bizKey = btnActionBo.getBizKey();
+    "TicketType": "CHANGEREQUEST", 
 
-        resultBo.setSkipSysExecutor(false);
-        resultBo.setCode(ResultCodeEnum.SUCCESS);
+   “InputParam”:  
 
-        // Only the users of L1.5 Change Team can closed cancel such CRs (Except ECR):
-        if (!bizKey.startsWith("ECR")) {
+{ 
 
-            BtnCallResultBo btnCallResultBo =  handleCrAction(btnActionBo);
+    "itsmcrnumber":"CR202502189922029", 
 
-            if (btnCallResultBo.getCode().equals(ResultCodeEnum.FAILURE)) {
-                resultBo.setSkipSysExecutor(true);
-                resultBo.setCode(btnCallResultBo.getCode());
-                resultBo.setMsg(btnCallResultBo.getMsg());
-                return;
-            }
-        }
-    }
+    "state":"New", 
 
+    "changerequestorgroups":"PSG_DBSAPP_ICHAMP", 
 
-    @Override
-    public void after(BtnActionBo btnActionBo, Object sysResultData, BtnCallResultBo resultBo) {
+    "changerequestor":"muhammadhazim", 
 
-    }
+    "countryoforigin":"SG", 
 
-    @Override
-    public void rollbackBefore(BtnActionBo btnActionBo, Object sysResultData, Object rollbackParam) {
+    "lob":"IBGT", 
 
-    }
+    "changetype":"Normal", 
 
-    private BtnCallResultBo handleCrAction(BtnActionBo btnActionBo){
-        BtnCallResultBo resultBo = new BtnCallResultBo();
-        resultBo.setSkipSysExecutor(true);
-        resultBo.setCode(ResultCodeEnum.FAILURE);
-        resultBo.setMsg("Once the CR is Approved, only user(s) from L1.5 Change Team can 'Closed Cancel' CRs related to Mainframe Package Deployment. Please contact them (dbschg@dbs.com) for cancelling CR.");
-        JsonNode formData = null;
-        MdlInstance mdlInstance = mdlInstanceMapper.selectByWorkOrderId(btnActionBo.getTopAccountId(), btnActionBo.getWorkOrderId());
-        if(btnActionBo.getFormData() == null){
-            formData = JsonUtils.parseJsonNode(mdlInstance.getFormData());
-        }else {
-            formData = JsonUtils.parseJsonNode(btnActionBo.getFormData());
-        }
+    "changegroup":"Project Cutover Technical", 
 
+    "changenature":"Business Enhancement", 
 
-        RequestDomain requestDomain = UserHolder.get();
+    "changecategory":"High", 
 
-        UserService userService = SpringContextUtils.getBean(UserService.class);
+    "countryimpacted":"SG,CN", 
 
-        boolean status=false;
+    "schedulestartdatetime":"2025-02-18 15:17:00", 
 
-        //L1.5 Change Team
-        DubboUserIdAccountIdRequest req2 = new DubboUserIdAccountIdRequest();
-        req2.setUserId(Long.valueOf(requestDomain.getUserId()));
-        req2.setAccountId(Long.valueOf(requestDomain.getAccountId()));
-        req2.setAccountScope("all");
-        req2.setGroupScope("all");
-        DubboCommonResp<List<UserGroupInfo>> userGroupInfosByUserId = userService.getUserGroupInfosByUserId(req2);
-        Long loginUserGroupId=null;
-        if (Objects.nonNull(userGroupInfosByUserId) && Objects.nonNull(userGroupInfosByUserId.getData())) {
-            List<UserGroupInfo> userGroupInfoList = userGroupInfosByUserId.getData();
-            if (userGroupInfoList != null && userGroupInfoList.size() > 0) {
-                //Is Member of CR Requestor Group
-                for (int i = 0; i < userGroupInfoList.size(); i++) {
-                    UserGroupInfo item = userGroupInfoList.get(i);
-                    loginUserGroupId= item.getGroupId();
-                    if ("L1.5 Change Management Group".equals(item.getGroupName())) {
-                        status = true;
-                        break;
-                    }
-                }
-            }
-        }
+    "scheduleenddatetime":"2025-02-20 15:17:00", 
 
-        if(status){
-            resultBo.setSkipSysExecutor(false);
-            resultBo.setCode(ResultCodeEnum.SUCCESS);
-            handleStatus2CloseCancel(mdlInstance);
-            return resultBo;
-        }
+    "applicationimpacted":"OTRS", 
 
-        String crStatus=null,mainframeCRType=null,changeType=null, groupId=null;
-        if(formData.has(Select_CR_Status+"_value") && formData.get(Select_CR_Status+"_value") !=null){
-            crStatus = formData.get(Select_CR_Status+"_value").asText("");
-        }
+    "summary":"This is the change summary of this CR", 
 
-        if(formData.has(Select_MainframeCRType+"_value") && formData.get(Select_MainframeCRType+"_value") !=null){
-            mainframeCRType = formData.get(Select_MainframeCRType+"_value").asText("");
-        }
+    "description":"This is the change description of this CR", 
 
-        if(formData.has(Select_ChangeType+"_value") && formData.get(Select_ChangeType+"_value") !=null){
-            changeType = formData.get(Select_ChangeType+"_value").asText("");
-        }
+    "implementationplan":"This is the implementation plan of this CR", 
 
-        try {
-        if(formData.has(Group_ChangeRequestorGroups) && formData.get(Group_ChangeRequestorGroups) !=null){
-            JsonNode jsonNode = formData.get(Group_ChangeRequestorGroups);
-            groupId = jsonNode.get(0).get("groupId").asText("");
-            }
-        }catch (Exception e){
-            log.error("ClosedCancelBannerButton Group_ChangeRequestorGroups error:{}",formData);
-        }
+    "implementationplanschedulestart":"2025-02-18 15:17:00", 
 
-        if(!"ECR".equals(changeType) && "Approved".equals(crStatus) && "Mainframe Package Deployment".equals(mainframeCRType) && (groupId != null && loginUserGroupId != null && groupId.equals(String.valueOf(loginUserGroupId)))){
-            log.info("ClosedCancelBannerButton handleCrAction changeType:{}",changeType);
-            return resultBo;
-        }else {
-            resultBo.setSkipSysExecutor(false);
-            resultBo.setCode(ResultCodeEnum.SUCCESS);
-            handleStatus2CloseCancel(mdlInstance);
-            return resultBo;
-        }
-    }
+    "implementationplanscheduleenddate":"2025-02-20 15:17:00", 
 
-    public void handleStatus2CloseCancel(MdlInstance mdlInstance){
-        JsonNode formData = com.cloudwise.dosm.core.utils.JsonUtils.parseJsonNode(mdlInstance.getFormData());
-        ObjectNode formDataResult = (ObjectNode) formData;
-        DataDictDetailMapper dataDictDetailMapper = com.cloudwise.dosm.core.utils.SpringContextUtils.getBean(DataDictDetailMapper.class);
-        DataDictMapper dataDictMapper = com.cloudwise.dosm.core.utils.SpringContextUtils.getBean(DataDictMapper.class);
-        DataDict dataDict = new DataDict();
-        dataDict.setIsDel(0);
-        dataDict.setDictCode("crStatus");
-        DataDict crStatusDataDict = dataDictMapper.selectOneByParam(dataDict);
-        List<DataDictDetail> dataDictDetails = dataDictDetailMapper.selectDetailByDictIdAndLevel(crStatusDataDict.getId(), 1, crStatusDataDict.getAccountId());
-        Optional<DataDictDetail> first = dataDictDetails.stream().filter(item -> item.getData().equals("Closed Cancel")).findFirst();
-        if (first.isPresent()) {
-            formDataResult.put("crStatus", first.get().getId());
-            formDataResult.put("crStatus_value", "Closed Cancel");
-        }
-        mdlInstance.setFormData(com.cloudwise.dosm.core.utils.JsonUtils.toJsonString(formDataResult));
-        mdlInstanceMapper.updateByIdSelective(mdlInstance);
-    }
-}
+    "reversionplan":"This is the reversion plan of this CR", 
+
+    "reversionplanschedulestartdate":"2025-02-18 15:17:00", 
+
+    "reversionplanscheduleenddate":"2025-02-20 15:17:00", 
+
+    "uat":"Yes - UAT Signed-off", 
+
+    "regressiontesting":"Yes - Regression Testing Singed-off", 
+
+    "rollbacktesting":"Yes - Reversion/Backout/Rollback Testing", 
+
+    "relatedincident":"", 
+
+    "implementergroup":"PSG_DBSAPP_ICHAMP", 
+
+    "cmrmavailablity":"3", 
+
+    "cmrmcontinuity":"3", 
+
+    "cmrmtraining":"3", 
+
+    "cmrmcomplexity":"3", 
+
+    "cmrmimplement":"3", 
+
+    "cmrminterfaces":"3", 
+
+    "cmrmsecurity":"3", 
+
+    "cmrminherentresidualrisks":"3", 
+
+    "cyberarkobjects":"NA", 
+
+    "changecount":"3", 
+
+    "crclassification":"Heightened", 
+
+    "appresiliencyclassification":"Red", 
+
+    "potentialblastradius":"Yes -  downtime / maintenance has been declared", 
+
+    "changeduringonlinebusinesshours":"Yes - But is application change window", 
+
+    "upstreamdownstreaminterfacesimpact":"All Upstream/Downstream application code app in App impacted field and Other App impacted field. Upstream/Downstream will rollback if this change rollback.", 
+
+    "mainframecriticalmonthendbatchimpact":"Yes - Jobs will be on hold and have informed Mainframe DC Ops team", 
+
+    "drcapabilitiesimpact":"Yes - DR Capabilities Impact and have informed DR team", 
+
+    "resourceengagement":"App LV,Infra LV", 
+
+    "majorinterdependencies":"Yes - Major interdependences have been evaluated, local for regional or external related dependencies e.g. interface to external party MAS for interface file.", 
+
+    "deploymentapproach":"Manual with Maker/Checker", 
+
+    "reversionapproach":"CICD Reversion", 
+
+    "cmcappcodechange":"YES - more than 3 apps", 
+
+    "cmcmakerchecker":"Yes", 
+
+    "cmcmaker":"muhammadhazim", 
+
+    "cmcchecker":"angelatang", 
+
+    "cmcdatapatchnumberofrecord":"", 
+
+    "liveverification":"Technical Live Verification (LV)", 
+
+    "mainappimpacted":"OTRS", 
+
+    "releaseticketslist":"D-OTRS-1", 
+
+    "cmcmajorchange":"", 
+
+    "cmcmascategory":"Business Enhancement", 
+
+    "location":"Prod", 
+
+    "lpar":"CPE2", 
+
+    "mainframecrtype":"Mainframe Adhoc Job Request", 
+
+    "mainframedata": { 
+
+                    "Job Details": [ 
+
+                { 
+
+                    "jobname": "job1", 
+
+                    "jobdatetime": "17/01/2025 11:07", 
+
+                    "jobduration": "100" 
+
+                }, 
+
+                { 
+
+                    "jobname": "job2", 
+
+                    "jobdatetime": "16/01/2025 11:07", 
+
+                    "jobduration": "200" 
+
+                }, 
+
+                { 
+
+                    "jobname": "job3", 
+
+                    "jobdatetime": "18/01/2025 11:08", 
+
+                    "jobduration": "300" 
+
+                } 
+
+            ], 
+
+            "Load Module": [ 
+
+                { 
+
+                    "modulecompiled": "load1", 
+
+                    "moduledatetime": "17/01/2025 11:08" 
+
+                }, 
+
+                { 
+
+                    "modulecompiled": "load2", 
+
+                    "moduledatetime": "23/01/2025 11:08" 
+
+                }, 
+
+                { 
+
+                    "modulecompiled": "load3", 
+
+                    "moduledatetime": "20/01/2025 11:08" 
+
+                } 
+
+            ], 
+
+            "DBRM Members": [ 
+
+                { 
+
+                    "dbrmmember": "dbrm1" 
+
+                }, 
+
+                { 
+
+                    "dbrmmember": "dbrm2" 
+
+                }, 
+
+                { 
+
+                    "dbrmmember": "dbrm3" 
+
+                } 
+
+            ], 
+
+            "Input Data": [ 
+
+                { 
+
+                    "inputdata": "input1", 
+
+                    "inputdatadatetime": "16/01/2025 11:09" 
+
+                }, 
+
+                { 
+
+                    "inputdata": "input2", 
+
+                    "inputdatadatetime": "17/01/2025 11:09" 
+
+                }, 
+
+                { 
+
+                    "inputdata": "input 3", 
+
+                    "inputdatadatetime": "18/01/2025 11:09" 
+
+                } 
+
+            ] 
+
+                }, 
+
+    "majorchangeflag":"Yes", 
+
+    "parentchange":"CR202501289900025", 
+
+    "otherapplicationimpacted":"ADA", 
+
+    "mdapproverrejectioncode":"", 
+
+    "mdapprovergroup":"PSG_DBSGOV_EASRE", 
+
+    "mdapprover":"angelatang", 
+
+    "mdstatusreason":"", 
+
+    "mdapproverstatus":"Rejected", 
+
+    "codechecker":"Yes", 
+
+    "servicesimpactedandrecoveryplan":"", 
+
+    "mainframepackagecreator1bankid":"", 
+
+    "mainframepackagecreatortsoid":"", 
+
+    "mainframepackagename":"", 
+
+    "mainframepackagetype":"", 
+
+    "holdbatchjob":"", 
+
+    "jobtype":"", 
+
+    "riskmitigated":"", 
+
+    "impactriskidentified":"will revert to snapshot if required", 
+
+    "explainability":"Location,High event rate over past 6 months for an Implementer Group of this CR,Live Verification level,Change group,Location", 
+
+    "explainabilityscores":"0.0117063091516502,0.00549994589724406,0.00528509627367384,0.00435705022556363,0.00199262166785502,0.00182364646432688", 
+
+    "explainabilitybase":"0.27770148619202", 
+
+    "featurevalues":"1,0.0566037735849057,1,1,0,0,0,0,1,0", 
+
+    "diffcatselectedfrmaimlreason":"This is the reason", 
+
+    "recommendedrisklevel":"low_businessrule", 
+
+    "riskscore":"0.155307951248087", 
+
+    "riskthreshold":"0.5", 
+
+    "jobneedtoaccessonlinefiles":"", 
+
+    "closeonlinefilesduringjobrun":"", 
+
+    "usehighcpuincreaseworkload":"", 
+
+    "closedincompletereasoncode":"", 
+
+    "approvergroup1":"PSG_DBSGOV_TEST", 
+
+    "approver1":"Mark Anthony U Quinto", 
+
+    "approver1status":"Rejected", 
+
+    "approver1rejectioncode":"Missed Approval Cutoff", 
+
+    "approver1statusreason":"This is the reason", 
+
+    "approvergroup2":"PSG_DBSGOV_ICHAMP", 
+
+    "approver2":"Huei Ching EE", 
+
+    "approver2status":"Rejected", 
+
+    "approver2rejectioncode":"Missed Approval Cutoff", 
+
+    "approver2statusreason":"This is the reason", 
+
+    "approvergroup3":"SG_DBSGOV_ICHAMP", 
+
+    "approver3":"Huei Ching EE", 
+
+    "approver3status":"Rejected", 
+
+    "approver3rejectioncode":"Missed Approval Cutoff", 
+
+    "approver3statusreason":"This is the reason", 
+
+    "approvergroup4":"PSG_DBSGOV_OPENSYS", 
+
+    "approver4":"Karthikeyan PADMANABAN", 
+
+    "approver4status":"Rejected", 
+
+    "approver4rejectioncode":"Missed Approval Cutoff", 
+
+    "approver4statusreason":"This is the reason", 
+
+    "approvergroup5":"CN_DBSGOV_CNUT", 
+
+    "approver5":"Karthikeyan PADMANABAN", 
+
+    "approver5status":"Rejected", 
+
+    "approver5rejectioncode":"Missed Approval Cutoff", 
+
+    "approver5statusreason":"This is the reason", 
+
+    "approvergroup6":"", 
+
+    "approver6":"", 
+
+    "approver6status":"", 
+
+    "approver6rejectioncode":"", 
+
+    "approver6statusreason":"", 
+
+    "changemanagergroup":"PSG_DBSGOV_MTOIS", 
+
+    "changemanagerapproverstatus":"Rejected", 
+
+    "changemanagerrejectioncode":"Incorrect Change Data", 
+
+    "changemanagerstatusreason":"incorrect change data", 
+
+    "releasemanagergroup":"PSG_DBSGOV_APPRLSE", 
+
+    "rmapproverstatus":"Rejected", 
+
+    "rmapproverrejectioncode":"Change Not Ready", 
+
+    "rmapproverrejectionreason":"This CR is not ready", 
+
+    "downtimeapprover1_name":"Huei Ching EE", 
+
+    "downtimeapprover2_name":"Huei Ching EE", 
+
+    "downtimeapprover3_name":"Huei Ching EE", 
+
+    "downtimeapprover4_name":"Huei Ching EE", 
+
+    "downtimeapprover5_name":"Huei Ching EE", 
+
+    "downtimeapprover1_":"hueiching", 
+
+    "downtimeapprover2_":"hueiching", 
+
+    "downtimeapprover3_":"hueiching", 
+
+    "downtimeapprover4_":"hueiching", 
+
+    "downtimeapprover5_":"hueiching", 
+
+    "downtimestartdatetime":"2025-02-18 15:17:00", 
+
+    "downtimeenddatetime":"2025-02-20 15:17:00", 
+
+    "scheduledmaintenancestartdatetime":"2025-02-18 15:17:00", 
+
+    "scheduledmaintenanceenddatetime":"2025-02-20 15:17:00", 
+
+    "downtimeapproverstatus1":"Rejected", 
+
+    "downtimeapproverstatus2":"Rejected", 
+
+    "downtimeapproverstatus3":"Rejected", 
+
+    "downtimeapproverstatus4":"Rejected", 
+
+    "downtimeapproverstatus5":"Rejected", 
+
+    "downtimeapproverrejectioncomment1":"Downtime rejected", 
+
+    "downtimeapproverrejectioncomment2":"Downtime rejected", 
+
+    "downtimeapproverrejectioncomment3":"Downtime rejected", 
+
+    "downtimeapproverrejectioncomment4":"Downtime rejected", 
+
+    "downtimeapproverrejectioncomment5":"Downtime rejected", 
+
+    "l1changemanagerapprovername":"Kavan Lee", 
+
+    "l1changemanagerapproverstatus":"Rejected", 
+
+    "l1changemanagerapproverrejectioncode":"To Reschedule", 
+
+    "l1changemanagerstatusreason":"please reschedule", 
+
+    "riskmanagerapprovername":"Kelvin Lee", 
+
+    "riskmanagerapproverstatus":"Rejected", 
+
+    "riskmanagerapproverrejectioncode":"To Reschedule", 
+
+    "riskmanagerstatusreason":"please reschedule", 
+
+    "applicationownername":"Huei Ching EE", 
+
+    "applicationownerapprovalstatus":"Rejected", 
+
+    "appownerdatapatchapprovalstatustime":"2025-02-17 15:17:00", 
+
+    "applicationownercomment":"This is my comment", 
+
+    "designfordatachoice":"Yes", 
+
+    "designfordatajustification":"", 
+
+    "designfordataowner":"kavanlee", 
+
+    "designfordatarequirements":"requirement1", 
+
+    "designfordataownername":"Kavan Lee", 
+
+    "designfordataapproverstatus":"Rejected", 
+
+    "designfordatarejectioncomment":"rejectioncomment1", 
+
+    "issoverduepatchapprover":"Kelvin Lee", 
+
+    "issoverduepatchapprovergroup":"PSG_DBSGOV_ISSOVERDUE", 
+
+    "issoverduepatchapproverstatus":"Rejected", 
+
+    "issoverduepatchapproverrejectioncode":"To Reschedule", 
+
+    "issoverduepatchapproverstatusreason":"please reschedule", 
+
+    "relatedincidentfromcrfail":"IN202502038800280", 
+
+    "crfailpreventivemeasure":"preventive measure1", 
+
+    "crfailedforappcode":"OTRS", 
+
+    "crfailrootcause":"rootcause", 
+
+    "crfailcorrectiveaction":"here is the corrective action", 
+
+    "targetisssuefixdate":"2025-02-20 15:17:00", 
+
+    "crfailreason":"This is the reason", 
+
+    "failedcrcategory":"Human/Operator Error,Inadequate Planning", 
+
+    "rcastatus":"RCA Open", 
+
+    "rcacmapproverstatus":"Rejected", 
+
+    "rcacmapproverstatusreason":"This is the reason", 
+
+    "rcaapprover1statusreason":"Rejected", 
+
+    "rcaapprover1status":"This is the reason", 
+
+    "rcaapprover1":"Mark Anthony U Quinto", 
+
+    "ticketprojectmanager":"Mark Anthony U Quinto", 
+
+    "ticketprojectmanagermobile":"+6598765432", 
+
+    "projectobjective":"This is the project objective", 
+
+    "projectscope":"This is the project scope", 
+
+    "idrsignofftype":"SignOff Attachment and/or Case ID Required", 
+
+    "idrsignoffurl":"", 
+
+    "idrsignoffcaseid":[ 
+
+                { 
+
+                    "caseid":"aa1", 
+
+                    "remarks":"Signoff Exceed 6 months" 
+
+                }, 
+
+                { 
+
+                    "caseid":"aa2", 
+
+                    "remarks":"Not approved" 
+
+                }, 
+
+                { 
+
+                    "caseid":"aa3", 
+
+                    "remarks":"Signoff not found" 
+
+                }, 
+
+                { 
+
+                    "caseid":"aa4", 
+
+                    "remarks":"Ok" 
+
+                } 
+
+            ], 
+
+    "cussignofftype":"SignOff Attachment Required", 
+
+    "cussignoffurl":"www.example.com", 
+
+    "servicemonitoringsnoctype":"Service Monitoring Dashboard URL Required", 
+
+    "servicemonitoringsnocappservicelist":"applicationservice1,applicationservice2,applicationservice3", 
+
+    "servicemonitoringsnocurllist":"www.example.com", 
+
+    "hasignofftype":"Approval Required", 
+
+    "hasignoffapproverlogin":"hueiching", 
+
+    "hasignoffstatus":"Rejected", 
+
+    "hasignoffrejectionreason":"reason1", 
+
+    "datacentersignofftype":"Approval Required", 
+
+    "datacentersignoffapproverlogin":"hueiching", 
+
+    "datacentersignoffstatus":"Rejected", 
+
+    "datacentersignoffrejectionreason":"reason2", 
+
+    "mddelegatesignofftype":"Approver Same as CR", 
+
+    "mddelegatesignoffapproverlogin":"hueiching", 
+
+    "mddelegatesignoffstatus":"Rejected", 
+
+    "mddelegatesignoffrejectionreason":"reason3", 
+
+    "busignoffapproverlogin":"hueiching", 
+
+    "busignoffstatus":"Rejected", 
+
+    "busignoffrejectionreason":"reason4", 
+
+    "impacttomainframetype":"Approval Required", 
+
+    "impacttomainframeapproverlogin":"hueiching", 
+
+    "impacttomainframestatus":"Rejected", 
+
+    "impacttomainframerejectionreason":"reason5", 
+
+    "d4dsignofftype":"Approval Required", 
+
+    "d4dsignoffapproverlogin":"hueiching", 
+
+    "d4dsignoffstatus":"Rejected", 
+
+    "d4dsignoffrejectionreason":"reason6", 
+
+    "alldocsandartifactsurl":"www.example.com", 
+
+    "clarificationsection": [ 
+
+                { 
+
+                    "seekclarification":"Question 1", 
+
+                    "clarification": "clarification 1" 
+
+                }, 
+
+                { 
+
+                    "seekclarification":"Question 2", 
+
+                    "clarification": "clarification 2" 
+
+                } 
+
+            ] 
+
+} 
+
+} 
+
+ 
