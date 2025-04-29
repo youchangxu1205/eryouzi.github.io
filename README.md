@@ -1,1 +1,853 @@
-[{"0":"Normal CR Note","1":"NormalCRNote","2":null,"3":"TEXT","4":null,"5":null,"6":null,"7":null,"8":"text","9":"text","10":"{\"storeValue\":\"text\",\"apiValue\":\"text\"}"},{"0":"Mainframe CR Typ Note","1":"MainframeCRTypeNote","2":null,"3":"TEXT","4":null,"5":null,"6":null,"7":null,"8":"text","9":"text","10":"{\"storeValue\":\"text\",\"apiValue\":\"text\"}"},{"0":"Project Cutover Note","1":"PROJECTCutoverNote","2":null,"3":"TEXT","4":null,"5":null,"6":null,"7":null,"8":"text","9":"text","10":"{\"storeValue\":\"text\",\"apiValue\":\"text\"}"},{"0":"Note:","1":"AIMLNote","2":null,"3":"TEXT","4":null,"5":null,"6":null,"7":null,"8":"text","9":"text","10":"{\"storeValue\":\"text\",\"apiValue\":\"text\"}"},{"0":"Drone Note","1":"DroneNote","2":null,"3":"TEXT","4":null,"5":null,"6":null,"7":null,"8":"text","9":"text","10":"{\"storeValue\":\"text\",\"apiValue\":\"text\"}"},{"0":"CyberArk Object Note","1":"CyberArkObjectNote","2":null,"3":"TEXT","4":null,"5":null,"6":null,"7":null,"8":"text","9":"text","10":"{\"storeValue\":\"text\",\"apiValue\":\"text\"}"},{"0":"Heighten Note","1":"HeightenNote","2":null,"3":"TEXT","4":null,"5":null,"6":null,"7":null,"8":"text","9":"text","10":"{\"storeValue\":\"text\",\"apiValue\":\"text\"}"},{"0":"Closed Cancel Notice","1":"ClosedCancelNotice","2":null,"3":"TEXT","4":null,"5":null,"6":null,"7":null,"8":"text","9":"text","10":"{\"storeValue\":\"text\",\"apiValue\":\"text\"}"},{"0":"Closure","1":"Closure","2":null,"3":"ADD_GROUP","4":null,"5":null,"6":null,"7":null,"8":null,"9":null,"10":null},{"0":"Start Date Time (YYYY-MM-DD HH:MM)","1":"A_Start_Time","2":null,"3":"DATE","4":"A_Pre_Implementation_Tasks_Activ","5":"TABLE_FORM","6":null,"7":null,"8":"2025-04-27 14:44:03","9":"1745736243354","10":null},{"0":"End Date Time (YYYY-MM-DD HH:MM)","1":"A_End_Time","2":null,"3":"DATE","4":"A_Pre_Implementation_Tasks_Activ","5":"TABLE_FORM","6":null,"7":null,"8":"2025-04-27 14:44:03","9":"1745736243354","10":null},{"0":"Start Date Time (YYYY-MM-DD HH:MM)","1":"B_Start_Time","2":null,"3":"DATE","4":"B_Implementation_Tasks_Activ","5":"TABLE_FORM","6":null,"7":null,"8":"2025-04-27 14:44:03","9":"1745736243354","10":null},{"0":"Approvals","1":"Approvals","2":null,"3":"EXTEND_FIELD","4":null,"5":null,"6":null,"7":null,"8":null,"9":null,"10":null},{"0":"Change Request Information","1":"BasicInfo","2":null,"3":"ADD_GROUP","4":null,"5":null,"6":null,"7":null,"8":null,"9":null,"10":null},{"0":"End Date Time (YYYY-MM-DD HH:MM)","1":"B_End_Time","2":null,"3":"DATE","4":"B_Implementation_Tasks_Activ","5":"TABLE_FORM","6":null,"7":null,"8":"2025-04-27 14:44:03","9":"1745736243354","10":null},{"0":"Start Date Time (YYYY-MM-DD HH:MM)","1":"C_Start_Time","2":null,"3":"DATE","4":"C_Post_Implementation_Plan","5":"TABLE_FORM","6":null,"7":null,"8":"2025-04-27 14:44:03","9":"1745736243354","10":null},{"0":"End Date Time (YYYY-MM-DD HH:MM)","1":"C_End_Time","2":null,"3":"DATE","4":"C_Post_Implementation_Plan","5":"TABLE_FORM","6":null,"7":null,"8":"2025-04-27 14:44:03","9":"1745736243354","10":null},{"0":"Start Date Time (YYYY-MM-DD HH:MM)","1":"F_Start_Time","2":null,"3":"DATE","4":"F_Reversion_Plan","5":"TABLE_FORM","6":null,"7":null,"8":"2025-04-27 14:44:03","9":"1745736243354","10":null},{"0":"End Date Time (YYYY-MM-DD HH:MM)","1":"F_End_Time","2":null,"3":"DATE","4":"F_Reversion_Plan","5":"TABLE_FORM","6":null,"7":null,"8":"2025-04-27 14:44:03","9":"1745736243354","10":null},{"0":"Current Groups","1":"CurrentGroups","2":null,"3":"GROUP","4":null,"5":null,"6":null,"7":null,"8":"CN_DBSINF_DC","9":"{\"groupId\":\"1\",\"groupName\":\"CN_DBSINF_DC\"}","10":"{\"storeValue\":\"{\\\"groupId\\\":\\\"1\\\",\\\"groupName\\\":\\\"CN_DBSINF_DC\\\"}\",\"apiValue\":\"CN_DBSINF_DC\"}"},{"0":"Implementer Group","1":"A_Implementer_Group","2":null,"3":"GROUP","4":"A_Pre_Implementation_Tasks_Activ","5":"TABLE_FORM","6":null,"7":null,"8":"CN_DBSINF_DC","9":"{\"groupId\":\"1\",\"groupName\":\"CN_DBSINF_DC\"}","10":null},{"0":"Implementer Group","1":"B_Implementer_Group","2":null,"3":"GROUP","4":"B_Implementation_Tasks_Activ","5":"TABLE_FORM","6":null,"7":null,"8":"CN_DBSINF_DC","9":"{\"groupId\":\"1\",\"groupName\":\"CN_DBSINF_DC\"}","10":null},{"0":"Implementer Group","1":"F_Implementer_Group","2":null,"3":"GROUP","4":"F_Reversion_Plan","5":"TABLE_FORM","6":null,"7":null,"8":"CN_DBSINF_DC","9":"{\"groupId\":\"1\",\"groupName\":\"CN_DBSINF_DC\"}","10":null},{"0":"L1 Change Manager Group","1":"ChangeManagerGroup_one","2":null,"3":"GROUP","4":null,"5":null,"6":null,"7":null,"8":"CN_DBSINF_DC","9":"{\"groupId\":\"1\",\"groupName\":\"CN_DBSINF_DC\"}","10":"{\"storeValue\":\"{\\\"groupId\\\":\\\"1\\\",\\\"groupName\\\":\\\"CN_DBSINF_DC\\\"}\",\"apiValue\":\"CN_DBSINF_DC\"}"},{"0":"L1 Risk Manager Group","1":"RiskManagerGroup_one","2":null,"3":"GROUP","4":null,"5":null,"6":null,"7":null,"8":"CN_DBSINF_DC","9":"{\"groupId\":\"1\",\"groupName\":\"CN_DBSINF_DC\"}","10":"{\"storeValue\":\"{\\\"groupId\\\":\\\"1\\\",\\\"groupName\\\":\\\"CN_DBSINF_DC\\\"}\",\"apiValue\":\"CN_DBSINF_DC\"}"},{"0":"Phone Number","1":"INPUT_PAGImVa9DgPW1wUd","2":null,"3":"INPUT","4":null,"5":null,"6":null,"7":null,"8":"input","9":"input","10":"{\"storeValue\":\"input\",\"apiValue\":\"input\"}"},{"0":"Email","1":"INPUT_RDciTgvsuPCFV9qU","2":null,"3":"INPUT","4":null,"5":null,"6":null,"7":null,"8":"input","9":"input","10":"{\"storeValue\":\"input\",\"apiValue\":\"input\"}"},{"0":"1BankID","1":"INPUT_pWmMunT46DaWmfmA","2":null,"3":"INPUT","4":null,"5":null,"6":null,"7":null,"8":"input","9":"input","10":"{\"storeValue\":\"input\",\"apiValue\":\"input\"}"},{"0":"Scheduled Reject1","1":"Scheduled1","2":null,"3":"INPUT","4":null,"5":null,"6":null,"7":null,"8":"input","9":"input","10":"{\"storeValue\":\"input\",\"apiValue\":\"input\"}"},{"0":"Scheduled Reject2","1":"Scheduled2","2":null,"3":"INPUT","4":null,"5":null,"6":null,"7":null,"8":"input","9":"input","10":"{\"storeValue\":\"input\",\"apiValue\":\"input\"}"},{"0":"Scheduled Reject3","1":"Scheduled3","2":null,"3":"INPUT","4":null,"5":null,"6":null,"7":null,"8":"input","9":"input","10":"{\"storeValue\":\"input\",\"apiValue\":\"input\"}"},{"0":"Scheduled Reject4","1":"Scheduled4","2":null,"3":"INPUT","4":null,"5":null,"6":null,"7":null,"8":"input","9":"input","10":"{\"storeValue\":\"input\",\"apiValue\":\"input\"}"},{"0":"Scheduled Reject5","1":"Scheduled5","2":null,"3":"INPUT","4":null,"5":null,"6":null,"7":null,"8":"input","9":"input","10":"{\"storeValue\":\"input\",\"apiValue\":\"input\"}"},{"0":"Application Owner Reject","1":"AppOwnerReject","2":null,"3":"INPUT","4":null,"5":null,"6":null,"7":null,"8":"input","9":"input","10":"{\"storeValue\":\"input\",\"apiValue\":\"input\"}"},{"0":"D4D approve Reject","1":"D4DapproveReject","2":null,"3":"INPUT","4":null,"5":null,"6":null,"7":null,"8":"input","9":"input","10":"{\"storeValue\":\"input\",\"apiValue\":\"input\"}"},{"0":"masFlag","1":"masFlag","2":null,"3":"INPUT","4":null,"5":null,"6":null,"7":null,"8":"input","9":"input","10":"{\"storeValue\":\"input\",\"apiValue\":\"input\"}"},{"0":"Ready to submit","1":"Readytosubmit","2":null,"3":"INPUT","4":null,"5":null,"6":null,"7":null,"8":"input","9":"input","10":"{\"storeValue\":\"input\",\"apiValue\":\"input\"}"},{"0":"Ready to close","1":"Readytoclose","2":null,"3":"INPUT","4":null,"5":null,"6":null,"7":null,"8":"input","9":"input","10":"{\"storeValue\":\"input\",\"apiValue\":\"input\"}"},{"0":"Ready to approve","1":"Readytoapprove","2":null,"3":"INPUT","4":null,"5":null,"6":null,"7":null,"8":"input","9":"input","10":"{\"storeValue\":\"input\",\"apiValue\":\"input\"}"},{"0":"Application Owner Type","1":"ApplicationOwnerType","2":null,"3":"INPUT","4":null,"5":null,"6":null,"7":null,"8":"input","9":"input","10":"{\"storeValue\":\"input\",\"apiValue\":\"input\"}"},{"0":"If Has Child CR","1":"IfHasChildCR","2":null,"3":"INPUT","4":null,"5":null,"6":null,"7":null,"8":"input","9":"input","10":"{\"storeValue\":\"input\",\"apiValue\":\"input\"}"},{"0":"Technical Cutover CR Number","1":"techCutOverCRNumber","2":null,"3":"INPUT","4":null,"5":null,"6":null,"7":null,"8":"input","9":"input","10":"{\"storeValue\":\"input\",\"apiValue\":\"input\"}"},{"0":"Requester","1":"Requester","2":null,"3":"MEMBER","4":null,"5":null,"6":null,"7":null,"8":"1bankid","9":"{\"userId\":\"1\",\"userName\":\"itsmuser1 (itsmuser1)\"}","10":"{\"storeValue\":\"{\\\"userId\\\":\\\"1\\\",\\\"userName\\\":\\\"itsmuser1 (itsmuser1)\\\"}\",\"apiValue\":\"1bankid\"}"},{"0":"Scheduled Hide2","1":"ScheduledHide2","2":null,"3":"MEMBER","4":null,"5":null,"6":null,"7":null,"8":"1bankid","9":"{\"userId\":\"1\",\"userName\":\"itsmuser1 (itsmuser1)\"}","10":"{\"storeValue\":\"{\\\"userId\\\":\\\"1\\\",\\\"userName\\\":\\\"itsmuser1 (itsmuser1)\\\"}\",\"apiValue\":\"1bankid\"}"},{"0":"Scheduled Hide3","1":"ScheduledHide3","2":null,"3":"MEMBER","4":null,"5":null,"6":null,"7":null,"8":"1bankid","9":"{\"userId\":\"1\",\"userName\":\"itsmuser1 (itsmuser1)\"}","10":"{\"storeValue\":\"{\\\"userId\\\":\\\"1\\\",\\\"userName\\\":\\\"itsmuser1 (itsmuser1)\\\"}\",\"apiValue\":\"1bankid\"}"},{"0":"Scheduled Hide4","1":"ScheduledHide4","2":null,"3":"MEMBER","4":null,"5":null,"6":null,"7":null,"8":"1bankid","9":"{\"userId\":\"1\",\"userName\":\"itsmuser1 (itsmuser1)\"}","10":"{\"storeValue\":\"{\\\"userId\\\":\\\"1\\\",\\\"userName\\\":\\\"itsmuser1 (itsmuser1)\\\"}\",\"apiValue\":\"1bankid\"}"},{"0":"Change Schedule Date & Time","1":"Schedule","2":null,"3":"ADD_GROUP","4":null,"5":null,"6":null,"7":null,"8":null,"9":null,"10":null},{"0":"Scheduled Hide5","1":"ScheduledHide5","2":null,"3":"MEMBER","4":null,"5":null,"6":null,"7":null,"8":"1bankid","9":"{\"userId\":\"1\",\"userName\":\"itsmuser1 (itsmuser1)\"}","10":"{\"storeValue\":\"{\\\"userId\\\":\\\"1\\\",\\\"userName\\\":\\\"itsmuser1 (itsmuser1)\\\"}\",\"apiValue\":\"1bankid\"}"},{"0":"Rejected by","1":"Rejectedby","2":null,"3":"MEMBER","4":null,"5":null,"6":null,"7":null,"8":"1bankid","9":"{\"userId\":\"1\",\"userName\":\"itsmuser1 (itsmuser1)\"}","10":"{\"storeValue\":\"{\\\"userId\\\":\\\"1\\\",\\\"userName\\\":\\\"itsmuser1 (itsmuser1)\\\"}\",\"apiValue\":\"1bankid\"}"},{"0":"Requestor","1":"LastRequestor","2":"changerequestor","3":"MEMBER","4":null,"5":null,"6":null,"7":null,"8":"1bankid","9":"{\"userId\":\"1\",\"userName\":\"itsmuser1 (itsmuser1)\"}","10":"{\"storeValue\":\"{\\\"userId\\\":\\\"1\\\",\\\"userName\\\":\\\"itsmuser1 (itsmuser1)\\\"}\",\"apiValue\":\"1bankid\"}"},{"0":"Schedule note","1":"Schedulenote","2":null,"3":"TEXT","4":null,"5":null,"6":null,"7":null,"8":"text","9":"text","10":"{\"storeValue\":\"text\",\"apiValue\":\"text\"}"},{"0":"Duration (In Mins)","1":"A_Duration_In_Mins","2":null,"3":"NUMBER","4":"A_Pre_Implementation_Tasks_Activ","5":"TABLE_FORM","6":null,"7":null,"8":null,"9":null,"10":null},{"0":"Duration (In Mins)","1":"B_Duration_In_Mins","2":null,"3":"NUMBER","4":"B_Implementation_Tasks_Activ","5":"TABLE_FORM","6":null,"7":null,"8":null,"9":null,"10":null},{"0":"Change Details","1":"AdditionalInfomation","2":null,"3":"ADD_GROUP","4":null,"5":null,"6":null,"7":null,"8":null,"9":null,"10":null},{"0":"Duration (In Mins)","1":"C_Duration_In_Mins","2":null,"3":"NUMBER","4":"C_Post_Implementation_Plan","5":"TABLE_FORM","6":null,"7":null,"8":null,"9":null,"10":null},{"0":"Duration (In Mins)","1":"F_Duration_In_Mins","2":null,"3":"NUMBER","4":"F_Reversion_Plan","5":"TABLE_FORM","6":null,"7":null,"8":null,"9":null,"10":null},{"0":"CyberArk Note","1":"CyberArkNote","2":null,"3":"TEXT","4":null,"5":null,"6":null,"7":null,"8":"text","9":"text","10":"{\"storeValue\":\"text\",\"apiValue\":\"text\"}"},{"0":"Need Iss Approve","1":"NeedIssApprove","2":null,"3":"RADIO","4":null,"5":null,"6":"Option\n —— No\n —— Yes","7":"Option\n —— 75dde84672224fdbb81779de6d911985\n —— a1061b854502496ea736a739418706fe","8":"No","9":"75dde84672224fdbb81779de6d911985","10":"{\"storeValue\":\"radioId\",\"apiValue\":\"radioLabel\"}"},{"0":"Need L1.5CM Team Approve","1":"NeedL15CMTeamApprove","2":null,"3":"RADIO","4":null,"5":null,"6":"Option\n —— No\n —— Yes","7":"Option\n —— 75dde84672224fdbb81779de6d911985\n —— a1061b854502496ea736a739418706fe","8":"No","9":"75dde84672224fdbb81779de6d911985","10":"{\"storeValue\":\"radioId\",\"apiValue\":\"radioLabel\"}"},{"0":"Note","1":"TEXT_nmJu1mPGz4JZkFS","2":null,"3":"TEXT","4":null,"5":null,"6":null,"7":null,"8":"text","9":"text","10":"{\"storeValue\":\"text\",\"apiValue\":\"text\"}"},{"0":"Close Status","1":"CloseStatus","2":null,"3":"SELECT","4":null,"5":null,"6":"Option\n —— Closed Incomplete\n —— Closed Cancel\n —— Closed Issues\n —— Closed Partial\n —— Closed Over Ran\n —— Closed Successful\n —— Closed Backoutfail\n —— Closed Backout","7":"Option\n —— 17fd2cd573714668b55bf42f65a88c05\n —— dda2dc4eb42f4e8dba8d67e7cf349b3b\n —— d19eb9b8095d45f6b4dca3f4baa1389e\n —— 2186ac66d134497685a5ac47b952a2f5\n —— 11ae6dd035d74568a9cf59e7e5243ba9\n —— 82685d548be344248beb0cb838216301\n —— a09e911ab6974fea9af33f731f5dcdf3\n —— bc3b2bdce94d4c35ba08cb399b2ecef3","8":"Closed Incomplete","9":"17fd2cd573714668b55bf42f65a88c05","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"Application Impacted MAS Critical Apps","1":"ApplicationImpactedMAS","2":null,"3":"SELECT","4":null,"5":null,"6":"Option\n —— No\n —— Yes","7":"Option\n —— 75dde84672224fdbb81779de6d911985\n —— a1061b854502496ea736a739418706fe","8":"No","9":"75dde84672224fdbb81779de6d911985","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"Application Impacted Application Category","1":"ApplicationImpactedCate","2":null,"3":"SELECT","4":null,"5":null,"6":"Option\n —— 2\n —— 4\n —— 3\n —— 1","7":"Option\n —— 9f0125b42d3c4fc081ddaf38c6c142cd\n —— ee95160380a842ed8b76c7f33f55bab5\n —— 1fb8bcde9a764249b859147a8ff142c3\n —— 67c87174bdaa415b9c7241fc74bc4db5","8":"2","9":"9f0125b42d3c4fc081ddaf38c6c142cd","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"Other Application Impacted MAS Critical App","1":"OtherAppImpactedMAS","2":null,"3":"SELECT","4":null,"5":null,"6":"Option\n —— No\n —— Yes","7":"Option\n —— 75dde84672224fdbb81779de6d911985\n —— a1061b854502496ea736a739418706fe","8":"No","9":"75dde84672224fdbb81779de6d911985","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"Other Application Impacted Application Category","1":"OtherAppImpactedCate","2":null,"3":"SELECT","4":null,"5":null,"6":"Option\n —— 2\n —— 4\n —— 3\n —— 1","7":"Option\n —— 9f0125b42d3c4fc081ddaf38c6c142cd\n —— ee95160380a842ed8b76c7f33f55bab5\n —— 1fb8bcde9a764249b859147a8ff142c3\n —— 67c87174bdaa415b9c7241fc74bc4db5","8":"2","9":"9f0125b42d3c4fc081ddaf38c6c142cd","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"ReleaseManageReadyToApprove","1":"ReleaseManageReadyToApprove","2":null,"3":"SELECT","4":null,"5":null,"6":"Option\n —— No\n —— Yes","7":"Option\n —— 75dde84672224fdbb81779de6d911985\n —— a1061b854502496ea736a739418706fe","8":"No","9":"75dde84672224fdbb81779de6d911985","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"Performance Testing","1":"PerformanceTesting","2":null,"3":"SELECT","4":null,"5":null,"6":"Option\n —— NA - Changes that meet ALL of the following criteria:\na)  No revision to non-functional requirements of the application or system \nb)  No changes made to the application's core processing\nc)  No infrastructure changes or major upgrades to the application system \n —— NA - Faulty hardware replacement\n —— Yes - Performance Testing Signed off","7":"Option\n —— ljsmdT\n —— qHoEES\n —— 3lqB6c","8":"NA - Changes that meet ALL of the following criteria:\na)  No revision to non-functional requirements of the application or system \nb)  No changes made to the application's core processing\nc)  No infrastructure changes or major upgrades to the application system","9":"ljsmdT","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"Production Assurance Testing","1":"ProductionAssuranceTesting","2":null,"3":"SELECT","4":null,"5":null,"6":"Option\n —— NA - Changes are for applications without PAT environment\n —— NA - Changes are for applications with PAT environment and ALL of the following criteria must be met:\na)  No New/major product changes with high impact to account/credit risk \nb)  No Major architecture or journey changes\nc)  No Technical re-platform\nd)  No Data Conversion or Migration\n —— NA - Changes require external interface testing\n —— NA - Changes require system data/date movement during PAT\n —— NA - Changes require other applications which do not have PAT environment\n —— Yes - PAT Signed off","7":"Option\n —— STfDnB\n —— QSfK0w\n —— eLfShl\n —— eUHiAG\n —— jzCyYZ\n —— Tk52Bj","8":"NA - Changes are for applications without PAT environment","9":"STfDnB","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"Tab Infomation","1":"TabInfomations","2":null,"3":"ADD_GROUP","4":null,"5":null,"6":null,"7":null,"8":null,"9":null,"10":null},{"0":"Hidden","1":"ADD_GROUP_AzZKlFkPyP","2":null,"3":"ADD_GROUP","4":null,"5":null,"6":null,"7":null,"8":null,"9":null,"10":null},{"0":"Chaos Testing","1":"ChaosTesting","2":null,"3":"SELECT","4":null,"5":null,"6":"Option\n —— NA - Changes on Non MAS644 App\n —— NA - Changes on Mainframe app\n —— NA - Changes on Vendor app not hosted in DBS\n —— NA - Changes on Hardware or physical appliance\n —— NA - Changes that meet ALL of the following criteria :\na)  No new infrastructure provisioning changes on MAS644 App \n     Two scenarios below are exempted from chaos testing :\n     (i)   Additional servers for scaling purposes that is not introducing new design pattern\n     (ii)  Setting of delayed replicas\nb)  No changes in Architecture design pattern on MAS644 App\nc)  No changes in technology stack on MAS644 App\n —— Yes - Chaos Testing Signed off","7":"Option\n —— q9b3f1\n —— UpbqGv\n —— sNwH44\n —— ZYn2jB\n —— D3cOB5\n —— rpsblH","8":"NA - Changes on Non MAS644 App","9":"q9b3f1","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"Production Data Download (DCON)","1":"DCONSignoff","2":null,"3":"SELECT","4":null,"5":null,"6":"Option\n —— Yes - Production data download\n —— NA - No production data download","7":"Option\n —— 65a91f7aa40a43a3bbe28562a09c21d6\n —— db197fc07f5b4f12b27f0b4e2a9a3911","8":"Yes - Production data download","9":"65a91f7aa40a43a3bbe28562a09c21d6","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"Application Owner(For Data Patch)","1":"AppOwner_forDataPatch","2":null,"3":"SELECT","4":null,"5":null,"6":"Option\n —— Same as CR MD Approver","7":"Option\n —— WR9E2o","8":"Same as CR MD Approver","9":"WR9E2o","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"Work Log Summary","1":"ClosedSummary","2":null,"3":"TEXTAREA","4":null,"5":null,"6":null,"7":null,"8":"textarea","9":"textarea","10":"{\"storeValue\":\"textarea\",\"apiValue\":\"textarea\"}"},{"0":"Rejected Reason","1":"Rejected_Reason","2":null,"3":"TEXTAREA","4":null,"5":null,"6":null,"7":null,"8":"textarea","9":"textarea","10":"{\"storeValue\":\"textarea\",\"apiValue\":\"textarea\"}"},{"0":"Task/Activity Description","1":"A_Task_Activity_Description","2":null,"3":"TEXTAREA","4":"A_Pre_Implementation_Tasks_Activ","5":"TABLE_FORM","6":null,"7":null,"8":"textarea","9":"textarea","10":null},{"0":"Remarks","1":"A_Remarks","2":null,"3":"TEXTAREA","4":"A_Pre_Implementation_Tasks_Activ","5":"TABLE_FORM","6":null,"7":null,"8":"textarea","9":"textarea","10":null},{"0":"Task/Activity Description","1":"B_Task_Activity_Description","2":null,"3":"TEXTAREA","4":"B_Implementation_Tasks_Activ","5":"TABLE_FORM","6":null,"7":null,"8":"textarea","9":"textarea","10":null},{"0":"Remarks","1":"B_Remarks","2":null,"3":"TEXTAREA","4":"B_Implementation_Tasks_Activ","5":"TABLE_FORM","6":null,"7":null,"8":"textarea","9":"textarea","10":null},{"0":"Task/Activity Description","1":"C_Plan_Description","2":null,"3":"TEXTAREA","4":"C_Post_Implementation_Plan","5":"TABLE_FORM","6":null,"7":null,"8":"textarea","9":"textarea","10":null},{"0":"Remarks","1":"C_Remarks","2":null,"3":"TEXTAREA","4":"C_Post_Implementation_Plan","5":"TABLE_FORM","6":null,"7":null,"8":"textarea","9":"textarea","10":null},{"0":"Task/Activity Description","1":"D_Task_Activity_Description","2":null,"3":"TEXTAREA","4":"D_Tech_Live_Verifiy_TA_for_Impl","5":"TABLE_FORM","6":null,"7":null,"8":"textarea","9":"textarea","10":null},{"0":"Completion Criteria","1":"D_Completion_Criteria","2":null,"3":"TEXTAREA","4":"D_Tech_Live_Verifiy_TA_for_Impl","5":"TABLE_FORM","6":null,"7":null,"8":"textarea","9":"textarea","10":null},{"0":"Remarks","1":"D_Remarks","2":null,"3":"TEXTAREA","4":"D_Tech_Live_Verifiy_TA_for_Impl","5":"TABLE_FORM","6":null,"7":null,"8":"textarea","9":"textarea","10":null},{"0":"Task/Activity Description","1":"E_Task_Activity_Description","2":null,"3":"TEXTAREA","4":"E_BULV_TA_for_Impl","5":"TABLE_FORM","6":null,"7":null,"8":"textarea","9":"textarea","10":null},{"0":"Completion Criteria","1":"E_Completion_Criteria","2":null,"3":"TEXTAREA","4":"E_BULV_TA_for_Impl","5":"TABLE_FORM","6":null,"7":null,"8":"textarea","9":"textarea","10":null},{"0":"Remarks","1":"E_Remarks","2":null,"3":"TEXTAREA","4":"E_BULV_TA_for_Impl","5":"TABLE_FORM","6":null,"7":null,"8":"textarea","9":"textarea","10":null},{"0":"Task/Activity Description","1":"F_Task_Activity_Description","2":null,"3":"TEXTAREA","4":"F_Reversion_Plan","5":"TABLE_FORM","6":null,"7":null,"8":"textarea","9":"textarea","10":null},{"0":"Remarks","1":"F_Remarks","2":null,"3":"TEXTAREA","4":"F_Reversion_Plan","5":"TABLE_FORM","6":null,"7":null,"8":"textarea","9":"textarea","10":null},{"0":"Task/Activity Description","1":"G_Task_Activity_Description","2":null,"3":"TEXTAREA","4":"G_TechLV_TA_for_Reversion","5":"TABLE_FORM","6":null,"7":null,"8":"textarea","9":"textarea","10":null},{"0":"Completion Criteria","1":"G_Completion_Criteria","2":null,"3":"TEXTAREA","4":"G_TechLV_TA_for_Reversion","5":"TABLE_FORM","6":null,"7":null,"8":"textarea","9":"textarea","10":null},{"0":"Remarks","1":"G_Remarks","2":null,"3":"TEXTAREA","4":"G_TechLV_TA_for_Reversion","5":"TABLE_FORM","6":null,"7":null,"8":"textarea","9":"textarea","10":null},{"0":"Task/Activity Description","1":"H_Task_Activity_Description","2":null,"3":"TEXTAREA","4":"H_BULV_TA_for_Reversion","5":"TABLE_FORM","6":null,"7":null,"8":"textarea","9":"textarea","10":null},{"0":"Completion Criteria","1":"H_Completion_Criteria","2":null,"3":"TEXTAREA","4":"H_BULV_TA_for_Reversion","5":"TABLE_FORM","6":null,"7":null,"8":"textarea","9":"textarea","10":null},{"0":"Remarks","1":"H_Remarks","2":null,"3":"TEXTAREA","4":"H_BULV_TA_for_Reversion","5":"TABLE_FORM","6":null,"7":null,"8":"textarea","9":"textarea","10":null},{"0":"Any Data Migration/Loading?  What Happened to the Data If Reversion?","1":"Any_data_migration_question","2":null,"3":"TEXTAREA","4":null,"5":null,"6":null,"7":null,"8":"textarea","9":"textarea","10":"{\"storeValue\":\"textarea\",\"apiValue\":\"textarea\"}"},{"0":"URL for Project Docs and Artefacts (Please provide Project Repository URL)","1":"URLForProjectDocsandArtefac","2":"alldocsandartifactsurl","3":"TEXTAREA","4":null,"5":null,"6":null,"7":null,"8":"textarea","9":"textarea","10":"{\"storeValue\":\"textarea\",\"apiValue\":\"textarea\"}"},{"0":"Application(s) Impacted","1":"applicationImpacte","2":"applicationimpacted","3":"SELECT_MANY","4":null,"5":null,"6":"Option\n —— SAMPLE","7":"Option\n —— ZY9wyP","8":"SAMPLE","9":"ZY9wyP","10":"{\"storeValue\":\"[\\\"1\\\",\\\"2\\\"]\",\"apiValue\":\"select1,select2\"}"},{"0":null,"1":null,"2":"applicationownerapprovalstatus","3":null,"4":"Application Owner (For Data Patch)","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"applicationownercomment","3":null,"4":"Application Owner (For Data Patch)","5":null,"6":null,"7":null,"8":null},{"0":"Application Owner","1":"ApplicationOwner","2":"applicationownername","3":"MEMBER","4":"Application Owner (For Data Patch)","5":null,"6":null,"7":null,"8":"1bankid","9":"{\"userId\":\"1\",\"userName\":\"itsmuser1 (itsmuser1)\"}","10":"{\"storeValue\":\"{\\\"userId\\\":\\\"1\\\",\\\"userName\\\":\\\"itsmuser1 (itsmuser1)\\\"}\",\"apiValue\":\"1bankid\"}"},{"0":null,"1":null,"2":"appownerdatapatchapprovalstatustime","3":null,"4":"Application Owner (For Data Patch)","5":null,"6":null,"7":null,"8":null},{"0":"App(s) Resiliency Classification","1":"appResiliencyClassification","2":"appresiliencyclassification","3":"SELECT","4":null,"5":null,"6":"Option\n —— Green Monitoring\n —— Green\n —— Amber\n —— Red","7":"Option\n —— cc8b261541fc4f139cd218812372ec35\n —— aebe1565b8b04e649c61f53a491fa5a0\n —— 4cbade4c4614447abf79cf8aa93162c1\n —— 71bbdf9e34b44dcaa91d19dfa803df43","8":"Green Monitoring","9":"cc8b261541fc4f139cd218812372ec35","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"Approver 1","1":"Approver01","2":"approver1","3":"MEMBER","4":"App Govenance6","5":null,"6":null,"7":null,"8":"1bankid","9":"{\"userId\":\"1\",\"userName\":\"itsmuser1 (itsmuser1)\"}","10":"{\"storeValue\":\"{\\\"userId\\\":\\\"1\\\",\\\"userName\\\":\\\"itsmuser1 (itsmuser1)\\\"}\",\"apiValue\":\"1bankid\"}"},{"0":null,"1":null,"2":"approver1rejectioncode","3":null,"4":"App Govenance1","5":null,"6":null,"7":null,"8":null},{"0":"Mainframe","1":"ADD_GROUP_1x9Eik4NDC","2":null,"3":"ADD_GROUP","4":null,"5":null,"6":null,"7":null,"8":null,"9":null,"10":null},{"0":null,"1":null,"2":"approver1status","3":null,"4":"App Govenance1","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"approver1statusreason","3":null,"4":"App Govenance1","5":null,"6":null,"7":null,"8":null},{"0":"Approver 2","1":"Approver02","2":"approver2","3":"MEMBER","4":"App Govenance6","5":null,"6":null,"7":null,"8":"1bankid","9":"{\"userId\":\"1\",\"userName\":\"itsmuser1 (itsmuser1)\"}","10":"{\"storeValue\":\"{\\\"userId\\\":\\\"1\\\",\\\"userName\\\":\\\"itsmuser1 (itsmuser1)\\\"}\",\"apiValue\":\"1bankid\"}"},{"0":null,"1":null,"2":"approver2rejectioncode","3":null,"4":"App Govenance2","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"approver2status","3":null,"4":"App Govenance2","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"approver2statusreason","3":null,"4":"App Govenance2","5":null,"6":null,"7":null,"8":null},{"0":"Approver 3","1":"Approver03","2":"approver3","3":"MEMBER","4":"App Govenance6","5":null,"6":null,"7":null,"8":"1bankid","9":"{\"userId\":\"1\",\"userName\":\"itsmuser1 (itsmuser1)\"}","10":"{\"storeValue\":\"{\\\"userId\\\":\\\"1\\\",\\\"userName\\\":\\\"itsmuser1 (itsmuser1)\\\"}\",\"apiValue\":\"1bankid\"}"},{"0":null,"1":null,"2":"approver3rejectioncode","3":null,"4":"App Govenance3","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"approver3status","3":null,"4":"App Govenance3","5":null,"6":null,"7":null,"8":null},{"0":"S.N.","1":"SN","2":null,"3":"AUTO_NUMBER","4":"JobDetailsSection","5":"TABLE_FORM","6":null,"7":null,"8":null,"9":null,"10":null},{"0":null,"1":null,"2":"approver3statusreason","3":null,"4":"App Govenance3","5":null,"6":null,"7":null,"8":null},{"0":"Approver 4","1":"Approver04","2":"approver4","3":"MEMBER","4":"App Govenance6","5":null,"6":null,"7":null,"8":"1bankid","9":"{\"userId\":\"1\",\"userName\":\"itsmuser1 (itsmuser1)\"}","10":"{\"storeValue\":\"{\\\"userId\\\":\\\"1\\\",\\\"userName\\\":\\\"itsmuser1 (itsmuser1)\\\"}\",\"apiValue\":\"1bankid\"}"},{"0":null,"1":null,"2":"approver4rejectioncode","3":null,"4":"App Govenance4","5":null,"6":null,"7":null,"8":null},{"0":"S.N.","1":"SNo","2":null,"3":"AUTO_NUMBER","4":"LoadModuleDetailsSection","5":"TABLE_FORM","6":null,"7":null,"8":null,"9":null,"10":null},{"0":null,"1":null,"2":"approver4status","3":null,"4":"App Govenance4","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"approver4statusreason","3":null,"4":"App Govenance4","5":null,"6":null,"7":null,"8":null},{"0":"S.N.","1":"SNum","2":null,"3":"AUTO_NUMBER","4":"DBRMMemberDetailsSection","5":"TABLE_FORM","6":null,"7":null,"8":null,"9":null,"10":null},{"0":"Approver 5","1":"Approver05","2":"approver5","3":"MEMBER","4":"App Govenance6","5":null,"6":null,"7":null,"8":"1bankid","9":"{\"userId\":\"1\",\"userName\":\"itsmuser1 (itsmuser1)\"}","10":"{\"storeValue\":\"{\\\"userId\\\":\\\"1\\\",\\\"userName\\\":\\\"itsmuser1 (itsmuser1)\\\"}\",\"apiValue\":\"1bankid\"}"},{"0":"S.N.","1":"SNumb","2":null,"3":"AUTO_NUMBER","4":"InputDataDetailsSection","5":"TABLE_FORM","6":null,"7":null,"8":null,"9":null,"10":null},{"0":null,"1":null,"2":"approver5rejectioncode","3":null,"4":"App Govenance5","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"approver5status","3":null,"4":"App Govenance5","5":null,"6":null,"7":null,"8":null},{"0":"Change Impact Assessment","1":"ADD_GROUP_Yd9CqiI99M","2":null,"3":"ADD_GROUP","4":null,"5":null,"6":null,"7":null,"8":null,"9":null,"10":null},{"0":null,"1":null,"2":"approver5statusreason","3":null,"4":"App Govenance5","5":null,"6":null,"7":null,"8":null},{"0":"Approver 6","1":"Approver06","2":"approver6","3":"MEMBER","4":"App Govenance6","5":null,"6":null,"7":null,"8":"1bankid","9":"{\"userId\":\"1\",\"userName\":\"itsmuser1 (itsmuser1)\"}","10":"{\"storeValue\":\"{\\\"userId\\\":\\\"1\\\",\\\"userName\\\":\\\"itsmuser1 (itsmuser1)\\\"}\",\"apiValue\":\"1bankid\"}"},{"0":null,"1":null,"2":"approver6rejectioncode","3":null,"4":"App Govenance6","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"approver6status","3":null,"4":"App Govenance6","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"approver6statusreason","3":null,"4":"App Govenance6","5":null,"6":null,"7":null,"8":null},{"0":"Approver Group 1","1":"ApproverGroup1","2":"approvergroup1","3":"GROUP","4":"App Govenance1","5":null,"6":null,"7":null,"8":"CN_DBSINF_DC","9":"{\"groupId\":\"1\",\"groupName\":\"CN_DBSINF_DC\"}","10":"{\"storeValue\":\"{\\\"groupId\\\":\\\"1\\\",\\\"groupName\\\":\\\"CN_DBSINF_DC\\\"}\",\"apiValue\":\"CN_DBSINF_DC\"}"},{"0":"Approver Group 2","1":"ApproverGroup2","2":"approvergroup2","3":"GROUP","4":"App Govenance2","5":null,"6":null,"7":null,"8":"CN_DBSINF_DC","9":"{\"groupId\":\"1\",\"groupName\":\"CN_DBSINF_DC\"}","10":"{\"storeValue\":\"{\\\"groupId\\\":\\\"1\\\",\\\"groupName\\\":\\\"CN_DBSINF_DC\\\"}\",\"apiValue\":\"CN_DBSINF_DC\"}"},{"0":"Approver  Group 3","1":"ApproverGroup3","2":"approvergroup3","3":"GROUP","4":"App Govenance3","5":null,"6":null,"7":null,"8":"CN_DBSINF_DC","9":"{\"groupId\":\"1\",\"groupName\":\"CN_DBSINF_DC\"}","10":"{\"storeValue\":\"{\\\"groupId\\\":\\\"1\\\",\\\"groupName\\\":\\\"CN_DBSINF_DC\\\"}\",\"apiValue\":\"CN_DBSINF_DC\"}"},{"0":"Approver Group 4","1":"ApproverGroupfourr","2":"approvergroup4","3":"GROUP","4":"App Govenance4","5":null,"6":null,"7":null,"8":"CN_DBSINF_DC","9":"{\"groupId\":\"1\",\"groupName\":\"CN_DBSINF_DC\"}","10":"{\"storeValue\":\"{\\\"groupId\\\":\\\"1\\\",\\\"groupName\\\":\\\"CN_DBSINF_DC\\\"}\",\"apiValue\":\"CN_DBSINF_DC\"}"},{"0":"Approver Group 5","1":"ApproverGroupfive","2":"approvergroup5","3":"GROUP","4":"App Govenance5","5":null,"6":null,"7":null,"8":"CN_DBSINF_DC","9":"{\"groupId\":\"1\",\"groupName\":\"CN_DBSINF_DC\"}","10":"{\"storeValue\":\"{\\\"groupId\\\":\\\"1\\\",\\\"groupName\\\":\\\"CN_DBSINF_DC\\\"}\",\"apiValue\":\"CN_DBSINF_DC\"}"},{"0":"Approver Group 6","1":"ApproverGroupsix","2":"approvergroup6","3":"GROUP","4":"App Govenance6","5":null,"6":null,"7":null,"8":"CN_DBSINF_DC","9":"{\"groupId\":\"1\",\"groupName\":\"CN_DBSINF_DC\"}","10":"{\"storeValue\":\"{\\\"groupId\\\":\\\"1\\\",\\\"groupName\\\":\\\"CN_DBSINF_DC\\\"}\",\"apiValue\":\"CN_DBSINF_DC\"}"},{"0":null,"1":null,"2":"busignoffapproverlogin","3":null,"4":"BU/Application Owner Signoff","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"busignoffrejectionreason","3":null,"4":"BU/Application Owner Signoff","5":null,"6":null,"7":null,"8":null},{"0":"Implementation Plan","1":"ADD_GROUP_gwsJqyiogW","2":null,"3":"ADD_GROUP","4":null,"5":null,"6":null,"7":null,"8":null,"9":null,"10":null},{"0":null,"1":null,"2":"busignoffstatus","3":null,"4":"BU/Application Owner Signoff","5":null,"6":null,"7":null,"8":null},{"0":"S/No.","1":"A_S_No","2":null,"3":"AUTO_NUMBER","4":"A_Pre_Implementation_Tasks_Activ","5":"TABLE_FORM","6":null,"7":null,"8":null,"9":null,"10":null},{"0":"Change Category","1":"Change_Category","2":"changecategory","3":"INPUT","4":null,"5":null,"6":null,"7":null,"8":"input","9":"input","10":"{\"storeValue\":\"input\",\"apiValue\":\"input\"}"},{"0":"ChangeCount (Mainframe total adhoc jobs count)","1":"ChangeCountForMainframe","2":"changecount","3":"NUMBER","4":null,"5":null,"6":null,"7":null,"8":null,"9":null,"10":null},{"0":"Change During Online/Business Hours or Change to Online System","1":"changeDescriptionDuringBusinessH","2":"changeduringonlinebusinesshours","3":"SELECT","4":null,"5":null,"6":"Option\n —— Yes - But is application change window\n —— No - No impact when doing changes as service still available\n —— No - Only Monitoring done during application operational hours\n —— No - Change window for backup infrastructure\n —— No - Service will not be available and changed during downtime/maintenace window","7":"Option\n —— 0bf71b77975844a98e53893635856ef3\n —— 2d2b799ac77f45e5b0e87ab9746b2f47\n —— fc34df10929b462390a3a78fead68b67\n —— 817ced6dd0b04d3984bbdca1edb8f4bb\n —— d3a9a641af3b4c27b6e3c250499cfecc","8":"Yes - But is application change window","9":"0bf71b77975844a98e53893635856ef3","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"Change Group","1":"changeGroup","2":"changegroup","3":"SELECT","4":null,"5":null,"6":"Option\n —— BAU\n —— Project Cutover Technical & Business\n —— Project Cutover Business\n —— Project\n —— Project Cutover Technical\n —— BAU Cutover\n —— Data Patch","7":"Option\n —— cfa7fd3f38ca40d6b9ae0581807f637a\n —— 849abf580ee74eccad866a5e2ad90fdd\n —— 3a0bb9831df94ca49b882a7c1be267ca\n —— 92f693f468df4fbbb01c6db8c66cdd82\n —— cce958c3b4484b4f836ad2c4b550581b\n —— a9c9268b25dc4bc2a2f96277c5fea7bf\n —— f9081eed514d4b3ab1441a8a97529d19","8":"BAU","9":"cfa7fd3f38ca40d6b9ae0581807f637a","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":null,"1":null,"2":"changemanagerapproverstatus","3":null,"4":"L1.5 Change Management Team","5":null,"6":null,"7":null,"8":null},{"0":"S/No.","1":"B_S_No","2":null,"3":"AUTO_NUMBER","4":"B_Implementation_Tasks_Activ","5":"TABLE_FORM","6":null,"7":null,"8":null,"9":null,"10":null},{"0":"L1.5 Change Management Group","1":"ChangeManagerGroup_OP","2":"changemanagergroup","3":"GROUP","4":"L1.5 Change Management Team","5":null,"6":null,"7":null,"8":"CN_DBSINF_DC","9":"{\"groupId\":\"1\",\"groupName\":\"CN_DBSINF_DC\"}","10":"{\"storeValue\":\"{\\\"groupId\\\":\\\"1\\\",\\\"groupName\\\":\\\"CN_DBSINF_DC\\\"}\",\"apiValue\":\"CN_DBSINF_DC\"}"},{"0":null,"1":null,"2":"changemanagerrejectioncode","3":null,"4":"L1.5 Change Management Team","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"changemanagerstatusreason","3":null,"4":"L1.5 Change Management Team","5":null,"6":null,"7":null,"8":null},{"0":"S/No.","1":"C_S_No","2":null,"3":"AUTO_NUMBER","4":"C_Post_Implementation_Plan","5":"TABLE_FORM","6":null,"7":null,"8":null,"9":null,"10":null},{"0":"Change Nature","1":"changeNature","2":"changenature","3":"SELECT","4":null,"5":null,"6":"Option\n —— Partner or Customer Standard API or H2H Onboarding\n —— Operational Risk In Nature\n —— Necessary Changes which will pose significant legal or reputational impact\n —— Reputational Impact If Not Implemented\n —— Data Patches\n —— Business Enhancement\n —— Tech Debt\n —— Existing Customers/Partners operational services requiring change in integration (e.g. cert renewals)\n —— Fixes\n —— DR Drill\n —— Cyber Related Remediations or Improvements\n —— Changes to Systems located in Overseas Market\n —— Regulatory compliance\n —— Risk Management System Related\n —— Regulatory Reports\n —— T-Up/T-Off Workstream Deliverables\n —— Compliance with Industry Standards\n —— Technology Re-Platform\n —— Capacity Upgrades\n —— capacity upgrades\n —— Legal Impact If Not Implemented\n —— System/Business recovery & support, capacity upgrades\n —— Accenture Remediation","7":"Option\n —— 73c20a9ccb5d4f4f8aa62b35f303dd70\n —— 9a8d5477e68e4ea6af51a8e06d22e68b\n —— 3f9a999d865e44188f6b1374f61963d6\n —— 17c7f685de1640859a6539c807048635\n —— 14449b2a1da1439bb413dc1bb9f9243b\n —— df66c708b60648f3af64d14af42b1a62\n —— ff706593f7504d4a890d3dc212bf241e\n —— 5b3b868a3a5941a5adfff85892c2b15f\n —— 7d8a0b54695d4bd59c460fbeef37c55d\n —— 42d2b944ffcf4752937bea41cb8365ce\n —— 8d55e567f11a4c38901f0db6956a6bdc\n —— 04ac293e62f243c8bf2dc8bd0785bf72\n —— 12b10afb5854448aa8a95281078fba4d\n —— 911b8fa0fc6a4cb8b1d09303536e6e77\n —— 156d877b5cb540e78807b9be852acbbc\n —— 58c7fc6e1e174fe5a7f7211ce292d9f8\n —— 11121c2a05eb4bef91db91f369e40846\n —— 5cc2dffe94224e4d8a7b90ff00286930\n —— 2a1102f2179f4ca6899bfe3eb332a38c\n —— cc3e569c86c346adadcdc9bfd9f5bc88\n —— 9ebf53b902ff42648b571b1119fa008e\n —— 3ebe9992038d4b6d8196b86f971bdca6\n —— 61d7fdd8433143dd9303adf9baa00784","8":"Partner or Customer Standard API or H2H Onboarding","9":"73c20a9ccb5d4f4f8aa62b35f303dd70","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"Change Requester Group","1":"changeRequestorGroups","2":"changerequestorgroups","3":"GROUP","4":null,"5":null,"6":null,"7":null,"8":"CN_DBSINF_DC","9":"{\"groupId\":\"1\",\"groupName\":\"CN_DBSINF_DC\"}","10":"{\"storeValue\":\"{\\\"groupId\\\":\\\"1\\\",\\\"groupName\\\":\\\"CN_DBSINF_DC\\\"}\",\"apiValue\":\"CN_DBSINF_DC\"}"},{"0":"Change Risk Upgraded Downgraded","1":"ChangeRiskUpgradedDowngraded","2":"changeriskupgradeddowngraded","3":"INPUT","4":null,"5":null,"6":null,"7":null,"8":"input","9":"input","10":"{\"storeValue\":\"input\",\"apiValue\":\"input\"}"},{"0":"Change Type","1":"changeType","2":"changetype","3":"SELECT","4":null,"5":null,"6":"Option\n —— Standard-Annual\n —— Standard\n —— Heighten App\n —— Heighten\n —— Normal","7":"Option\n —— 0ea65fc2a17243efb958d458818170d6\n —— 9228573b58f542a98a5ff3c47d13a1dc\n —— 576823e8e20e49658c356954e71fa789\n —— d6871ff390cc47e28976fba9be741225\n —— 33517fa7133e4564a0140b17d570a85a","8":"Standard-Annual","9":"0ea65fc2a17243efb958d458818170d6","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"S/No.","1":"D_S_No","2":null,"3":"AUTO_NUMBER","4":"D_Tech_Live_Verifiy_TA_for_Impl","5":"TABLE_FORM","6":null,"7":null,"8":null,"9":null,"10":null},{"0":null,"1":null,"2":"clarificationsection","3":null,"4":null,"5":null,"6":null,"7":null,"8":null},{"0":"Reason for the Closed Incomplete","1":"ClosedLogSummary","2":"closedincompletereasoncode","3":"SELECT","4":null,"5":null,"6":"Option\n —— ID related issue - missing CyberArk object\n —— Permission issue that prevented installation\n —— Unable to complete CR due to environment/platform/infra/network issue\n —— No error but parent CR failed\n —— Request by business/application to cancel/reschedule implementation/maintenance in progress\n —— Upstream/Downstream related issue\n —— Incorrect configuration in deployment script (no impact to implementation)\n —— Insufficient time (no impact to implementation; raise new CR)\n —— Firewall blocked traffic from end user laptop to vCenter\n —— Hardware/Interface faulty","7":"Option\n —— 14671e34f83949edb5b6f2c300741d4a\n —— 161178c50a8f4393910b39054c6b1e04\n —— 36d05ee024e54e4b9699170ad3124329\n —— bfc1bcf0ac654f0d958d09398ff49c10\n —— 1988c81179de4528888122c0037e1aa2\n —— 730a0bc2dbe341af8b17c350fc7dc7ef\n —— 6ad85d9482c947a5a39225b11a4d689d\n —— 5211b2a022a341a3adac4c1b6b897d8c\n —— 12418190aced4cc997b523f47e2b6d08\n —— 4e3f413f31b643c9bfc5a93f8b535eb5","8":"ID related issue - missing CyberArk object","9":"14671e34f83949edb5b6f2c300741d4a","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"Close Online Files During Job Run?","1":"CloseOnlineFilesDuringJobRun","2":"closeonlinefilesduringjobrun","3":"SELECT","4":null,"5":null,"6":"Option\n —— No\n —— Yes","7":"Option\n —— 75dde84672224fdbb81779de6d911985\n —— a1061b854502496ea736a739418706fe","8":"No","9":"75dde84672224fdbb81779de6d911985","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"S/No.","1":"E_S_No","2":null,"3":"AUTO_NUMBER","4":"E_BULV_TA_for_Impl","5":"TABLE_FORM","6":null,"7":null,"8":null,"9":null,"10":null},{"0":"Any Application/Programme Code Change?","1":"AnyapplicationCode","2":"cmcappcodechange","3":"SELECT","4":null,"5":null,"6":"Option\n —— No\n —— Yes - Not more than 3 apps\n —— Yes - More than 3 apps","7":"Option\n —— 533a2c534c7c4c29bbfa151af3d8e5b5\n —— b61108d0e4e34dd18d3ef5bf6dd364c0\n —— df05fb5c19a74f438593c0a7f1e1ad84","8":"No","9":"533a2c534c7c4c29bbfa151af3d8e5b5","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"Checker","1":"checker","2":"cmcchecker","3":"MEMBER","4":null,"5":null,"6":null,"7":null,"8":"1bankid","9":"{\"userId\":\"1\",\"userName\":\"itsmuser1 (itsmuser1)\"}","10":"{\"storeValue\":\"{\\\"userId\\\":\\\"1\\\",\\\"userName\\\":\\\"itsmuser1 (itsmuser1)\\\"}\",\"apiValue\":\"1bankid\"}"},{"0":"Data Patch Number of Record","1":"dataPatchNumberOfRecords","2":"cmcdatapatchnumberofrecord","3":"NUMBER","4":null,"5":null,"6":null,"7":null,"8":null,"9":null,"10":null},{"0":"S/No.","1":"F_S_No","2":null,"3":"AUTO_NUMBER","4":"F_Reversion_Plan","5":"TABLE_FORM","6":null,"7":null,"8":null,"9":null,"10":null},{"0":"Major Change","1":"MajorChanges","2":"cmcmajorchange","3":"SELECT_MANY","4":null,"5":null,"6":"Option\n —— New Product\n —— Requiring heighten period to be imposed\n —— DB/Middleware/Clustered software patching or upgrades\n —— Data Patch > 1000 records\n —— High Risk CR\n —— Major projects with upstream/downstream impact and complex system dependencies (major, >= 5 other app impacted)\n —— Changes to comply with Industry Standards\n —— Project Cutover\n —— Service/System/Data migration\n —— Program or code change to more than 1 system (more than 3 application codes)\n —— Re-Platform\n —— System Identified Major\n —— Changes to comply with industry standards \n —— Re-platform\n —— With upstream/downstream impact and complex system dependencies greater than 5 other apps impacted\n —— Requiring heighten period to be imposed\n —— Major Release/Upgrade","7":"Option\n —— 9e44f34b2284428f901019bc1d344f70\n —— 508fe42b522d46758fcd7b5cfa233406\n —— b59de17e345b49bc812a69c0cc9f1a30\n —— 897be175f23c41dc9f5ed4048c343485\n —— e4b3be6edf3f413a88d4712313dc3c5c\n —— f57ec6955099464fb204bb875436ba58\n —— 65fd7b8a57774d02bb6e1d79c16958a2\n —— e605250ed8a14fdd8f4ae184b5ab3cc1\n —— 2882ed040e2f4eb493e7fb8fa4938b67\n —— 0a6ac287098f4ec680c781c06c059991\n —— ddb34cb55d0f46d09019edd7b1282ef5\n —— b7e3096076d0489fac99e3facf57c3b1\n —— 596e687e73bd45a297a6c76dc29856eb\n —— 02e9ea1af9b641cfa992dbc85a987d6d\n —— a9a4c58fbf8942dc92aeba365c7a70db\n —— 3b1c5a1d57eb4f98b314976018a307d2\n —— 90d92c3311124f93a0fb9c568abdaf59","8":"New Product","9":"9e44f34b2284428f901019bc1d344f70","10":"{\"storeValue\":\"[\\\"1\\\",\\\"2\\\"]\",\"apiValue\":\"select1,select2\"}"},{"0":"Maker","1":"maker","2":"cmcmaker","3":"MEMBER","4":null,"5":null,"6":null,"7":null,"8":"1bankid","9":"{\"userId\":\"1\",\"userName\":\"itsmuser1 (itsmuser1)\"}","10":"{\"storeValue\":\"{\\\"userId\\\":\\\"1\\\",\\\"userName\\\":\\\"itsmuser1 (itsmuser1)\\\"}\",\"apiValue\":\"1bankid\"}"},{"0":"Maker/Checker","1":"MakerChecker","2":"cmcmakerchecker","3":"RADIO","4":null,"5":null,"6":"Option\n —— No\n —— Yes","7":"Option\n —— 75dde84672224fdbb81779de6d911985\n —— a1061b854502496ea736a739418706fe","8":"No","9":"75dde84672224fdbb81779de6d911985","10":"{\"storeValue\":\"radioId\",\"apiValue\":\"radioLabel\"}"},{"0":"MAS Category","1":"MASCategory","2":"cmcmascategory","3":"SELECT","4":null,"5":null,"6":"Option\n —— Compliance With Local And Foreign Laws And Regulations\n —— Business Enhancement\n —— Bank's Risk Management And Controls\n —— IT Resiliency and Cyber Security\n —— Changes to Systems located in Overseas Market\n —— API or Host-to-Host onboarding\n —— Legal & Reputation Risk","7":"Option\n —— a965acba216a4160a589690ed1ccff0c\n —— b8b48ec006104a159c305e417b424db7\n —— 00c805c785e8473485403b60874d727b\n —— 76744e35a39b42edad6216d2db39fe2a\n —— 394355cb903b4a53b41a2684f84ca4a0\n —— 33661f2b44bd461d8ab5e3d7316078bb\n —— 614c1d85dcd1438ba38b7b36f657553e","8":"Compliance With Local And Foreign Laws And Regulations","9":"a965acba216a4160a589690ed1ccff0c","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"Customer Services","1":"CustomerServices","2":"cmrmavailablity","3":"RADIO","4":null,"5":null,"6":"Option\n —— High\n —— Low","7":"Option\n —— d7b6d17cf02c401a93144a6323915745\n —— bf24e00c427242b99ba4052535c24b6a","8":"High","9":"d7b6d17cf02c401a93144a6323915745","10":"{\"storeValue\":\"radioId\",\"apiValue\":\"radioLabel\"}"},{"0":"Change Complexity","1":"ChangeComplexity","2":"cmrmcomplexity","3":"RADIO","4":null,"5":null,"6":"Option\n —— Low\n —— High","7":"Option\n —— 845a783c49524348bd5804cfbc0ac06e\n —— 7369a45983eb4db393e4f991d54ca17f","8":"Low","9":"845a783c49524348bd5804cfbc0ac06e","10":"{\"storeValue\":\"radioId\",\"apiValue\":\"radioLabel\"}"},{"0":"S/No.","1":"G_S_No","2":null,"3":"AUTO_NUMBER","4":"G_TechLV_TA_for_Reversion","5":"TABLE_FORM","6":null,"7":null,"8":null,"9":null,"10":null},{"0":"Business Units Operations","1":"BusinessUnitsOperations","2":"cmrmcontinuity","3":"RADIO","4":null,"5":null,"6":"Option\n —— High\n —— Low","7":"Option\n —— a45fcab91e214e2285615b4cc28243d3\n —— 2008e9b96d5d413798d119b829648535","8":"High","9":"a45fcab91e214e2285615b4cc28243d3","10":"{\"storeValue\":\"radioId\",\"apiValue\":\"radioLabel\"}"},{"0":"Backout Complexity","1":"BackoutComplexity","2":"cmrmimplement","3":"RADIO","4":null,"5":null,"6":"Option\n —— High\n —— Low","7":"Option\n —— be3b5b66dfe44d04a1d6cbb24233d472\n —— c7199dacb70e4a07ad29dd898cf56860","8":"High","9":"be3b5b66dfe44d04a1d6cbb24233d472","10":"{\"storeValue\":\"radioId\",\"apiValue\":\"radioLabel\"}"},{"0":"Inherent and Residual Risks","1":"InherentandResidualrisks","2":"cmrminherentresidualrisks","3":"RADIO","4":null,"5":null,"6":"Option\n —— High\n —— Low","7":"Option\n —— bf466ac4792947239c12d897cb06e2b1\n —— f831cb01fd0f43b297a93ead68abc562","8":"High","9":"bf466ac4792947239c12d897cb06e2b1","10":"{\"storeValue\":\"radioId\",\"apiValue\":\"radioLabel\"}"},{"0":"S/No.","1":"H_S_No","2":null,"3":"AUTO_NUMBER","4":"H_BULV_TA_for_Reversion","5":"TABLE_FORM","6":null,"7":null,"8":null,"9":null,"10":null},{"0":"Interfaces","1":"Interfaces","2":"cmrminterfaces","3":"RADIO","4":null,"5":null,"6":"Option\n —— High\n —— Low","7":"Option\n —— 757cf8444112442e8def39e82a37b618\n —— aea98f47781147f8a8cb8eae078f7299","8":"High","9":"757cf8444112442e8def39e82a37b618","10":"{\"storeValue\":\"radioId\",\"apiValue\":\"radioLabel\"}"},{"0":"Security","1":"Security","2":"cmrmsecurity","3":"RADIO","4":null,"5":null,"6":"Option\n —— High\n —— Low","7":"Option\n —— cc6c97c483844972a0ff570530fef0a3\n —— 3240ef33f1bd4dbcbb1ad5ac86bb0b53","8":"High","9":"cc6c97c483844972a0ff570530fef0a3","10":"{\"storeValue\":\"radioId\",\"apiValue\":\"radioLabel\"}"},{"0":"Documentation and Training","1":"Documentation","2":"cmrmtraining","3":"RADIO","4":null,"5":null,"6":"Option\n —— Low\n —— High","7":"Option\n —— ff30d63471b14bc3870b90c849c66f7d\n —— 7749eee7c8144ada9be0b4330d2c4a3d","8":"Low","9":"ff30d63471b14bc3870b90c849c66f7d","10":"{\"storeValue\":\"radioId\",\"apiValue\":\"radioLabel\"}"},{"0":"Project Cutover","1":"ADD_GROUP_037c6P8VUm","2":null,"3":"ADD_GROUP","4":null,"5":null,"6":null,"7":null,"8":null,"9":null,"10":null},{"0":"Project Cutover Top Note","1":"TEXT_DvsQ1caruUgtG2h","2":null,"3":"TEXT","4":null,"5":null,"6":null,"7":null,"8":"text","9":"text","10":"{\"storeValue\":\"text\",\"apiValue\":\"text\"}"},{"0":"Code Checker","1":"Code_Checker","2":"codechecker","3":"SELECT","4":null,"5":null,"6":"Option\n —— No - JCL, no code change\n —— Yes\n —— No - No code change\n —— No - No access to vendor/external source codes\n —— No - Code checker unable to support code scanning\n —— No - Adhoc job run, no code change","7":"Option\n —— 0b486d73dad94e6eaa5e9be7c832369d\n —— abb960feb55a4d4c9ecd5bf83dd109e9\n —— d4d33733772e4041a5ad3e41ba24c598\n —— 3cef6aff075f4e8397aad5bf63313619\n —— 7860c84fdc58493a83b9edc6596451dc\n —— bb34dcf8cfc84a93b3b9f2add154a5ec","8":"No - JCL, no code change","9":"0b486d73dad94e6eaa5e9be7c832369d","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"Country Impacted","1":"CountryImpacte","2":"countryimpacted","3":"SELECT_MANY","4":null,"5":null,"6":"Option\n —— HK\n —— CN\n —— TW\n —— ID\n —— IC\n —— TH\n —— SG\n —— IN","7":"Option\n —— 74f5a2efa41a420db7900f09014b6fc0\n —— b45937c11d754d63b3aa02d97701136d\n —— c43fc18be9ae4269950d59f8e9835a66\n —— 08ac871344034ea1920c138939a1dc35\n —— 42484d46cae446888c75eeefb6702fb7\n —— a225973d338e42a0b4dd7cec7f4efee3\n —— 10a104828b1e4626b17dd57f5be26ce4\n —— 19474fe1876e4edb9b6b00e049990e24","8":"HK","9":"74f5a2efa41a420db7900f09014b6fc0","10":"{\"storeValue\":\"[\\\"1\\\",\\\"2\\\"]\",\"apiValue\":\"select1,select2\"}"},{"0":"Country of Origin","1":"countryOfOrigin","2":"countryoforigin","3":"SELECT","4":null,"5":null,"6":"Option\n —— HK\n —— CN\n —— TW\n —— ID\n —— IC\n —— TH\n —— SG\n —— IN","7":"Option\n —— 74f5a2efa41a420db7900f09014b6fc0\n —— b45937c11d754d63b3aa02d97701136d\n —— c43fc18be9ae4269950d59f8e9835a66\n —— 08ac871344034ea1920c138939a1dc35\n —— 42484d46cae446888c75eeefb6702fb7\n —— a225973d338e42a0b4dd7cec7f4efee3\n —— 10a104828b1e4626b17dd57f5be26ce4\n —— 19474fe1876e4edb9b6b00e049990e24","8":"HK","9":"74f5a2efa41a420db7900f09014b6fc0","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"CR Classification","1":"crClassification","2":"crclassification","3":"SELECT","4":null,"5":null,"6":"Option\n —— Heightened\n —— Managed\n —— MAS644","7":"Option\n —— b9896f8dff9849a1bce64912a120d04b\n —— 0376b587f07b4e0780d33e05ca006f31\n —— a4dae8de11e14634b90929c387f5d40c","8":"Heightened","9":"b9896f8dff9849a1bce64912a120d04b","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":null,"1":"whatwasthecorrectiveactiontaken","2":"crfailcorrectiveaction","3":null,"4":null,"5":null,"6":null,"7":null,"8":null},{"0":null,"1":"impactedapplication","2":"crfailedforappcode","3":null,"4":null,"5":null,"6":null,"7":null,"8":null},{"0":null,"1":"anypreventivemeasuretoavoidthis","2":"crfailpreventivemeasure","3":null,"4":null,"5":null,"6":null,"7":null,"8":null},{"0":null,"1":"whythechangeimplementationfailed","2":"crfailreason","3":"TEXTAREA","4":null,"5":null,"6":null,"7":null,"8":null},{"0":null,"1":"whatistherootcause","2":"crfailrootcause","3":null,"4":null,"5":null,"6":null,"7":null,"8":null},{"0":"CR Submission Datetime","1":"CRSubmissionDatetime","2":"crsubmissiondatetime","3":"DATE","4":null,"5":null,"6":null,"7":null,"8":"2025-04-27 14:44:03","9":"1745736243354","10":"{\"storeValue\":\"1745736243354\",\"apiValue\":\"2025-04-27 14:44:03\"}"},{"0":"SNOC NOTE","1":"TEXT_ahb3f2kscslMAf4","2":null,"3":"TEXT","4":null,"5":null,"6":null,"7":null,"8":"text","9":"text","10":"{\"storeValue\":\"text\",\"apiValue\":\"text\"}"},{"0":"CUS Signoff","1":"CUSsignoff","2":"cussignofftype","3":"SELECT","4":null,"5":null,"6":"Option\n —— No Integration with AD (LDAP or DNS), SMTP, Blackberry services, Cisco, Avaya, Nice recording\n —— Sign Off Attachment Required","7":"Option\n —— 4c78613653474c18a95d04e73ac3a27b\n —— 919792e1389d46c8874178ab4ba26d6c","8":"No Integration with AD (LDAP or DNS), SMTP, Blackberry services, Cisco, Avaya, Nice recording","9":"4c78613653474c18a95d04e73ac3a27b","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":null,"1":null,"2":"cussignoffurl","3":null,"4":"CUS Signoff","5":null,"6":null,"7":null,"8":null},{"0":"CyberArk Objects (Please key in 'NA' if CyberArk objects are not required)","1":"CyberArk_Object","2":"cyberarkobjects","3":"TEXTAREA","4":null,"5":null,"6":null,"7":null,"8":"textarea","9":"textarea","10":"{\"storeValue\":\"textarea\",\"apiValue\":\"textarea\"}"},{"0":null,"1":null,"2":"d4dsignoffapproverlogin","3":null,"4":"Design For Data (D4D) Signoff","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"d4dsignoffrejectionreason","3":null,"4":"Design For Data (D4D) Signoff","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"d4dsignoffstatus","3":null,"4":"Design For Data (D4D) Signoff","5":null,"6":null,"7":null,"8":null},{"0":"Parent Child Relationship","1":"ADD_GROUP_Vp2QiWXBMp","2":null,"3":"ADD_GROUP","4":null,"5":null,"6":null,"7":null,"8":null,"9":null,"10":null},{"0":"Relevant Change Request","1":"RelevantChangeRequest","2":null,"3":"EXTEND_FIELD","4":null,"5":null,"6":null,"7":null,"8":null,"9":null,"10":null},{"0":"Signoff","1":"ADD_GROUP_mU8bT4eK6w","2":null,"3":"ADD_GROUP","4":null,"5":null,"6":null,"7":null,"8":null,"9":null,"10":null},{"0":"Design for Data (D4D) Signoff","1":"D4Dsignoff","2":"d4dsignofftype","3":"SELECT","4":null,"5":null,"6":"Option\n —— No Data Requirement\n —— Approval Required","7":"Option\n —— 72f3065a3fb048f891015ea7b313751f\n —— e5e13c12014142158a74b885487e37f3","8":"No Data Requirement","9":"72f3065a3fb048f891015ea7b313751f","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":null,"1":null,"2":"datacentersignoffapproverlogin","3":null,"4":"Data Center OPS (Batch) Signoff","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"datacentersignoffrejectionreason","3":null,"4":"Data Center OPS (Batch) Signoff","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"datacentersignoffstatus","3":null,"4":"Data Center OPS (Batch) Signoff","5":null,"6":null,"7":null,"8":null},{"0":"Data Center OPS (Batch) Signoff","1":"DataCenterOPSsignoff","2":"datacentersignofftype","3":"SELECT","4":null,"5":null,"6":"Option\n —— Approval Required\n —— No new TWS job\n —— No batch job\n —— New TWS job added will not cause potential SL1 to SL3 severity if the job failed and is not recovered\n —— Not using TWS for job","7":"Option\n —— 56081dbac19542fa88d5d5e6d131193d\n —— d265e78e52e34c7f84eecbcc2c04f658\n —— f0e4f15414be40b6a708fc3edfe7c512\n —— 31e0335b35de4066ade211e768ad0f30\n —— ede2ce99e7d14fc4a6740db6f70162b9","8":"Approval Required","9":"56081dbac19542fa88d5d5e6d131193d","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"Deployment Approach","1":"Deployment_Approach","2":"deploymentapproach","3":"SELECT_MANY","4":null,"5":null,"6":"Option\n —— Manual with Maker/Checker\n —— CICD Deployment\n —— Blue/Green Deployment\n —— Canary Deployment","7":"Option\n —— f48ea2c9b57f41f991f05ac51d78ca9a\n —— e5db17e8101d460586039ef8adee98f0\n —— 3d8b71504af0436abc440e2ce6ce4aa6\n —— 6b782914022449489e1be4816ce241fd","8":"Manual with Maker/Checker","9":"f48ea2c9b57f41f991f05ac51d78ca9a","10":"{\"storeValue\":\"[\\\"1\\\",\\\"2\\\"]\",\"apiValue\":\"select1,select2\"}"},{"0":"Change Description","1":"changeDescribtion","2":"description","3":"TEXTAREA","4":null,"5":null,"6":null,"7":null,"8":"textarea","9":"textarea","10":"{\"storeValue\":\"textarea\",\"apiValue\":\"textarea\"}"},{"0":"Testing Signoff","1":"TestingSignoff","2":null,"3":"EXTEND_FIELD","4":null,"5":null,"6":null,"7":null,"8":null,"9":null,"10":null},{"0":"ARC Signoff","1":"HeightenSignoff","2":null,"3":"EXTEND_FIELD","4":null,"5":null,"6":null,"7":null,"8":null,"9":null,"10":null},{"0":"Project Cutover Signoff","1":"ProjectCutoverSignoff","2":null,"3":"EXTEND_FIELD","4":null,"5":null,"6":null,"7":null,"8":null,"9":null,"10":null},{"0":"Project Cutover - IDR Certification","1":"ProjectCutoverIDRSignoff","2":null,"3":"EXTEND_FIELD","4":null,"5":null,"6":null,"7":null,"8":null,"9":null,"10":null},{"0":"Optional Signoff","1":"OtherSignoff","2":null,"3":"EXTEND_FIELD","4":null,"5":null,"6":null,"7":null,"8":null,"9":null,"10":null},{"0":"Optional Artefacts","1":"OptionalSignoff","2":null,"3":"EXTEND_FIELD","4":null,"5":null,"6":null,"7":null,"8":null,"9":null,"10":null},{"0":"Approval","1":"ADD_GROUP_RJqBwyZ5fU","2":null,"3":"ADD_GROUP","4":null,"5":null,"6":null,"7":null,"8":null,"9":null,"10":null},{"0":null,"1":null,"2":"designfordataapproverstatus","3":null,"4":"D4D Data Owner","5":null,"6":null,"7":null,"8":null},{"0":"Is This CR In Scope for Design For Data (D4D)?","1":"IsthisCRinscope_forD4D","2":"designfordatachoice","3":"SELECT","4":null,"5":null,"6":"Option\n —— No\n —— Yes","7":"Option\n —— 75dde84672224fdbb81779de6d911985\n —— a1061b854502496ea736a739418706fe","8":"No","9":"75dde84672224fdbb81779de6d911985","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"Justification","1":"justificationReason","2":"designfordatajustification","3":"SELECT","4":null,"5":null,"6":"Option\n —— No-Out of scope (MVPs / Enhancements started before 01-01-2021)\n —— Decommission of hardware or software\n —— No-Upgrade OS patches\n —— No-Provisioning\n —— Backend application changes\n —— Migration of application or platform\n —— No-Pre-production\n —— No-Infra or physical tasks\n —— Infrastructure or OS update\n —— Pure control tower or dashboard delivery\n —— No- Configuration\n —— No change/minor changes in existing customer or employee journey or workflow\n —— BAU system maintenance\n —— Defects/bugs fixing or patches\n —— No-Resizing\n —— Security update or configuration\n —— Yes- This CR includes Data Requirements\n —— No-Migration\n —— No-Defect fixing, Maintenance\n —— No-Security configuration tasks","7":"Option\n —— 7ea690a23d694f579768c3359ec75e62\n —— 8c5b3bd5e14749a2be33fc8809c10d53\n —— 34cf8d100d32474fbe5fab8cbfdcee7a\n —— c96c0916e3804b62b3a3b741234c4506\n —— 1233b48b36774f699e8550422317486d\n —— 951cdeacb1bb43cf898723c188695454\n —— 075ae685733a40159a5c5253bc6068c8\n —— db73639c3fe54d07b90894390144e3a1\n —— 1e0adef096464f37a3c98ae3ceac466d\n —— 01503f2b29e64d3f88ce61b6fe09b494\n —— 6e31a0f955cf4762bf83e702321574bb\n —— e3facded84964842a090696cfb9ef1c8\n —— a1139e3309344fbe943eee5c4af5cea2\n —— 02f125bb94b740e1b23c610762f31e33\n —— 3a11d580eb3844539b63d5d4e35569cd\n —— 8418f2c6e721486a8639bb5ce44b38ff\n —— f4b95706fb24441c89ea5434232da8ab\n —— 7b19b0fafca1422db6dc5d56283d30d8\n —— 8358e638bb2a48678928ea8d420b0944\n —— e79a69c53e244f16a9992736d50e53d8","8":"No-Out of scope (MVPs / Enhancements started before 01-01-2021)","9":"7ea690a23d694f579768c3359ec75e62","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"D4D Approver","1":"d4dDataOwner","2":"designfordataowner,designfordataownername","3":"MEMBER","4":"D4D Data Owner","5":null,"6":null,"7":null,"8":"1bankid","9":"{\"userId\":\"1\",\"userName\":\"itsmuser1 (itsmuser1)\"}","10":"{\"storeValue\":\"{\\\"userId\\\":\\\"1\\\",\\\"userName\\\":\\\"itsmuser1 (itsmuser1)\\\"}\",\"apiValue\":\"1bankid\"}"},{"0":null,"1":null,"2":"designfordatarejectioncomment","3":null,"4":"D4D Data Owner","5":null,"6":null,"7":null,"8":null},{"0":"Approval Note","1":"ApprovalNote","2":null,"3":"TEXT","4":null,"5":null,"6":null,"7":null,"8":"text","9":"text","10":"{\"storeValue\":\"text\",\"apiValue\":\"text\"}"},{"0":"Details of Data Requirements (Reporting and diagnostic data)","1":"dataRequirementsDetails","2":"designfordatarequirements","3":"TEXTAREA","4":null,"5":null,"6":null,"7":null,"8":"textarea","9":"textarea","10":"{\"storeValue\":\"textarea\",\"apiValue\":\"textarea\"}"},{"0":"Justification Why Change Category Low Risk Is Selected When AI Model Recommends High Risk","1":"JustificationwhyCategory","2":"diffcatselectedfrmaimlreason","3":"TEXTAREA","4":null,"5":null,"6":null,"7":null,"8":"textarea","9":"textarea","10":"{\"storeValue\":\"textarea\",\"apiValue\":\"textarea\"}"},{"0":"Scheduled Downtime/Maintenance Approver1","1":"ScheduledApprover1","2":"downtimeapprover1_,downtimeapprover1_name","3":"MEMBER","4":"Scheduled Downtime/Maintenance Approver 1","5":null,"6":null,"7":null,"8":"1bankid","9":"{\"userId\":\"1\",\"userName\":\"itsmuser1 (itsmuser1)\"}","10":"{\"storeValue\":\"{\\\"userId\\\":\\\"1\\\",\\\"userName\\\":\\\"itsmuser1 (itsmuser1)\\\"}\",\"apiValue\":\"1bankid\"}"},{"0":"Scheduled Downtime/Maintenance Approver2","1":"ScheduledApprover2","2":"downtimeapprover2_,downtimeapprover2_name","3":"MEMBER","4":"Scheduled Downtime/Maintenance Approver 2","5":null,"6":null,"7":null,"8":"1bankid","9":"{\"userId\":\"1\",\"userName\":\"itsmuser1 (itsmuser1)\"}","10":"{\"storeValue\":\"{\\\"userId\\\":\\\"1\\\",\\\"userName\\\":\\\"itsmuser1 (itsmuser1)\\\"}\",\"apiValue\":\"1bankid\"}"},{"0":"Scheduled Downtime/Maintenance Approver3","1":"ScheduledApprover3","2":"downtimeapprover3_,downtimeapprover3_name","3":"MEMBER","4":"Scheduled Downtime/Maintenance Approver 3","5":null,"6":null,"7":null,"8":"1bankid","9":"{\"userId\":\"1\",\"userName\":\"itsmuser1 (itsmuser1)\"}","10":"{\"storeValue\":\"{\\\"userId\\\":\\\"1\\\",\\\"userName\\\":\\\"itsmuser1 (itsmuser1)\\\"}\",\"apiValue\":\"1bankid\"}"},{"0":"Scheduled Downtime/Maintenance Approver4","1":"ScheduledApprover4","2":"downtimeapprover4_,downtimeapprover4_name","3":"MEMBER","4":"Scheduled Downtime/Maintenance Approver 4","5":null,"6":null,"7":null,"8":"1bankid","9":"{\"userId\":\"1\",\"userName\":\"itsmuser1 (itsmuser1)\"}","10":"{\"storeValue\":\"{\\\"userId\\\":\\\"1\\\",\\\"userName\\\":\\\"itsmuser1 (itsmuser1)\\\"}\",\"apiValue\":\"1bankid\"}"},{"0":"Scheduled Downtime/Maintenance Approver5","1":"ScheduledApprover5","2":"downtimeapprover5_,downtimeapprover5_name","3":"MEMBER","4":"Scheduled Downtime/Maintenance Approver 5","5":null,"6":null,"7":null,"8":"1bankid","9":"{\"userId\":\"1\",\"userName\":\"itsmuser1 (itsmuser1)\"}","10":"{\"storeValue\":\"{\\\"userId\\\":\\\"1\\\",\\\"userName\\\":\\\"itsmuser1 (itsmuser1)\\\"}\",\"apiValue\":\"1bankid\"}"},{"0":null,"1":null,"2":"downtimeapproverrejectioncomment1","3":null,"4":"Scheduled Downtime/Maintenance Approver 1","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"downtimeapproverrejectioncomment2","3":null,"4":"Scheduled Downtime/Maintenance Approver 2","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"downtimeapproverrejectioncomment3","3":null,"4":"Scheduled Downtime/Maintenance Approver 3","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"downtimeapproverrejectioncomment4","3":null,"4":"Scheduled Downtime/Maintenance Approver 4","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"downtimeapproverrejectioncomment5","3":null,"4":"Scheduled Downtime/Maintenance Approver 5","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"downtimeapproverstatus1","3":null,"4":"Scheduled Downtime/Maintenance Approver 1","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"downtimeapproverstatus2","3":null,"4":"Scheduled Downtime/Maintenance Approver 2","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"downtimeapproverstatus3","3":null,"4":"Scheduled Downtime/Maintenance Approver 3","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"downtimeapproverstatus4","3":null,"4":"Scheduled Downtime/Maintenance Approver 4","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"downtimeapproverstatus5","3":null,"4":"Scheduled Downtime/Maintenance Approver 5","5":null,"6":null,"7":null,"8":null},{"0":"Scheduled Downtime Start & End Time (YYYY-MM-DD HH:MM)","1":"ScheduledDowntime_Time","2":"downtimestartdatetime,downtimeenddatetime","3":"DATERANGE","4":null,"5":null,"6":null,"7":null,"8":"This will be split two field to sync","9":"{\"startDate\":1745736243865,\"endDate\":1745736243865}","10":"{\"storeValue\":\"{\\\"startDate\\\":1745736243865,\\\"endDate\\\":1745736243865}\",\"apiValue\":\"This will be split two field to sync\"}"},{"0":"DR Capabilities Impact","1":"DRCapabilitiesImpact","2":"drcapabilitiesimpact","3":"SELECT","4":null,"5":null,"6":"Option\n —— No - No DR Capabilities Impact\n —— Yes - DR Capabilities Impact and have informed DR team","7":"Option\n —— 9150b29c87a9405d8f59a7204348ab2b\n —— 09a09495bc3941428d2c71c257054e7f","8":"No - No DR Capabilities Impact","9":"9150b29c87a9405d8f59a7204348ab2b","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"Explainability","1":"explainability","2":"explainability","3":"INPUT","4":null,"5":null,"6":null,"7":null,"8":"input","9":"input","10":"{\"storeValue\":\"input\",\"apiValue\":\"input\"}"},{"0":"Explainibility Base","1":"explainabilityBase","2":"explainabilitybase","3":"INPUT","4":null,"5":null,"6":null,"7":null,"8":"input","9":"input","10":"{\"storeValue\":\"input\",\"apiValue\":\"input\"}"},{"0":"Explainability Scores","1":"explainabilityScores","2":"explainabilityscores","3":"INPUT","4":null,"5":null,"6":null,"7":null,"8":"input","9":"input","10":"{\"storeValue\":\"input\",\"apiValue\":\"input\"}"},{"0":null,"1":"whatisthefailedchangecategor","2":"failedcrcategory","3":null,"4":null,"5":null,"6":null,"7":null,"8":null},{"0":"Feature Values","1":"featureValues","2":"featurevalues","3":"INPUT","4":null,"5":null,"6":null,"7":null,"8":"input","9":"input","10":"{\"storeValue\":\"input\",\"apiValue\":\"input\"}"},{"0":"Risk Matrix","1":"ADD_GROUP_28gGG1fIsi","2":null,"3":"ADD_GROUP","4":null,"5":null,"6":null,"7":null,"8":null,"9":null,"10":null},{"0":null,"1":null,"2":"hasignoffapproverlogin","3":null,"4":"HA & DR Flip Signoff","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"hasignoffrejectionreason","3":null,"4":"HA & DR Flip Signoff","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"hasignoffstatus","3":null,"4":"HA & DR Flip Signoff","5":null,"6":null,"7":null,"8":null},{"0":"HA & DR Flip Signoff","1":"HADRFlipsignoff","2":"hasignofftype","3":"SELECT","4":null,"5":null,"6":"Option\n —— AWS Deployment\n —— Signoff is not required for CAT4 application\n —— No infrastructure changes are required.\n —— Implementation to PAT environment\n —— Application changes only with no new interface\n —— Approval Required","7":"Option\n —— b2ac6c37d15b45049cd49b85d13de998\n —— b73176e5af524e26b78cf55a2332c62e\n —— 49db2f5c443140c28e82fc7e5f54b37f\n —— dbb717ba620d4759be4d170fe7af1306\n —— 385125bcc2ad41ceb4ab593b5d3f4138\n —— b7f8164d8ede4f7fb598d7301e274e07","8":"AWS Deployment","9":"b2ac6c37d15b45049cd49b85d13de998","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"Hold Batch Job and Implement Same JCL","1":"Holdbatch_job","2":"holdbatchjob","3":"RADIO","4":null,"5":null,"6":"Option\n —— No\n —— Yes","7":"Option\n —— 75dde84672224fdbb81779de6d911985\n —— a1061b854502496ea736a739418706fe","8":"No","9":"75dde84672224fdbb81779de6d911985","10":"{\"storeValue\":\"radioId\",\"apiValue\":\"radioLabel\"}"},{"0":null,"1":null,"2":"idrsignoffcaseid","3":null,"4":"IDR Signoff","5":null,"6":null,"7":null,"8":null},{"0":"IDR Certification","1":"IDRsignoff","2":"idrsignofftype","3":"SELECT","4":null,"5":null,"6":"Option\n —— No request submitted in RIT Service request portal for infrastructure change\n —— No new S/W component introduced or new instance (Middleware/Database)created on existing system/application\n —— Signoff Attachment and/or Case ID Required\n —— If the changes are only application release","7":"Option\n —— bfc017ab30fd4093836ab570dfdfb804\n —— 7cfabf1ae8684ea1aa92c86561b673f8\n —— 271f3a2d5dc04123b5d55c78e586e97b\n —— 29a0a376ab31414f8d505f81241383cd","8":"No request submitted in RIT Service request portal for infrastructure change","9":"bfc017ab30fd4093836ab570dfdfb804","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":null,"1":null,"2":"idrsignoffurl","3":null,"4":"IDR Signoff","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"rcastatus","3":null,"4":null,"5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"cmcrollbackduration","3":null,"4":null,"5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"mainframedata","3":null,"4":null,"5":null,"6":null,"7":null,"8":null},{"0":"Impact and Risks Identified When Doing This Change","1":"identifiedImpactAndRisks","2":"impactriskidentified","3":"SELECT","4":null,"5":null,"6":"Option\n —— No impact as changes are performed 1 set at a time\n —— Minimal impact/intermittent disruption and change done during downtime/maintenance window\n —— Service will not be available and changed during downtime/maintenance window\n —— Minimal impact as this is for information collection\n —— Minimal impact when doing online changes\n —— Minimal impact as there is an alternative to service production load\n —— Minimal impact as this setup is minimally used for production\n —— Minimal impact as done during service minimal operation hours\n —— TW regulatory operation checklist: The changes made has no impact to the checklist as per initial launch","7":"Option\n —— 48f2e436c3594050a05b19ed8e016830\n —— b91bef90d3e1461f84b3a683edb22682\n —— 8a8ca8c7bbe346ed81dba3fea2962189\n —— 15fa7049c638497890e743da316af91c\n —— 39d46bcf8a4a4c53ba5a092c01c84a69\n —— c41ba91575264e5f89f2a4cdd4e2c9d6\n —— bc23d8b8158b490086e25a70f7b663e8\n —— cf95e0da24914bf99defa043f0686eac\n —— d4c71ac0f663487e94e0a345df940ac5","8":"No impact as changes are performed 1 set at a time","9":"48f2e436c3594050a05b19ed8e016830","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":null,"1":null,"2":"impacttomainframeapproverlogin","3":null,"4":"Impact To Mainframe Signoff","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"impacttomainframerejectionreason","3":null,"4":"Impact To Mainframe Signoff","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"impacttomainframestatus","3":null,"4":"Impact To Mainframe Signoff","5":null,"6":null,"7":null,"8":null},{"0":"Impact to Mainframe Signoff","1":"ImpactToMainframe","2":"impacttomainframetype","3":"SELECT","4":null,"5":null,"6":"Option\n —— No interface/dependency on mainframe monthend/critical batch\n —— Approval Required\n —— No mainframe batch job","7":"Option\n —— 6111de27375f433aad1b56a9cc951521\n —— a634e6d7d73e4fd096af042f1ae9ffa8\n —— d6a0c1863f454dcfb2741a1cd59d3945","8":"No interface/dependency on mainframe monthend/critical batch","9":"6111de27375f433aad1b56a9cc951521","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":null,"1":null,"2":"implementationplan","3":null,"4":null,"5":null,"6":null,"7":null,"8":null},{"0":"Implementation Start & End Time (YYYY-MM-DD HH:MM)","1":"Implementation_Time","2":"implementationplanschedulestart,implementationplanscheduleenddate","3":"DATERANGE","4":null,"5":null,"6":null,"7":null,"8":"This will be split two field to sync","9":"{\"startDate\":1745736243865,\"endDate\":1745736243865}","10":"{\"storeValue\":\"{\\\"startDate\\\":1745736243865,\\\"endDate\\\":1745736243865}\",\"apiValue\":\"This will be split two field to sync\"}"},{"0":"Implementer Groups","1":"implementergroup","2":"implementergroup","3":"GROUP","4":null,"5":null,"6":null,"7":null,"8":"CN_DBSINF_DC","9":"{\"groupId\":\"1\",\"groupName\":\"CN_DBSINF_DC\"}","10":"{\"storeValue\":\"{\\\"groupId\\\":\\\"1\\\",\\\"groupName\\\":\\\"CN_DBSINF_DC\\\"}\",\"apiValue\":\"CN_DBSINF_DC\"}"},{"0":"ISS Group","1":"ISSGroup","2":"issoverduepatchapprover","3":"GROUP","4":"ISS Overdue Patch","5":null,"6":null,"7":null,"8":"CN_DBSINF_DC","9":"{\"groupId\":\"1\",\"groupName\":\"CN_DBSINF_DC\"}","10":"{\"storeValue\":\"{\\\"groupId\\\":\\\"1\\\",\\\"groupName\\\":\\\"CN_DBSINF_DC\\\"}\",\"apiValue\":\"CN_DBSINF_DC\"}"},{"0":"ISS Approver","1":"ISSApprover1","2":"issoverduepatchapprovergroup","3":"MEMBER","4":"ISS Overdue Patch","5":null,"6":null,"7":null,"8":"1bankid","9":"{\"userId\":\"1\",\"userName\":\"itsmuser1 (itsmuser1)\"}","10":"{\"storeValue\":\"{\\\"userId\\\":\\\"1\\\",\\\"userName\\\":\\\"itsmuser1 (itsmuser1)\\\"}\",\"apiValue\":\"1bankid\"}"},{"0":null,"1":null,"2":"issoverduepatchapproverrejectioncode","3":null,"4":"ISS Overdue Patch","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"issoverduepatchapproverstatus","3":null,"4":"ISS Overdue Patch","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"issoverduepatchapproverstatusreason","3":null,"4":"ISS Overdue Patch","5":null,"6":null,"7":null,"8":null},{"0":"Job Need to Access Online Files?","1":"JobNeedToAccessOnlineFiles","2":"jobneedtoaccessonlinefiles","3":"SELECT","4":null,"5":null,"6":"Option\n —— No\n —— Yes","7":"Option\n —— 75dde84672224fdbb81779de6d911985\n —— a1061b854502496ea736a739418706fe","8":"No","9":"75dde84672224fdbb81779de6d911985","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"Job Type","1":"jobType","2":"jobtype","3":"SELECT","4":null,"5":null,"6":"Option\n —— OP\n —— P1\n —— C1\n —— R1\n —— P2\n —— W1","7":"Option\n —— b8d4aa58f5754629baa9eeec0892dc4d\n —— f90d7bd294894b49bce2d6ed8d7e9d4a\n —— 14876b74b95045bb8a9cc297ce0e4b77\n —— b13f0b0a595847e484ff172fb3d8b936\n —— ea163af5768442af8eb3a2d28da1b11c\n —— f84c0ea4503848c6bc8f32b3ccd14157","8":"OP","9":"b8d4aa58f5754629baa9eeec0892dc4d","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"L1 Change Manager","1":"L1Change_Manager","2":"l1changemanagerapprovername","3":"MEMBER","4":"L1 Change Manager","5":null,"6":null,"7":null,"8":"1bankid","9":"{\"userId\":\"1\",\"userName\":\"itsmuser1 (itsmuser1)\"}","10":"{\"storeValue\":\"{\\\"userId\\\":\\\"1\\\",\\\"userName\\\":\\\"itsmuser1 (itsmuser1)\\\"}\",\"apiValue\":\"1bankid\"}"},{"0":null,"1":null,"2":"l1changemanagerapproverrejectioncode","3":null,"4":"L1 Change Manager","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"l1changemanagerapproverstatus","3":null,"4":"L1 Change Manager","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"l1changemanagerstatusreason","3":null,"4":"L1 Change Manager","5":null,"6":null,"7":null,"8":null},{"0":"The Following Live Verification (LV) Will Be Done After Implementation & Reversion","1":"liveVerificationAfterImplementat","2":"liveverification","3":"SELECT","4":null,"5":null,"6":"Option\n —— Technical Live Verification (LV)\n —— Technical & Business Live Verification(LV)\n —— Business LIve Verification(LV)\n —— NA\n —— Technical Live Verification(LV)\n —— Technical & Business Live Verification (LV)","7":"Option\n —— 1feabdb62e16477eb82a0e56838d7893\n —— 0f8d08ec3f7446f999774b0b0faf00f1\n —— 0681e50c0f24470f9276900fa137a7b0\n —— 7180a17eb5424d09810ca78868238c32\n —— 5a6cacdbef9443ff985c82873453dac6\n —— 84ca02b229a74c798aacf16e3afa0ea9","8":"Technical Live Verification (LV)","9":"1feabdb62e16477eb82a0e56838d7893","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"LOB","1":"lob","2":"lob","3":"SELECT","4":null,"5":null,"6":"Option\n —— MOT\n —— DATA\n —— C2E\n —— DBSV\n —— Location IT\n —— ITSS\n —— ITT\n —— ISS\n —— CT\n —— CE\n —— CBGT\n —— CST\n —— CES\n —— TS\n —— FR\n —— IBGT\n —— EASRE","7":"Option\n —— 74d90ccdb4f947689fd3272898ee198e\n —— da77fb8e808547f68e19acb3ca5175e7\n —— 3a4da9bcb733497984d786da42f2e439\n —— a5ab2277cbd54de7a101c3736380acf4\n —— c74d79be18de45efbef3bf8eb3bc02ee\n —— 34042dd2d7114ecf9479a13f9953c063\n —— b696cff4aa7d43b68b6a2d7ebd73433f\n —— 45eb96d75c5e4c02b8898265423a2326\n —— c3d5bb4ee8c9436090856e55fb8c1c11\n —— 557e4955c069466b9a90c890f0eb58ee\n —— 542fb01994c84c0d8d68c88496153655\n —— ddecb0d4ae3d4c5382a681a12157f12e\n —— b7750f1ceacf4fc28df4dec4b1fd8af9\n —— 123c781dae434ceeafdfa1264575853c\n —— 2614b6e50baf4a2687960c221cf0ac23\n —— fca20081b96b4b21a25ce0f7a6a2f903\n —— 80fb171c355246ee97190142a4b21e67","8":"MOT","9":"74d90ccdb4f947689fd3272898ee198e","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"Location","1":"location","2":"location","3":"SELECT","4":null,"5":null,"6":"Option\n —— Pre-prod\n —— PAT\n —— DR\n —— QA\n —— Prod\n —— Prod and DR","7":"Option\n —— 0a91739e52c84aac8275ad1c973c8364\n —— 50e84d2de7934aeaa0948ded80cacbca\n —— 514d249059734c11bc441f1f5ee2960f\n —— b65924bddb3a40dfa4968d5e633245a0\n —— 030c99d91ce44490b63d738c42fc8287\n —— 501501de5ce647f4abf8e9e38cf04cd5","8":"Pre-prod","9":"0a91739e52c84aac8275ad1c973c8364","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"LPAR (Mandatory for mainframe CR)","1":"lpar","2":"lpar","3":"SELECT_MANY","4":null,"5":null,"6":"Option\n —— DR CPUF1\n —— CPE2\n —— NA\n —— PKB1\n —— APP4\n —— PDS2\n —— PDS1\n —— DR CPUK\n —— APP2\n —— CPE1\n —— CPW2\n —— DR CPUF2\n —— CPR2\n —— APP1\n —— APP3\n —— CPW1\n —— PDS4\n —— PDS3\n —— DR CPUF4\n —— CPR1\n —— DR CPUF3","7":"Option\n —— fffa7ffef612464cafd7891dae7324d4\n —— ab9620683a714d8d9888502742ad6000\n —— d75ee21052804f4c80904e17aa926132\n —— 6a509701c02748dc88e5680f1a4dfb43\n —— 752a30472d2e40dfbae02e991d196b0a\n —— c62e9d0e1f3a4f23b540a6ae0b2f2378\n —— 8860103e7cca43d485730f2ed9cbb346\n —— 19de316c38794e23a6ac1f1779e302be\n —— f756a26274f044348fe03dd5fcee0772\n —— 752bea74356f49e49744ddeefdba74e9\n —— 5077b3eb04b0447495b31011e2239cf4\n —— f9ee8acb757446cc973fd143adb3b49c\n —— 0c62d6db64804fb9ac5e42d4c87d0b5c\n —— 0d0abe3385e94f3591642a4dc86ca767\n —— 04c362f4980446c78f8655031198f7ee\n —— 4751ab96634845ca9544543d2e9d425c\n —— 7acfc979ee2a414bafc2a45298b79f2a\n —— 77e4f4e94cb24563a2107aa87e76e8d8\n —— 525bfbe735e0470bbdedb69d79def6dc\n —— e6d5b1079cdd4066ae8559c28ea85071\n —— 334f45410bf1443496ae7723344250d6","8":"DR CPUF1","9":"fffa7ffef612464cafd7891dae7324d4","10":"{\"storeValue\":\"[\\\"1\\\",\\\"2\\\"]\",\"apiValue\":\"select1,select2\"}"},{"0":"Main Application Requiring Change","1":"mainApplicationRequiringChange","2":"mainappimpacted","3":"SELECT","4":null,"5":null,"6":"Option\n —— SampleData","7":"Option\n —— a0rnQ7","8":"SampleData","9":"a0rnQ7","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"Mainframe Critical/Month-End Batch Impact","1":"Mainframeritica","2":"mainframecriticalmonthendbatchimpact","3":"SELECT","4":null,"5":null,"6":"Option\n —— No - No Mainframe Critical/Month-End Batch Impact\n —— Yes - Jobs will be on hold and have informed Mainframe DC Ops team","7":"Option\n —— 21f174d20d654dd0ae0b0a2f69813eb2\n —— 86349016151145219405f711c0331534","8":"No - No Mainframe Critical/Month-End Batch Impact","9":"21f174d20d654dd0ae0b0a2f69813eb2","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"Mainframe CR Type","1":"mainframeCRType","2":"mainframecrtype","3":"SELECT","4":null,"5":null,"6":"Option\n —— Mainframe Package Deployment\n —— NA\n —— Mainframe Adhoc Job Request","7":"Option\n —— 32134ef7191b4e50b942551784534d43\n —— d1a5372a82c2437587ac91607a9757d7\n —— b2ef010eda854ef482fe64b0674e2cc2","8":"Mainframe Package Deployment","9":"32134ef7191b4e50b942551784534d43","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"DBRM Member","1":"DBRMMember","2":"mainframedata.\"DBRM Members\"[*].dbrmmember","3":"INPUT","4":"DBRMMemberDetailsSection","5":"TABLE_FORM","6":null,"7":null,"8":"input","9":"input","10":null},{"0":"Input Data","1":"InputData","2":"mainframedata.\"Input Data\"[*].inputdata","3":"INPUT","4":"InputDataDetailsSection","5":"TABLE_FORM","6":null,"7":null,"8":"input","9":"input","10":null},{"0":"Date Time Last Modified (YYYY-MM-DD HH:MM)","1":"DateTimeLastModified","2":"mainframedata.\"Input Data\"[*].inputdatadatetime","3":"DATE","4":"InputDataDetailsSection","5":"TABLE_FORM","6":null,"7":null,"8":"2025-04-27 14:44:03","9":"1745736243354","10":null},{"0":"Date Time Last Modified (YYYY-MM-DD HH:MM)","1":"DateTimeModified","2":"mainframedata.\"Job Details\"[*].jobdatetime","3":"DATE","4":"JobDetailsSection","5":"TABLE_FORM","6":null,"7":null,"8":"2025-04-27 14:44:03","9":"1745736243354","10":null},{"0":"Duration (In Mins)","1":"Duration","2":"mainframedata.\"Job Details\"[*].jobduration","3":"NUMBER","4":"JobDetailsSection","5":"TABLE_FORM","6":null,"7":null,"8":null,"9":null,"10":null},{"0":"Job Details","1":"JobDetails","2":"mainframedata.\"Job Details\"[*].jobname","3":"INPUT","4":"JobDetailsSection","5":"TABLE_FORM","6":null,"7":null,"8":"input","9":"input","10":null},{"0":"Load Module Compiled","1":"LoadModuleCompiled","2":"mainframedata.\"Load Module\"[*].modulecompiled","3":"INPUT","4":"LoadModuleDetailsSection","5":"TABLE_FORM","6":null,"7":null,"8":"input","9":"input","10":null},{"0":"Date Time Compiled (YYYY-MM-DD HH:MM)","1":"DateTimeCompiled","2":"mainframedata.\"Load Module\"[*].moduledatetime","3":"DATE","4":"LoadModuleDetailsSection","5":"TABLE_FORM","6":null,"7":null,"8":"2025-04-27 14:44:03","9":"1745736243354","10":null},{"0":"Mainframe Package Creator 1BankID","1":"mainframePackageCreator1BankID","2":"mainframepackagecreator1bankid","3":"INPUT","4":null,"5":null,"6":null,"7":null,"8":"input","9":"input","10":"{\"storeValue\":\"input\",\"apiValue\":\"input\"}"},{"0":"Mainframe Package Creator TSO ID","1":"mainframePackageCreatorTSOID","2":"mainframepackagecreatortsoid","3":"INPUT","4":null,"5":null,"6":null,"7":null,"8":"input","9":"input","10":"{\"storeValue\":\"input\",\"apiValue\":\"input\"}"},{"0":"Mainframe Package Name","1":"mainframePackageName","2":"mainframepackagename","3":"INPUT","4":null,"5":null,"6":null,"7":null,"8":"input","9":"input","10":"{\"storeValue\":\"input\",\"apiValue\":\"input\"}"},{"0":"Mainframe Package Type","1":"MainframePackage_Type","2":"mainframepackagetype","3":"SELECT","4":null,"5":null,"6":"Option\n —— Online\n —— EOS\n —— Batch","7":"Option\n —— da040d86bef141e0a1bab53fccbfbcaa\n —— 269090f450ac427ca18bcf6892f0deea\n —— 4fc45794115b49268bd8cef7ba748dfa","8":"Online","9":"da040d86bef141e0a1bab53fccbfbcaa","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"Is Major Change","1":"IsMajorChange","2":"majorchangeflag","3":"RADIO","4":null,"5":null,"6":"Option\n —— No\n —— Yes","7":"Option\n —— 75dde84672224fdbb81779de6d911985\n —— a1061b854502496ea736a739418706fe","8":"No","9":"75dde84672224fdbb81779de6d911985","10":"{\"storeValue\":\"radioId\",\"apiValue\":\"radioLabel\"}"},{"0":"Major Interdependencies","1":"interdependenciesDescription","2":"majorinterdependencies","3":"SELECT","4":null,"5":null,"6":"Option\n —— No - No Major Interdependencies\n —— Yes - Major interdependences have been evaluated, local, regional or external related dependencies e.g. interface to external party MAS for interface file.","7":"Option\n —— 008b55d0ce204f219773905a295c9725\n —— d88afc0cf82842f393976f6c30ebf609","8":"No - No Major Interdependencies","9":"008b55d0ce204f219773905a295c9725","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"MD Approver","1":"Tech_MDApprover","2":"mdapprover","3":"MEMBER","4":"Tech MD","5":null,"6":null,"7":null,"8":"1bankid","9":"{\"userId\":\"1\",\"userName\":\"itsmuser1 (itsmuser1)\"}","10":"{\"storeValue\":\"{\\\"userId\\\":\\\"1\\\",\\\"userName\\\":\\\"itsmuser1 (itsmuser1)\\\"}\",\"apiValue\":\"1bankid\"}"},{"0":"MD Approver Group","1":"TechMDApproverGroup","2":"mdapprovergroup","3":"GROUP","4":"Tech MD","5":null,"6":null,"7":null,"8":"CN_DBSINF_DC","9":"{\"groupId\":\"1\",\"groupName\":\"CN_DBSINF_DC\"}","10":"{\"storeValue\":\"{\\\"groupId\\\":\\\"1\\\",\\\"groupName\\\":\\\"CN_DBSINF_DC\\\"}\",\"apiValue\":\"CN_DBSINF_DC\"}"},{"0":null,"1":null,"2":"mdapproverrejectioncode","3":null,"4":"Tech MD","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"mdapproverstatus","3":null,"4":"Tech MD","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"mddelegatesignoffapproverlogin","3":null,"4":"MD Delegate Signoff","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"mddelegatesignoffrejectionreason","3":null,"4":"MD Delegate Signoff","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"mddelegatesignoffstatus","3":null,"4":"MD Delegate Signoff","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"mddelegatesignofftype","3":null,"4":"MD Delegate Signoff","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"mdstatusreason","3":null,"4":"Tech MD","5":null,"6":null,"7":null,"8":null},{"0":"Other Application(s) Impacted","1":"otherApplicationImpacted","2":"otherapplicationimpacted","3":"SELECT_MANY","4":null,"5":null,"6":"Option\n —— sample","7":"Option\n —— ynB3oD","8":"sample","9":"ynB3oD","10":"{\"storeValue\":\"[\\\"1\\\",\\\"2\\\"]\",\"apiValue\":\"select1,select2\"}"},{"0":"Parent Change Request Number","1":"parentChange","2":"parentchange","3":"INPUT","4":null,"5":null,"6":null,"7":null,"8":"input","9":"input","10":"{\"storeValue\":\"input\",\"apiValue\":\"input\"}"},{"0":"Potential Blast Radius If the Change Fails","1":"blastRadiusDescription","2":"potentialblastradius","3":"SELECT","4":null,"5":null,"6":"Option\n —— Yes - Downtime / maintenance has been declared\n —— No - Potential blast radius, can be reverted with no impact\n —— No - Potential blast radius, change done during application non operational hours\n —— No - Service will not be available and changed during downtime/maintenace window","7":"Option\n —— 89e7b96dd3d24ca4a277afdedadcceee\n —— 0d5aee7810c84c62b5ffbddf22c6602d\n —— c449ba61bd6b4d60a0f1da831abf4226\n —— e9ce28e859854851a2051d0d1f73b141","8":"Yes - Downtime / maintenance has been declared","9":"89e7b96dd3d24ca4a277afdedadcceee","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"Project Objective","1":"projectCutOverProjectObjective","2":"projectobjective","3":"INPUT","4":null,"5":null,"6":null,"7":null,"8":"input","9":"input","10":"{\"storeValue\":\"input\",\"apiValue\":\"input\"}"},{"0":"Project Scope","1":"projectCutOverProjectScope","2":"projectscope","3":"INPUT","4":null,"5":null,"6":null,"7":null,"8":"input","9":"input","10":"{\"storeValue\":\"input\",\"apiValue\":\"input\"}"},{"0":null,"1":"appmanagerapproval","2":"rcaapprover1","3":null,"4":null,"5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"rcaapprover1status","3":null,"4":"App Manager Approval","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"rcaapprover1statusreason","3":null,"4":"App Manager Approval","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"rcacmapproverstatus","3":null,"4":"Risk Manager Approval","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"rcacmapproverstatusreason","3":null,"4":"Risk Manager Approval","5":null,"6":null,"7":null,"8":null},{"0":null,"1":"IncidentSummary","2":"rcaincidentsummary","3":null,"4":null,"5":null,"6":null,"7":null,"8":null},{"0":null,"1":"RCAStatus","2":"rcastatus","3":null,"4":null,"5":null,"6":null,"7":null,"8":null},{"0":"Recommended Risk Level","1":"recommendedRisk","2":"recommendedrisklevel","3":"INPUT","4":null,"5":null,"6":null,"7":null,"8":"input","9":"input","10":"{\"storeValue\":\"input\",\"apiValue\":\"input\"}"},{"0":"Regression Testing","1":"regressiontesting","2":"regressiontesting","3":"SELECT","4":null,"5":null,"6":"Option\n —— Yes - Regression Testing Signed off\n —— NA - Non data import\n —— NA - PAT Infra Env Setup\n —— NA - Facility\n —— NA - Maintenance downtime announcement\n —— NA - Log dump collection\n —— NA - For servers/application full decommissioning\n —— NA Ã¢â‚¬â€œ For servers/application full decommissioning\n —— NA - Firewall/Network whitelist of new IPs\n —— NA - DB plan\n —— NA - Standalone Data patch\n —— NA - New access\n —— NA - BAU Backup infra activities/Storage decommission\n —— NA - No UAT servers/devices\n —— NA - Faulty hardware replacement\n —— NA - Reporting\n —— NA - Backup execution\n —— NA - HA DR Flip(exclude MF)\n —— NA - Data download to non-prod,Data restoration\n —— NA - Rerunning an existing batch job (outside of TWS)\n —— NA - Restart servers/services\n —— NA - Data Masking\n —— NA - IDs related activities\n —— NA - Network name/address change\n —— NA - Health check\n —— NA - CPU/memory/hard disk/storage/file system change\n —— NA - Certificate renewal/Key Generation\n —— NA - Pre-production setup\n —— NA - Firewall Port change\n —— NA - Recover Batch Job Abends for existing jobs","7":"Option\n —— 0e00367e92344271b5b766f34e227e41\n —— 5798ad971bc2454ea16a5f1b8f27c865\n —— 4cf39e62cbef4f84b027b54f10476421\n —— a4e39a295abb48f89ef45cca5c36f48b\n —— 8bc50dbb57a34dab9c82e2749304a797\n —— ad5237de844443728778a6fbd0572f8b\n —— bf019e5d8c064da091e7847992338abc\n —— f950ad4df5d0412985cc0ee9dc008d8a\n —— 5b4a3632d795466fafc55e797e32518c\n —— 8dc70880e9334982adfa1aae77882a7d\n —— 9a5d2e9d0ceb4b57adaf74564a6cb534\n —— b6d87e13309847e08c9716d53cde4c56\n —— 1827dd78f6a54d57b99fc92428853428\n —— 7dd7dba9bf594db1a8071e5824e8bb17\n —— 63176005c2714df8bc074944c52c92c2\n —— 220aa4ebcb65455c947d5db8aa4bd955\n —— 3b63ca622d7947729761b1e7461dd1ae\n —— a52e7f4cad8c4feead1ed776b40a524b\n —— 0e683c1c03bd41edba98b0ba22b8e0bf\n —— 10b0b7bc178b423c8ac7075097183598\n —— 7ef81f662a85486b8fc08baa4b97a6ca\n —— b300782fd1574f37b2790f3b92c6350a\n —— 12a6e74f427140c49bb3287b106bbe3c\n —— 7b548bbd679148c7a1b4d9c0535e4c76\n —— 93dbcaddfc9b45dbb2e8422ee4ef8eac\n —— f77d9d96687248d689c5c4b874f67e53\n —— b4c1958810324f3caeb15166be305aa7\n —— b62455caa2d44c3bad487719bac99b64\n —— 41a78c088b104249950462e7dd665a97\n —— a4ffa854ac6b4f64a4d41ae4f15db369","8":"Yes - Regression Testing Signed off","9":"0e00367e92344271b5b766f34e227e41","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"Related Incident Ticket Number","1":"relatedIncident","2":"relatedincident","3":"INPUT","4":null,"5":null,"6":null,"7":null,"8":"input","9":"input","10":"{\"storeValue\":\"input\",\"apiValue\":\"input\"}"},{"0":null,"1":"anyincidentticketraisedduetothe","2":"relatedincidentfromcrfail","3":null,"4":null,"5":null,"6":null,"7":null,"8":null},{"0":"L1.5 Release Management Group","1":"ReleaseManagerGroup","2":"releasemanagergroup","3":"GROUP","4":"L1.5 Release Manager Team","5":null,"6":null,"7":null,"8":"CN_DBSINF_DC","9":"{\"groupId\":\"1\",\"groupName\":\"CN_DBSINF_DC\"}","10":"{\"storeValue\":\"{\\\"groupId\\\":\\\"1\\\",\\\"groupName\\\":\\\"CN_DBSINF_DC\\\"}\",\"apiValue\":\"CN_DBSINF_DC\"}"},{"0":"Release Tickets List (Use comma to separate multiple Release Tickets)","1":"DroneTicket","2":"releaseticketslist","3":"TEXTAREA","4":null,"5":null,"6":null,"7":null,"8":"textarea","9":"textarea","10":"{\"storeValue\":\"textarea\",\"apiValue\":\"textarea\"}"},{"0":"Resource Engagement","1":"Resource_Engagement","2":"resourceengagement","3":"SELECT_MANY","4":null,"5":null,"6":"Option\n —— App LV\n —— Command Centre\n —— Infra LV\n —— BU LV\n —— External Parties\n —— Customer Contact Centre\n —— SNOC","7":"Option\n —— 40cc373ccabe414e81ca54607d8109cf\n —— ec81fb16bd9c46f0ae36647d1ef9da8c\n —— 978a43d8c7a0453ab7bf5c4e576917bb\n —— 688875fe699f41a4a2a6981506d65fcc\n —— 4df7d061902e420a8ebb718526f16ac4\n —— 93b63eb4e255455a8406ee048cb6f0f2\n —— 9cd9b8c3abb74dee84050cfb1b25e9d1","8":"App LV","9":"40cc373ccabe414e81ca54607d8109cf","10":"{\"storeValue\":\"[\\\"1\\\",\\\"2\\\"]\",\"apiValue\":\"select1,select2\"}"},{"0":"Reversion Approach","1":"Reversion_Approach","2":"reversionapproach","3":"SELECT_MANY","4":null,"5":null,"6":"Option\n —— Manual reversion with Maker/Checker\n —— CICD Reversion\n —— Restore from backup/snapshot\n —— Blue/Green Deployment\n —— NA","7":"Option\n —— b44c46d5ecac4a80aea2bac668877c23\n —— 9aef11d046054c58811ad46e7aaba156\n —— c9cd22f865674e62acd985d0618ac78d\n —— 1e86e746cc6243959b9024a7fdda38ae\n —— 49414f3d9a204457860debf6820c6933","8":"Manual reversion with Maker/Checker","9":"b44c46d5ecac4a80aea2bac668877c23","10":"{\"storeValue\":\"[\\\"1\\\",\\\"2\\\"]\",\"apiValue\":\"select1,select2\"}"},{"0":null,"1":null,"2":"reversionplan","3":null,"4":null,"5":null,"6":null,"7":null,"8":null},{"0":"Reversion Start & End Time (YYYY-MM-DD HH:MM)","1":"Reversion_Time","2":"reversionplanschedulestartdate,reversionplanscheduleenddate","3":"DATERANGE","4":null,"5":null,"6":null,"7":null,"8":"This will be split two field to sync","9":"{\"startDate\":1745736243865,\"endDate\":1745736243865}","10":"{\"storeValue\":\"{\\\"startDate\\\":1745736243865,\\\"endDate\\\":1745736243865}\",\"apiValue\":\"This will be split two field to sync\"}"},{"0":"L1 Risk Manager","1":"L1Risk_Manager","2":"riskmanagerapprovername","3":"MEMBER","4":"L1 Risk Manager","5":null,"6":null,"7":null,"8":"1bankid","9":"{\"userId\":\"1\",\"userName\":\"itsmuser1 (itsmuser1)\"}","10":"{\"storeValue\":\"{\\\"userId\\\":\\\"1\\\",\\\"userName\\\":\\\"itsmuser1 (itsmuser1)\\\"}\",\"apiValue\":\"1bankid\"}"},{"0":null,"1":null,"2":"riskmanagerapproverrejectioncode","3":null,"4":"L1 Risk Manager","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"riskmanagerapproverstatus","3":null,"4":"L1 Risk Manager","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"riskmanagerstatusreason","3":null,"4":"L1 Risk Manager","5":null,"6":null,"7":null,"8":null},{"0":"How the Identified Risks Are Mitigated When Doing This Change?","1":"riskMitigationPlan","2":"riskmitigated","3":"SELECT","4":null,"5":null,"6":"Option\n —— Changes will be reverted, if any issue is noticed\n —— The identified risks are minimal as all the servers are still under Pre-Prod stage\n —— Devices are already decommissioned and not reachable from network\n —— These are low risk BAU activities with no system configuration changes","7":"Option\n —— 80ff7f40be674d2f8d28ef737b805e4c\n —— 4c12d0cf51d14044b9fd66a8e3f1ac7f\n —— d251225962fb40c6b848dfd1654eee3e\n —— 37a369e9642f47bfb56590dd4d6e3482","8":"Changes will be reverted, if any issue is noticed","9":"80ff7f40be674d2f8d28ef737b805e4c","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"Risk Score","1":"riskScore","2":"riskscore","3":"INPUT","4":null,"5":null,"6":null,"7":null,"8":"input","9":"input","10":"{\"storeValue\":\"input\",\"apiValue\":\"input\"}"},{"0":"Risk Threshold","1":"riskThreshold","2":"riskthreshold","3":"INPUT","4":null,"5":null,"6":null,"7":null,"8":"input","9":"input","10":"{\"storeValue\":\"input\",\"apiValue\":\"input\"}"},{"0":null,"1":null,"2":"rmapproverrejectioncode","3":null,"4":"L1.5 Release Manager Team","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"rmapproverrejectionreason","3":null,"4":"L1.5 Release Manager Team","5":null,"6":null,"7":null,"8":null},{"0":null,"1":null,"2":"rmapproverstatus","3":null,"4":"L1.5 Release Manager Team","5":null,"6":null,"7":null,"8":null},{"0":"Reversion/Backout/Rollback Testing","1":"ReversionBackoutRollbackTesting","2":"rollbacktesting","3":"SELECT","4":null,"5":null,"6":"Option\n —— NA - Token Generation and Seeding\n —— Yes - Rollback Testing Signed off\n —— NA - Pre-production setup\n —— NA - Health check\n —— NA - BAU Backup infra activities/Storage decommission\n —— NA - Reporting\n —— NA - For servers/application full decommissioning\n —— NA - DB plan\n —— NA - Faulty hardware replacement\n —— NA - Recover Batch Job Abends for existing jobs\n —— NA - Data download to non-prod,Data restoration\n —— NA - DR Flip for VPC\n —— NA - Rollback using previously deployed release ticket\n —— NA - Maintenance downtime announcement\n —— NA - Digi Apps external submission\n —— NA - PAT infra Env Setup\n —— NA - Restart servers/services\n —— NA - Backup execution\n —— NA - Batch reruns\n —— NA - No UAT servers/devices\n —— NA - Log dump collection","7":"Option\n —— be905d7ae08f44b797524f9952fdfa71\n —— 208b741c46754ebca2e1bfbd793f1a35\n —— e5613e4950a44633846ccb0a8d13e8e4\n —— 7a73472e0c8d42c7bb5a876d59d7c734\n —— d66cc3c54db14b4386905eb21f5a6097\n —— 285d27bea0984f6e8ea4c7ab15d44be6\n —— df91757a6ccb451e8f3ef856a2759e8d\n —— b9e08d4ab900439791c07b04601c09ee\n —— 013c2406785f4a3785e00a13c8f71c12\n —— 641f890fe3324fd8aa0e0846e2d298be\n —— 2cb5f98a716c430f8c9621f6c50a8db4\n —— be70ffe95cec4fe9abfe040e23311b82\n —— 343084c712d94456ad79eac166db64b4\n —— a2acab187e61436eb089218a020cfb67\n —— 730a717a376747778cb7e5912e7ec634\n —— c4b655300176481d8421037c841e515e\n —— a1e53dd899394044b91c666c6c1e55d2\n —— 833244c85b744f169cb045aec86e7d0b\n —— 6d72e63935ef4caea861297e940eb23e\n —— ce1288db5efb4388aaf5c66d2e990ded\n —— fbef783cfd9b47f29511e7b120a97760","8":"NA - Token Generation and Seeding","9":"be905d7ae08f44b797524f9952fdfa71","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"Scheduled Maintenance Start & End Time (YYYY-MM-DD HH:MM)","1":"ScheduledMaintenance_Time","2":"scheduledmaintenancestartdatetime,scheduledmaintenanceenddatetime","3":"DATERANGE","4":null,"5":null,"6":null,"7":null,"8":"This will be split two field to sync","9":"{\"startDate\":1745736243865,\"endDate\":1745736243865}","10":"{\"storeValue\":\"{\\\"startDate\\\":1745736243865,\\\"endDate\\\":1745736243865}\",\"apiValue\":\"This will be split two field to sync\"}"},{"0":"Change Schedule Start & End Time (YYYY-MM-DD HH:MM)","1":"ChangeSchedule_StartEndTime","2":"schedulestartdatetime,scheduleenddatetime","3":"DATERANGE","4":null,"5":null,"6":null,"7":null,"8":"This will be split two field to sync","9":"{\"startDate\":1745736243865,\"endDate\":1745736243865}","10":"{\"storeValue\":\"{\\\"startDate\\\":1745736243865,\\\"endDate\\\":1745736243865}\",\"apiValue\":\"This will be split two field to sync\"}"},{"0":"Please Specify the New Application Services Introduced in This Project","1":"NewApplicationServices","2":"servicemonitoringsnocappservicelist","3":"TEXTAREA","4":null,"5":null,"6":null,"7":null,"8":"textarea","9":"textarea","10":"{\"storeValue\":\"textarea\",\"apiValue\":\"textarea\"}"},{"0":"Service Monitoring at SNOC","1":"SNOCsignoff","2":"servicemonitoringsnoctype","3":"SELECT","4":null,"5":null,"6":"Option\n —— PAT only. SNOC monitoring not required\n —— CAT3 or CAT4 application\n —— Service Monitoring Dashboard URL Required\n —— Service monitoring will be mirrored over to the refreshed or new hardware\n —— New services introduced for CAT1, CAT2 which will NOT cause SL1/2/3 incident","7":"Option\n —— 753e9126035b4c0bb35fc16e2794d6f6\n —— 28cfa06232d44c169bd964b5ba5e36f8\n —— a2cf93e0be494618a8b247a4ab71ad2d\n —— c42ff998e6b5418b9dc50f1dce36c10d\n —— f5170ec77fd446dba3bd438c5ef59dc3","8":"PAT only. SNOC monitoring not required","9":"753e9126035b4c0bb35fc16e2794d6f6","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"Please Specify the Respective Production Monitoring Dashboard Link(s) Showing the New Services.","1":"TheProductionDashboardLinks","2":"servicemonitoringsnocurllist","3":"TEXTAREA","4":null,"5":null,"6":null,"7":null,"8":"textarea","9":"textarea","10":"{\"storeValue\":\"textarea\",\"apiValue\":\"textarea\"}"},{"0":"List the Critical Business Services Impacted by This Change","1":"Listtheimpactedbythechange","2":"servicesimpactedandrecoveryplan","3":"TEXTAREA","4":null,"5":null,"6":null,"7":null,"8":"textarea","9":"textarea","10":"{\"storeValue\":\"textarea\",\"apiValue\":\"textarea\"}"},{"0":"CR Status","1":"crStatus","2":"state","3":"SELECT","4":null,"5":null,"6":"Option\n —— Approved\n —— Closed Backoutfail\n —— Rejected\n —— Closed Backout\n —— Closed Successful\n —— Closed Issues\n —— New\n —— Reopen\n —— Closed Incomplete\n —— Closed Over Ran\n —— Open\n —— Closed Cancel","7":"Option\n —— 66ae1a9b61be416da589b7c710f43fa3\n —— 1cbde93f5d034fd79b4880af70d0e51f\n —— 52c6598bbdfa4758828e597596a44810\n —— 2a66e42e7bdb4307b5f1f28bd220446f\n —— 67880a24e8dc4bff9c6a3ecb2aec78a6\n —— 5cb2aa48be1049ac8947422fb8b41475\n —— 62fb0091f88f41d59496b015ec987b4e\n —— 8dbd44985f47436c8a3cc23973db780b\n —— 95abc2827c66496aa49904c9cd459aa3\n —— 893b61dadac048daad224a30df8f027a\n —— c3e701351c99411fa6aae7947142e34f\n —— b7248f486c5747e293b68cf59c7f98b4","8":"Approved","9":"66ae1a9b61be416da589b7c710f43fa3","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"Change Summary","1":"changeSummary","2":"summary","3":"TEXTAREA","4":null,"5":null,"6":null,"7":null,"8":"textarea","9":"textarea","10":"{\"storeValue\":\"textarea\",\"apiValue\":\"textarea\"}"},{"0":null,"1":"whenisthetargetdateofcompletion","2":"targetisssuefixdate","3":null,"4":null,"5":null,"6":null,"7":null,"8":null},{"0":"Project Manager","1":"projectCutOverProjectManager","2":"ticketprojectmanager","3":"MEMBER","4":null,"5":null,"6":null,"7":null,"8":"1bankid","9":"{\"userId\":\"1\",\"userName\":\"itsmuser1 (itsmuser1)\"}","10":"{\"storeValue\":\"{\\\"userId\\\":\\\"1\\\",\\\"userName\\\":\\\"itsmuser1 (itsmuser1)\\\"}\",\"apiValue\":\"1bankid\"}"},{"0":"Project Manager Contact Number","1":"projectCutOverProjectManagerCont","2":"ticketprojectmanagermobile","3":"INPUT","4":null,"5":null,"6":null,"7":null,"8":"input","9":"input","10":"{\"storeValue\":\"input\",\"apiValue\":\"input\"}"},{"0":"User Acceptance Testing (UAT)","1":"uat","2":"uat","3":"SELECT","4":null,"5":null,"6":"Option\n —— NA - Recover Batch Job Abends for existing jobs\n —— NA - Data restoration\n —— Yes - UAT Signed off\n —— NA - No UAT servers/devices\n —— NA - Firewall Port change\n —— NA - Maintenance downtime announcement\n —— NA - PAT Infra Env Setup\n —— NA - Certificate renewal/Key Generation\n —— NA - CPU/memoryhard disk/storage/file system change\n —— NA - Data download to non-prod, Data restoration\n —— NA - Faulty hardware replacement\n —— NA - Backup execution\n —— NA - IDs related activities\n —— NA - BAU Backup infra activities/Storage decommission\n —— NA - Health check\n —— NA - HA DR Flip (exclude MF)\n —— NA - Pre-production setup\n —— NA - For servers/application full decommissioning\n —— NA - Restart servers/services\n —— NA - Log dump collection","7":"Option\n —— faeaac9554284ef5902299ea9ae40b64\n —— 0f290323692f4347875250f451528012\n —— 49ea88c0ff464b7b8de36165fd8f1942\n —— 47e7cecda0d34896a06a09c5747680c3\n —— c88c062aaed94491b10c4cc04bffa233\n —— 77df4d2ac10b47dd8f7ecaa5ef52813f\n —— fcf7d21c63ae49188af09a7fa87f9261\n —— f619597a8d8f4a5da91978502446ef7f\n —— 5ee5f77a3d2144bab40a219bb98e802a\n —— 80ac6f8e1fa041babb601efae94fb960\n —— ce353f1c312c42999cf0bca8e36f346c\n —— cb1e3d18b7e944a3822a16fcd3b5ce6f\n —— 027f5c899cf84406aba587de374d2f35\n —— 5bd61d305c6a4175ab45c3304281ba9f\n —— 8e7562ef1d004c4784f04c0df1c40765\n —— efc089eaef45474cad80a4eeb78f9a9e\n —— 8eb9022f44114893950cdf5cf15a291c\n —— 8f4c36f771b342bcb1b04df95a63a835\n —— 36d7b9561f664ee995a634e01ded0295\n —— c87345ae00a149e1a230dba5c2914b22","8":"NA - Recover Batch Job Abends for existing jobs","9":"faeaac9554284ef5902299ea9ae40b64","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"Upstream/Downstream Interfaces Impact","1":"interfaceImpact","2":"upstreamdownstreaminterfacesimpact","3":"SELECT","4":null,"5":null,"6":"Option\n —— All Upstream/Downstream application code app in App impacted field and Other App impacted field.  Upstream/Downstream application will not rollback if this change rollback.\n —— All Upstream/Downstream application code app in App impacted field and Other App impacted field. Upstream/Downstream will rollback if this change rollback.\n —— No upstream/downstream application impacted. All input and output data consumed within one application.","7":"Option\n —— c08522a53675486d962cf1d7215590a3\n —— 4e61026922e64a09ae6473ffd0c96d93\n —— 4846333c60c44e2caa3fc6b465ed9863","8":"All Upstream/Downstream application code app in App impacted field and Other App impacted field.  Upstream/Downstream application will not rollback if this change rollback.","9":"c08522a53675486d962cf1d7215590a3","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"},{"0":"Use High CPU/Increase Workload?","1":"UseHighCPUIncreaseWorkload","2":"usehighcpuincreaseworkload","3":"SELECT","4":null,"5":null,"6":"Option\n —— No\n —— Yes","7":"Option\n —— 75dde84672224fdbb81779de6d911985\n —— a1061b854502496ea736a739418706fe","8":"No","9":"75dde84672224fdbb81779de6d911985","10":"{\"storeValue\":\"\",\"apiValue\":\"\"}"}]
+package com.cloudwise.douc.customization.biz.service.ichampsync;
+
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.io.resource.ClassPathResource;
+import cn.hutool.core.text.CharSequenceUtil;
+import cn.hutool.http.HttpResponse;
+import cn.hutool.http.HttpUtil;
+import cn.hutool.json.JSONUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.cloudwise.dosm.api.bean.form.GroupBean;
+import com.cloudwise.dosm.api.bean.utils.JsonUtils;
+import com.cloudwise.dosm.dbs.mapper.DbsSignOffMapper;
+import com.cloudwise.dosm.dbs.vo.DbsSignOffEntity;
+import com.cloudwise.douc.customization.biz.dao.DbsApiLogMapper;
+import com.cloudwise.douc.customization.biz.dao.DictMapper;
+import com.cloudwise.douc.customization.biz.dao.MdlApproveRecordDetailMapper;
+import com.cloudwise.douc.customization.biz.dao.MdlApproveRecordMapper;
+import com.cloudwise.douc.customization.biz.dao.MdlInstanceMapper;
+import com.cloudwise.douc.customization.biz.dao.MdlInstanceTableDataMapper;
+import com.cloudwise.douc.customization.biz.dao.UploadFileMapper;
+import com.cloudwise.douc.customization.biz.enums.CrApprovalEnum;
+import com.cloudwise.douc.customization.biz.facade.UserSSOClient;
+import com.cloudwise.douc.customization.biz.facade.user.BaseExtend;
+import com.cloudwise.douc.customization.biz.facade.user.UserInfo;
+import com.cloudwise.douc.customization.biz.model.email.ApproveRecord;
+import com.cloudwise.douc.customization.biz.model.email.dosm.ApproveResultEnum;
+import com.cloudwise.douc.customization.biz.model.log.DbsApiLog;
+import com.cloudwise.douc.customization.biz.model.table.MdlApproveRecord;
+import com.cloudwise.douc.customization.biz.model.table.MdlApproveRecordDetail;
+import com.cloudwise.douc.customization.biz.model.table.MdlInstance;
+import com.cloudwise.douc.customization.biz.model.table.MdlInstanceTableData;
+import com.cloudwise.douc.customization.biz.model.table.UploadFileInfo;
+import com.cloudwise.douc.customization.biz.service.email.DosmCustomApprovalRecordService;
+import com.cloudwise.douc.customization.common.config.DbsProperties;
+import com.cloudwise.storage.FileStorageService;
+import com.cloudwise.storage.Urler;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.JsonNodeType;
+import com.fasterxml.jackson.databind.node.NullNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.common.collect.Lists;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.util.StopWatch;
+
+import java.io.File;
+import java.nio.charset.Charset;
+import java.time.Duration;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static com.cloudwise.douc.customization.biz.service.ichampsync.SignoffConstants.SignoffItem.IDR_SIGNOFF_PROCUTOVER;
+import static com.cloudwise.douc.customization.biz.service.ichampsync.SignoffConstants.SignoffItem.MD_DELEGATE_SIGNOFF;
+
+/**
+ * <p>
+ *
+ * </p>
+ *
+ * @author Norval.Xu
+ * @since 2025/2/17
+ */
+@Slf4j
+@Component
+public class DataSynchronizer {
+
+    private final MdlInstanceMapper mdlInstanceMapper;
+    private final MdlInstanceTableDataMapper mdlInstanceTableDataMapper;
+    private final DbsSignOffMapper signOffMapper;
+
+    private final MdlApproveRecordMapper mdlApproveRecordMapper;
+    private final MdlApproveRecordDetailMapper mdlApproveRecordDetailMapper;
+    private final UserSSOClient userSSOClient;
+    private ExtParam extParam;
+    private final DbsApiLogMapper dbsApiLogMapper;
+
+    private final DbsProperties dbsProperties;
+
+    private final DictMapper dictMapper;
+
+    private final FileStorageService fileStorageService;
+
+    private final UploadFileMapper uploadFileMapper;
+
+    public static final int DEFAULT_EXPIRY_TIME = 7 * 24 * 3600;
+
+    private static final List<String> CLOSE_STATUS_LIST = Lists.newArrayList("Closed Backoutfail", "Closed Issues");
+    public static final String NEED_L1DOT5_CMTEAM_VALUE_CODE = "NeedL15CMTeamApprove_value";
+    public static final String NEED_ISSAPPROVE_VALUE_CODE = "NeedIssApprove_value";
+    public static final String MDDELEGATE_SIGNOFF_TYPE = "mddelegatesignofftype";
+    public static final String GROUP_NAME = "groupName";
+
+    @Autowired
+    DosmCustomApprovalRecordService dosmCustomApprovalRecordService;
+
+    public DataSynchronizer(MdlInstanceMapper mdlInstanceMapper, MdlInstanceTableDataMapper mdlInstanceTableDataMapper, DbsSignOffMapper dbsSignOffMapper, MdlApproveRecordMapper mdlApproveRecordMapper, MdlApproveRecordDetailMapper mdlApproveRecordDetailMapper, UserSSOClient userSSOClient, DbsApiLogMapper dbsApiLogMapper, DbsProperties dbsProperties, DictMapper dictMapper, FileStorageService fileStorageService, UploadFileMapper uploadFileMapper) {
+        this.mdlInstanceMapper = mdlInstanceMapper;
+        this.mdlInstanceTableDataMapper = mdlInstanceTableDataMapper;
+        this.signOffMapper = dbsSignOffMapper;
+        this.mdlApproveRecordMapper = mdlApproveRecordMapper;
+        this.mdlApproveRecordDetailMapper = mdlApproveRecordDetailMapper;
+        this.userSSOClient = userSSOClient;
+        this.dbsApiLogMapper = dbsApiLogMapper;
+        this.dbsProperties = dbsProperties;
+        this.dictMapper = dictMapper;
+        this.fileStorageService = fileStorageService;
+        this.uploadFileMapper = uploadFileMapper;
+    }
+
+
+    public void send2Ichamp(ObjectNode resultData, boolean isNew, MdlInstance mdlInstance, ObjectNode formData, List<MdlInstanceTableData> mdlInstanceTableData) {
+        JsonNode lastRequestor = formData.get("LastRequestor");
+        String userId = mdlInstance.getCreatedBy();
+        if (lastRequestor != null && !lastRequestor.isEmpty()) {
+            JsonNode jsonNode = lastRequestor.get(0);
+            JsonNode userIdNode = jsonNode.get("userId");
+            if (!userIdNode.asText().equals(userId)) {
+                userId = userIdNode.asText();
+            }
+        }
+        List<UserInfo> userListByIds = userSSOClient.getUserListByIds(Collections.singletonList(userId), "2", "110");
+        List<String> ibankIds = userListByIds.stream().map(item -> {
+            Optional<BaseExtend> first = item.getExtend().stream().filter(user -> user.getAlias().equalsIgnoreCase("1bankId")).findFirst();
+            if (first.isPresent()) {
+                return first.get().getValue();
+            } else {
+                return "";
+            }
+        }).collect(Collectors.toList());
+        ObjectNode result = JsonUtils.createObjectNode();
+        ObjectNode data = JsonUtils.createObjectNode();
+        result.put("action", isNew ? "Create" : "Modify");
+        resultData.put("changerequestor", ibankIds.get(0));
+        data.set("formData", resultData);
+        data.put("workOrderNo", mdlInstance.getBizKey());
+        data.put("createdBy", ibankIds.get(0));
+        data.put("createdDate", mdlInstance.getCreatedTime().getTime());
+        result.set("data", data);
+        String url = isNew ? dbsProperties.getIchampCreateUrl() : dbsProperties.getIchampUpdateUrl();
+        String jsonString = JsonUtils.toJsonString(result);
+        DbsApiLog dbsApiLog = new DbsApiLog();
+        dbsApiLog.setCreatedTime(new Date());
+        dbsApiLog.setRequestStatus(true);
+        dbsApiLog.setRequestUrl(url);
+        dbsApiLog.setRequestBody(jsonString);
+        dbsApiLog.setApiModule("crStatusSync");
+
+        StopWatch stopWatch = new StopWatch();
+        String body = "";
+        Map<String, Object> origin = new HashMap<>();
+        try {
+            stopWatch.start();
+            HttpResponse response = HttpUtil.createPost(url).header("Content-Type", "application/json").header("appCode", dbsProperties.getAppCode()).header("appKey", dbsProperties.getAppKey()).body(jsonString).execute();
+            stopWatch.stop();
+            long totalTimeMillis = stopWatch.getTotalTimeMillis();
+            log.info("CrStatusSync ichamp sync time: {} ms", totalTimeMillis);
+            body = response.body();
+            log.info("CrStatusSyncTriggermakeResult:{}", body);
+
+            JsonNode node = JsonUtils.parseJsonNode(body);
+            origin.put("mdlInstance", mdlInstance);
+            origin.put("mdlInstanceTableData", mdlInstanceTableData);
+            origin.put("reqBody", body);
+            origin.put("time", totalTimeMillis);
+            dbsApiLog.setResponseBody(JsonUtils.toJsonString(origin));
+            dbsApiLog.setWorkOrderNo(mdlInstance.getBizKey());
+
+            if ("200".equals(node.get("code").asText())) {
+                JsonNode dataNode = node.get("data");
+                JsonNode status = dataNode.get("Status");
+                if ("FAILED".equals(status.asText())) {
+                    dbsApiLog.setRequestStatus(false);
+                    dbsApiLogMapper.insert(dbsApiLog);
+                } else {
+                    dbsApiLog.setRequestStatus(true);
+                    dbsApiLogMapper.insert(dbsApiLog);
+                }
+            } else {
+                dbsApiLog.setRequestStatus(false);
+                dbsApiLogMapper.insert(dbsApiLog);
+            }
+        } catch (Exception e) {
+            stopWatch.stop();
+            long totalTimeMillis = stopWatch.getTotalTimeMillis();
+            origin.put("time", totalTimeMillis);
+            origin.put("errorInfo", e.getMessage());
+            dbsApiLog.setResponseBody(JsonUtils.toJsonString(origin));
+            dbsApiLog.setRequestStatus(false);
+            dbsApiLogMapper.insert(dbsApiLog);
+        }
+    }
+
+    private void setRiskValue(ObjectNode formData, String itsmFieldCode, String ichampFieldCode, ObjectNode resultNode) {
+        JsonNode fieldInfo = formData.get(itsmFieldCode + "_value");
+        if (fieldInfo == null) {
+            resultNode.put(ichampFieldCode, "3");
+            return;
+        }
+        String value = fieldInfo.asText();
+        if (value.equalsIgnoreCase("low")) {
+            resultNode.put(ichampFieldCode, "3");
+        } else {
+            resultNode.put(ichampFieldCode, "1");
+        }
+    }
+
+    public void convertFormData2ResultData(String workOrderId, String rcaWorkOrderId, ObjectNode resultData, String crStatus, String rcaStatus, Boolean isNew) {
+        if (extParam == null) {
+            ClassPathResource resource = new ClassPathResource("classpath:ichamp/extParam.json");
+            String readString = FileUtil.readString(resource.getFile(), Charset.defaultCharset());
+            extParam = JsonUtils.parseObject(readString, ExtParam.class);
+        }
+        MdlInstance mdlInstance = null;
+        if (StringUtils.isNotBlank(rcaWorkOrderId)) {
+            MdlInstance rcaMdlInstance = mdlInstanceMapper.selectMdlInstanceById(rcaWorkOrderId);
+            String formData = rcaMdlInstance.getFormData();
+            ObjectNode rcaFormData = (ObjectNode) JsonUtils.parseJsonNode(formData);
+            JsonNode crTicketNumber = rcaFormData.get("CRTicketNumber");
+            if (crTicketNumber == null) {
+                return;
+            }
+            String crTicketNumberValue = crTicketNumber.asText();
+            if (StringUtils.isBlank(crTicketNumberValue)) {
+                return;
+            }
+            mdlInstance = mdlInstanceMapper.selectMdlInstanceByBizKey(crTicketNumberValue);
+            if (mdlInstance == null) {
+                return;
+            }
+            workOrderId = mdlInstance.getId();
+            Map<String, String> rcaFieldMapping = extParam.getRcaFieldMapping();
+            for (Map.Entry<String, String> stringStringEntry : rcaFieldMapping.entrySet()) {
+                String ichampFieldCode = stringStringEntry.getKey();
+                String itsmFieldCode = stringStringEntry.getValue();
+                fillIChampValue(ichampFieldCode, rcaFormData, itsmFieldCode, resultData);
+            }
+        } else {
+            mdlInstance = mdlInstanceMapper.selectMdlInstanceById(workOrderId);
+        }
+
+        String formDataStr = mdlInstance.getFormData();
+        ObjectNode formData = (ObjectNode) JsonUtils.parseJsonNode(formDataStr);
+        Map<String, String> fieldMapping = extParam.getFieldMapping();
+        for (Map.Entry<String, String> stringStringEntry : fieldMapping.entrySet()) {
+            String ichampFieldCode = stringStringEntry.getKey();
+            String itsmFieldCode = stringStringEntry.getValue();
+            fillIChampValue(ichampFieldCode, formData, itsmFieldCode, resultData);
+        }
+        JsonNode crStatusValue = formData.get("crStatus_value");
+        JsonNode rcastatus = resultData.get("rcastatus");
+        if ((rcastatus == null || StringUtils.isBlank(rcastatus.asText())) && CLOSE_STATUS_LIST.contains(crStatusValue.asText())) {
+            resultData.put("rcastatus", "RCA Pending");
+        }
+
+
+        List<MdlInstanceTableData> mdlInstanceTableData = mdlInstanceTableDataMapper.selectList(Wrappers.lambdaQuery(MdlInstanceTableData.class).eq(MdlInstanceTableData::getWorkOrderId, workOrderId)
+                .eq(MdlInstanceTableData::getIsDel, 0));
+        Map<String, List<MdlInstanceTableData>> mdlInstanceTableMap = mdlInstanceTableData.stream().collect(Collectors.groupingBy(MdlInstanceTableData::getTableCode));
+
+
+        //Special handling
+        if (mdlInstanceTableMap.containsKey("F_Reversion_Plan")) {
+            List<MdlInstanceTableData> implementInfo = mdlInstanceTableMap.get("F_Reversion_Plan");
+            int cmcrollbackduration = 0;
+            Long minDate = null;
+            Long maxDate = null;
+            for (MdlInstanceTableData mdlInstanceTableData1 : implementInfo) {
+                String rowDataStr = mdlInstanceTableData1.getRowData();
+                JsonNode rowData = JsonUtils.parseJsonNode(rowDataStr);
+                JsonNode startTimeFieldInfo = rowData.get("F_Start_Time");
+                if (minDate == null) {
+                    minDate = startTimeFieldInfo.asLong();
+                } else {
+                    minDate = Math.min(minDate, startTimeFieldInfo.asLong());
+                }
+                JsonNode endTimeFieldInfo = rowData.get("F_End_Time");
+                if (maxDate == null) {
+                    maxDate = endTimeFieldInfo.asLong();
+                } else {
+                    maxDate = Math.max(maxDate, endTimeFieldInfo.asLong());
+                }
+            }
+            if (minDate != null && maxDate != null) {
+                cmcrollbackduration = (int) ((maxDate - minDate) / (1000 * 60));
+                resultData.put("cmcrollbackduration", cmcrollbackduration);
+            } else {
+                resultData.put("cmcrollbackduration", "NA");
+            }
+
+
+        } else {
+            log.error("CrStatusSyncTrigger: implementInfo not found");
+            resultData.put("cmcrollbackduration", "NA");
+        }
+
+
+        Map<String, List<TableFieldMapping>> tableFieldMappings = extParam.getTableFieldMapping();
+        for (Map.Entry<String, List<TableFieldMapping>> item : tableFieldMappings.entrySet()) {
+            String key = item.getKey();
+            ObjectNode itemResult = JsonUtils.createObjectNode();
+            List<TableFieldMapping> itemValue = item.getValue();
+            for (TableFieldMapping tableFieldMapping : itemValue) {
+                String itsmTableFieldInfo = tableFieldMapping.getItsmTableFieldInfo();
+                List<MdlInstanceTableData> jobDetailsSection = mdlInstanceTableMap.get(itsmTableFieldInfo);
+                if (jobDetailsSection != null) {
+                    log.error("CrStatusSyncTrigger find table info:{}", itsmTableFieldInfo);
+                    ArrayNode jobDetailResult = JsonUtils.createArrayNode();
+                    Map<String, String> fieldMapping1 = tableFieldMapping.getFieldMapping();
+                    for (MdlInstanceTableData rowData : jobDetailsSection) {
+                        ObjectNode jobDetailItem = JsonUtils.createObjectNode();
+                        String rowDataRowData = rowData.getRowData();
+                        ObjectNode jsonNode = (ObjectNode) JsonUtils.parseJsonNode(rowDataRowData);
+                        for (Map.Entry<String, String> stringStringEntry : fieldMapping1.entrySet()) {
+                            fillIChampValue(stringStringEntry.getKey(), jsonNode, stringStringEntry.getValue(), jobDetailItem);
+                        }
+                        jobDetailResult.add(jobDetailItem);
+                    }
+                    itemResult.put(tableFieldMapping.getIchampTableFieldInfo(), jobDetailResult);
+                } else {
+                    log.error("CrStatusSyncTrigger not find table info:{}", itsmTableFieldInfo);
+                }
+            }
+            if (!itemResult.isEmpty()) {
+                resultData.put(key, itemResult);
+            }
+        }
+
+
+        List<DbsSignOffEntity> signOffEntities = signOffMapper.selectList(Wrappers.lambdaQuery(DbsSignOffEntity.class).eq(DbsSignOffEntity::getWorkOrderId, workOrderId));
+        for (DbsSignOffEntity signoffManager : signOffEntities) {
+            String signOffType = signoffManager.getSignOffType();
+            JsonNode signOffTypes = JsonUtils.parseJsonNode(signOffType);
+            for (JsonNode offType : signOffTypes) {
+                SignoffConstants.SignoffItem signoffItem = SignoffConstants.SignoffItem.fromString(offType.asText());
+                if (signoffItem != null) {
+                    if (signoffItem == IDR_SIGNOFF_PROCUTOVER) {
+                        ArrayNode caseIdsResult = JsonUtils.createArrayNode();
+                        JsonNode caseIds = JsonUtils.parseJsonNode(signoffManager.getCaseId());
+                        if (caseIds != null && !caseIds.isEmpty()) {
+                            for (JsonNode caseId : caseIds) {
+                                ObjectNode caseIdResult = JsonUtils.createObjectNode();
+                                caseIdResult.put("caseid", caseId.get("caseId").asText());
+                                caseIdResult.put("remarks", caseId.get("showStatus").asText());
+                                caseIdsResult.add(caseIdResult);
+                            }
+                        }
+                        resultData.put("idrsignoffcaseid", caseIdsResult);
+                    }
+
+                    if (MD_DELEGATE_SIGNOFF == signoffItem) {
+                        String groupNames = "";
+                        if (CharSequenceUtil.isNotBlank(signoffManager.getSignOffUserGroup())) {
+                            List<GroupBean> groupBeans = JsonUtils.convertList(signoffManager.getSignOffUserGroup(), GroupBean.class);
+                            if (CollUtil.isNotEmpty(groupBeans)) {
+                                groupNames = groupBeans.stream().
+                                        filter(Objects::nonNull).map(GroupBean::getGroupName).
+                                        filter(CharSequenceUtil::isNotBlank).
+                                        collect(Collectors.joining(","));
+                            }
+                        }
+                        resultData.put(MDDELEGATE_SIGNOFF_TYPE, groupNames);
+                    }
+
+                    JsonNode signOffUser = JsonUtils.parseJsonNode(signoffManager.getSignOffUser());
+                    if (signOffUser != null && !signOffUser.isEmpty()) {
+                        if (signoffItem.getSignOffApproverLoginCode() != null) {
+                            String userId = signOffUser.get(0).get("userId").asText();
+                            if (!"Approver Same as CR MD Approver".equalsIgnoreCase(userId)) {
+                                UserInfo userInfo = userSSOClient.getUserById(userId);
+                                List<BaseExtend> extend = userInfo.getExtend();
+                                extend.stream().filter(item -> item.getAlias().equalsIgnoreCase("1bankid")).findFirst().ifPresent(item -> {
+                                    String ibankId = item.getValue();
+                                    resultData.put(signoffItem.getSignOffApproverLoginCode(), ibankId);
+                                });
+                            } else {
+                                resultData.put(signoffItem.getSignOffApproverLoginCode(), userId);
+                            }
+                        }
+                        SignOffStatusEnum signOffStatusEnum = SignOffStatusEnum.valueOf(signoffManager.getStatus());
+                        if (signOffStatusEnum == SignOffStatusEnum.REJECTED || signOffStatusEnum == SignOffStatusEnum.APPROVED) {
+                            if (StringUtils.isNotBlank(signoffItem.getSignOffStatusCode())) {
+                                resultData.put(signoffItem.getSignOffStatusCode(), signOffStatusEnum.getDesc());
+                            }
+                            if (StringUtils.isNotBlank(signoffItem.getSignOffRejectionReasonCode())) {
+                                resultData.put(signoffItem.getSignOffRejectionReasonCode(), signoffManager.getRejectionReason() == null ? "" : signoffManager.getRejectionReason());
+                            }
+                        } else {
+                            if (StringUtils.isNotBlank(signoffItem.getSignOffStatusCode())) {
+                                handleEmptyField(signoffItem.getSignOffStatusCode(), resultData);
+                            }
+                            if (StringUtils.isNotBlank(signoffItem.getSignOffRejectionReasonCode())) {
+                                handleEmptyField(signoffItem.getSignOffRejectionReasonCode(), resultData);
+                            }
+                        }
+                    }
+                    handleSignoffUrl(signoffManager, signoffItem, resultData);
+                }
+            }
+        }
+
+        String techMdApproverTime = "";
+        List<ApproveRecord> customApprovalRecords = dosmCustomApprovalRecordService.getCustomApprovalRecordsV1(workOrderId);
+        log.info("Sync cr status customApprovalRecords:{},workOrderId:{}", customApprovalRecords, workOrderId);
+        Map<String, ApproveRecord> map = new HashMap<>();
+        if (!customApprovalRecords.isEmpty()) {
+            log.info("CustomApprovalRecords is not empty");
+            for (ApproveRecord approveRecord : customApprovalRecords) {
+                String nodeId = approveRecord.getNodeId();
+                map.put(nodeId, approveRecord);
+            }
+        }
+        log.info("Sync cr status customApprovalRecords map:{}", map);
+
+        //设置审批数据
+        List<ApproveInfo> approveInfoMapping = extParam.getApproveInfoMapping();
+        for (ApproveInfo approveInfo : approveInfoMapping) {
+            String nodeId = approveInfo.getNodeId();
+            ApproveRecord approveRecord = map.get(nodeId);
+            log.info("Sync cr status nodeId:{},approveRecord:{}", nodeId, approveRecord);
+            Map<String, String> mapFieldMapping = approveInfo.getMapFieldMapping();
+            log.debug("Sync mapFieldMapping:{}", mapFieldMapping);
+            if (Objects.isNull(mapFieldMapping)) {
+                mapFieldMapping = new HashMap<>();
+            }
+            if (approveRecord != null) {
+                for (Map.Entry<String, String> stringStringEntry : mapFieldMapping.entrySet()) {
+                    String ichampFieldCode = stringStringEntry.getKey();
+                    String itsmFieldCode = stringStringEntry.getValue();
+                    String[] itsmFieldCodeAndType = itsmFieldCode.split(":");
+                    if (itsmFieldCodeAndType.length == 2) {
+                        String type = itsmFieldCodeAndType[1];
+                        if ("MEMBER".equals(type)) {
+                            String approverId = approveRecord.getApproverId();
+                            if (CharSequenceUtil.isNotBlank(approverId)) {
+                                fillIChampValueWithMember(ichampFieldCode, approverId, resultData);
+                            } else {
+                                fillIChampValue(ichampFieldCode, formData, itsmFieldCode, resultData);
+                            }
+                        } else {
+                            fillIChampValue(ichampFieldCode, formData, itsmFieldCode, resultData);
+                        }
+                    } else {
+                        fillIChampValue(ichampFieldCode, formData, itsmFieldCode, resultData);
+                    }
+                }
+                String status = approveRecord.getStatus();
+                if (CharSequenceUtil.isNotBlank(approveRecord.getReasonLable())) {
+                    resultData.put(approveInfo.getRejectionCode(), approveRecord.getReasonLable());
+                }
+                if (StringUtils.isNotBlank(approveInfo.getStatusTimeCode())) {
+                    if (Objects.isNull(approveRecord.getUpdateTime())) {
+                        resultData.put(approveInfo.getStatusTimeCode(), "");
+                    } else {
+                        resultData.put(approveInfo.getStatusTimeCode(), DateUtil.formatDateTime(new Date(approveRecord.getUpdateTime())));
+                    }
+                }
+                if (CharSequenceUtil.isNotBlank(approveRecord.getApproveMsg())) {
+                    resultData.put(approveInfo.getReasonCode(), approveRecord.getApproveMsg());
+                } else {
+                    resultData.put(approveInfo.getReasonCode(), "");
+                }
+                if (approveInfo.getNodeId().equals("SingleApprove_0cntz02")) {
+                    if (!Objects.isNull(approveRecord.getUpdateTime())) {
+                        techMdApproverTime = DateUtil.formatDateTime(new Date(approveRecord.getUpdateTime()));
+                    }
+                }
+                if (CrApprovalEnum.PENDING_APPROVAL.getName().equals(status)) {
+                    resultData.put(approveInfo.getStatusCode(), "");
+                    resultData.put(approveInfo.getRejectionCode(), "");
+                } else {
+                    resultData.put(approveInfo.getStatusCode(), CrApprovalEnum.APPROVED.getName().equals(status) ? "Approved" : "Rejected");
+                }
+            } else {
+                log.info("Sync cr status is:{}", crStatusValue);
+                //new 状态取表单数据同步
+                if ("New".equals(crStatusValue.asText())) {
+                    for (Map.Entry<String, String> stringStringEntry : mapFieldMapping.entrySet()) {
+                        String ichampFieldCode = stringStringEntry.getKey();
+                        String itsmFieldCode = stringStringEntry.getValue();
+                        String[] itsmFieldCodeAndType = itsmFieldCode.split(":");
+                        String type = itsmFieldCodeAndType[1];
+                        if ("GROUP".equals(type)) {
+                            fillIChampValueWithGroup(ichampFieldCode, formData, itsmFieldCode, resultData, type);
+                        } else {
+                            fillIChampValue(ichampFieldCode, formData, itsmFieldCode, resultData);
+                        }
+                    }
+                } else {
+                    for (Map.Entry<String, String> stringStringEntry : mapFieldMapping.entrySet()) {
+                        String ichampFieldCode = stringStringEntry.getKey();
+                        String itsmFieldCode = stringStringEntry.getValue();
+                        fillIChampValue(ichampFieldCode, formData, itsmFieldCode, resultData);
+                    }
+                }
+            }
+        }
+        if (StringUtils.isNotBlank(rcaWorkOrderId)) {
+            //查询审批数据
+            List<ApproveInfo> rcaApproveInfoMapping = extParam.getRcaApproveInfoMapping();
+            for (ApproveInfo approveInfo : rcaApproveInfoMapping) {
+                //if cr Status is not New ,need query approver status
+                LambdaQueryWrapper<MdlApproveRecord> wrapper = Wrappers.lambdaQuery(MdlApproveRecord.class).eq(MdlApproveRecord::getWorkOrderId, rcaWorkOrderId).eq(MdlApproveRecord::getNodeId, approveInfo.getNodeId()).orderByDesc(MdlApproveRecord::getCreatedTime);
+                MdlApproveRecord mdlApproveRecord = mdlApproveRecordMapper.selectOne(wrapper, false);
+                log.error("CrStatus:queryApprove:{}", mdlApproveRecord);
+                if (mdlApproveRecord != null) {
+                    if (mdlApproveRecord.getApproveStatus().equals(ApproveStatusEnum.FINISHED.getCode() + "")) {
+                        MdlApproveRecordDetail mdlApproveRecordDetail = mdlApproveRecordDetailMapper.selectOne(Wrappers.lambdaQuery(MdlApproveRecordDetail.class).eq(MdlApproveRecordDetail::getApproveRecordId, mdlApproveRecord.getId()), false);
+                        log.error("CrStatus:mdlApproveRecordDetail:{}", mdlApproveRecordDetail);
+                        if (mdlApproveRecordDetail != null) {
+                            String dictId = mdlApproveRecordDetail.getReason();
+                            if (StringUtils.isNotBlank(dictId) && StringUtils.isNotBlank(approveInfo.getRejectionCode())) {
+                                String dataDictLableById = mdlApproveRecordMapper.getDataDictLableById(dictId);
+                                resultData.put(approveInfo.getRejectionCode(), dataDictLableById);
+                            }
+                            resultData.put(approveInfo.getReasonCode(), mdlApproveRecordDetail.getApproveMsg());
+                        }
+                        resultData.put(approveInfo.getStatusCode(), mdlApproveRecord.getApproveResult() == ApproveResultEnum.PASS ? "Approved" : "Rejected");
+                    }
+                }
+            }
+        }
+
+        setRiskValue(formData, "CustomerServices", "cmrmavailablity", resultData);
+        setRiskValue(formData, "InherentandResidualrisks", "cmrminherentresidualrisks", resultData);
+        setRiskValue(formData, "BusinessUnitsOperations", "cmrmcontinuity", resultData);
+        setRiskValue(formData, "ChangeComplexity", "cmrmcomplexity", resultData);
+        setRiskValue(formData, "BackoutComplexity", "cmrmimplement", resultData);
+        setRiskValue(formData, "Documentation", "cmrmtraining", resultData);
+        setRiskValue(formData, "Security", "cmrmsecurity", resultData);
+        setRiskValue(formData, "Interfaces", "cmrminterfaces", resultData);
+
+        resultData.put("itsmcrnumber", mdlInstance.getBizKey());
+        resultData.put("implementationplan", "https://" + dbsProperties.getCloudwiseDomain() + "/docp/dosm/dosm/orderDetails?showType=handle&id=" + workOrderId + "&isType=&isShowBack=1&type=3d409c4dc7e741539194a528cd9f0d91");
+        resultData.put("reversionplan", "https://" + dbsProperties.getCloudwiseDomain() + "/docp/dosm/dosm/orderDetails?showType=handle&id=" + workOrderId + "&isType=&isShowBack=1&type=3d409c4dc7e741539194a528cd9f0d91");
+        if (StringUtils.isNotBlank(crStatus)) {
+            resultData.put("state", crStatus);
+        }
+        if (StringUtils.isNotBlank(rcaStatus)) {
+            resultData.put("rcastatus", rcaStatus);
+        }
+
+        handleClarificationsection(resultData, formData, mdlInstance);
+
+        //
+        JsonNode cmcdatapatchnumberofrecord = resultData.get("cmcdatapatchnumberofrecord");
+        if (cmcdatapatchnumberofrecord == null) {
+            resultData.put("cmcdatapatchnumberofrecord", "NA");
+        } else {
+            String cmcdatapatchnumberofrecordText = cmcdatapatchnumberofrecord.asText();
+            if (StringUtils.isBlank(cmcdatapatchnumberofrecordText)) {
+                resultData.put("cmcdatapatchnumberofrecord", "NA");
+            }
+
+        }
+
+        JsonNode appOwnerForDataPatch = formData.get("AppOwner_forDataPatch");
+        if (appOwnerForDataPatch != null && appOwnerForDataPatch.asText().equalsIgnoreCase("SameAsCRmDApprovers")) {
+            resultData.put("applicationownername", "Same as CR MD Approver");
+            resultData.put("applicationownercomment", resultData.get("mdstatusreason"));
+            resultData.put("applicationownerapprovalstatus", resultData.get("mdapproverstatus"));
+            resultData.put("appownerdatapatchapprovalstatustime", techMdApproverTime);
+        }
+        //l1.5
+        JsonNode needL15CMTeamApprove = formData.get(NEED_L1DOT5_CMTEAM_VALUE_CODE);
+        if (!(needL15CMTeamApprove != null && "Yes".equals(needL15CMTeamApprove.asText()))) {
+            resultData.put("changemanagergroup", "");
+            resultData.put("changemanagerrejectioncode", "");
+            resultData.put("changemanagerstatusreason", "");
+            resultData.put("changemanagerapproverstatus", "");
+            resultData.put("changemanagerrejectioncode", "");
+        }
+        JsonNode needIssApprove = formData.get(NEED_ISSAPPROVE_VALUE_CODE);
+        if (!(needIssApprove != null && "Yes".equals(needIssApprove.asText()))) {
+            resultData.put("issoverduepatchapprovergroup", "");
+            resultData.put("issoverduepatchapprover", "");
+            resultData.put("issoverduepatchapproverstatusreason", "");
+            resultData.put("issoverduepatchapproverstatus", "");
+            resultData.put("issoverduepatchapproverrejectioncode", "");
+        }
+
+
+        log.debug("Sync cr resultData:{}", resultData);
+        send2Ichamp(resultData, isNew, mdlInstance, formData, mdlInstanceTableData);
+    }
+
+    private void handleSignoffUrl(DbsSignOffEntity signoffManager, SignoffConstants.SignoffItem signoffItem, ObjectNode resultData) {
+        if (StringUtils.isNotBlank(signoffItem.getSignOffUrlCode())) {
+            if (signoffManager.getArtifact() != null && CharSequenceUtil.isNotBlank(signoffManager.getArtifact())) {
+                JsonNode node = JsonUtils.parseJsonNode(signoffManager.getArtifact());
+                List<String> urls = new ArrayList<>();
+                for (JsonNode jsonNode : node) {
+                    JsonNode id = jsonNode.get("id");
+                    UploadFileInfo fileInfoPo = uploadFileMapper.selectFileInfoListById(id.asText());
+                    String filePath = fileInfoPo.getUrl();
+                    String fileName = filePath.substring(filePath.indexOf(File.separator) + 1);
+                    try {
+                        Urler url = fileStorageService.of(fileName).setBucket(filePath.substring(0, filePath.indexOf(File.separator))).url();
+                        url.setExpire(Duration.of(DEFAULT_EXPIRY_TIME, ChronoUnit.YEARS));
+                        urls.add(url.get());
+                    } catch (Exception e) {
+                        log.error("HandleSignoffUrl Artifact error: signoffManager:{},SignoffItem:{}", signoffManager, signoffItem, e);
+                    }
+                }
+                resultData.put(signoffItem.getSignOffUrlCode(), String.join(",", urls));
+            } else {
+                resultData.put(signoffItem.getSignOffUrlCode(), "");
+            }
+        }
+    }
+
+    private void handleClarificationsection(ObjectNode resultData, ObjectNode formData, MdlInstance mdlInstance) {
+        JsonNode anyDataMigrationQuestion = formData.get("Any_data_migration_question");
+        JsonNode whyCRCATisNotPatchToAppCAT = formData.get("WhyCRCATisNotPatchToAppCAT");
+        ArrayNode arrayNode = JsonUtils.createArrayNode();
+
+
+        if (anyDataMigrationQuestion != null && StringUtils.isNotBlank(anyDataMigrationQuestion.asText())) {
+            ObjectNode objectNode = JsonUtils.createObjectNode();
+            objectNode.put("seekclarification", "Any data migration/loading? What happened to the data if reversion? ");
+            objectNode.put("clarification", anyDataMigrationQuestion.asText());
+            arrayNode.add(objectNode);
+        }
+        if (whyCRCATisNotPatchToAppCAT != null && StringUtils.isNotBlank(whyCRCATisNotPatchToAppCAT.asText())) {
+            ObjectNode objectNode1 = JsonUtils.createObjectNode();
+            objectNode1.put("seekclarification", "Any data migration/loading? What happened to the data if reversion? ");
+            objectNode1.put("clarification", whyCRCATisNotPatchToAppCAT.asText());
+            arrayNode.add(objectNode1);
+        }
+        resultData.put("clarificationsection", arrayNode);
+    }
+
+    private void fillIChampValue(String ichampFieldCode, ObjectNode formData, String itsmFieldCode, ObjectNode resultData) {
+        String[] itsmFieldCodeAndType = itsmFieldCode.split(":");
+        if (formData.has(itsmFieldCodeAndType[0])) {
+            JsonNode itsmValue = formData.get(itsmFieldCodeAndType[0]);
+            JsonNodeType nodeType = itsmValue.getNodeType();
+            switch (nodeType) {
+                case NULL:
+                case MISSING:
+                    handleEmptyField(ichampFieldCode, resultData);
+                    break;
+                case POJO:
+                case BINARY:
+                    log.error("not support");
+                    break;
+                case ARRAY:
+                    fillIChamValueWithArrary(ichampFieldCode, formData, itsmFieldCodeAndType[0], resultData);
+                    break;
+                case BOOLEAN:
+                    resultData.put(ichampFieldCode, itsmValue.asBoolean());
+                    break;
+                case OBJECT:
+                    if (itsmValue.has("startDate")) {
+                        String[] startAndEnd = ichampFieldCode.split(",");
+                        if (itsmValue.get("startDate").asLong() == 0) {
+                            resultData.set(startAndEnd[0], null);
+                            resultData.set(startAndEnd[1], null);
+                        } else {
+                            resultData.put(startAndEnd[0], DateUtil.format(new Date(itsmValue.get("startDate").asLong()), "yyyy-MM-dd HH:mm:ss"));
+                            resultData.put(startAndEnd[1], DateUtil.format(new Date(itsmValue.get("endDate").asLong()), "yyyy-MM-dd HH:mm:ss"));
+                        }
+                    } else {
+                        log.error("not support");
+                    }
+                    break;
+                default:
+                    if (formData.has(itsmFieldCodeAndType[0] + "_value")) {
+                        String label = formData.get(itsmFieldCodeAndType[0] + "_value").asText();
+                        String text = itsmValue.asText();
+                        if (StringUtils.isNotBlank(text) && StringUtils.isBlank(label)) {
+                            resultData.put(ichampFieldCode, queryDictLabel(Collections.singletonList(text), getDictMapping(itsmFieldCodeAndType[0])));
+                        } else {
+                            resultData.put(ichampFieldCode, label);
+                        }
+
+                    } else {
+                        if (itsmFieldCodeAndType.length > 1) {
+                            if ("DATE".equalsIgnoreCase(itsmFieldCodeAndType[1])) {
+                                if (itsmValue.asLong() == 0) {
+                                    resultData.set(ichampFieldCode, null);
+                                } else {
+                                    resultData.put(ichampFieldCode, DateUtil.format(new Date(itsmValue.asLong()), "yyyy-MM-dd HH:mm:ss"));
+                                }
+                            } else {
+                                resultData.put(ichampFieldCode, itsmValue.asText());
+                            }
+                        } else {
+                            resultData.put(ichampFieldCode, itsmValue.asText());
+                        }
+
+                    }
+                    break;
+            }
+        } else {
+            handleEmptyField(ichampFieldCode, resultData);
+        }
+    }
+
+    private static void handleEmptyField(String ichampFieldCode, ObjectNode resultData) {
+        if (ichampFieldCode.contains(",")) {
+            String[] fieldCode = ichampFieldCode.split(",");
+            for (String field : fieldCode) {
+                resultData.put(field, "");
+            }
+        } else {
+            resultData.put(ichampFieldCode, "");
+        }
+    }
+
+    private void fillIChamValueWithArrary(String ichampFieldCode, ObjectNode formData, String itsmFieldCode, ObjectNode resultData) {
+        if (formData.has(itsmFieldCode + "_value") && !formData.has(itsmFieldCode + "_search")) {
+            JsonNode itsmLabel = formData.get(itsmFieldCode + "_value");
+            JsonNode itsmValue = formData.get(itsmFieldCode);
+            if (itsmValue.size() > 0 && itsmLabel.size() == 0) {
+                List<String> values = new ArrayList<>();
+                for (JsonNode jsonNode : itsmValue) {
+                    values.add(jsonNode.asText());
+                }
+                resultData.put(ichampFieldCode, queryDictLabel(values, getDictMapping(itsmFieldCode)));
+            } else {
+                List<String> values = new ArrayList<>();
+                for (JsonNode jsonNode : itsmLabel) {
+                    values.add(jsonNode.asText());
+                }
+                resultData.put(ichampFieldCode, String.join(",", values));
+            }
+        } else {
+            JsonNode itsmValue = formData.get(itsmFieldCode);
+            List<String> values = new ArrayList<>();
+            boolean isUser = false;
+            for (JsonNode jsonNode : itsmValue) {
+                if (jsonNode instanceof ObjectNode) {
+                    JsonNode userId = jsonNode.get("userId");
+                    JsonNode groupName = jsonNode.get("groupName");
+                    if (userId != null && !(userId instanceof NullNode) && StringUtils.isNotBlank(userId.asText()) && !"null".equalsIgnoreCase(userId.asText())) {
+                        isUser = true;
+                        values.add(userId.asText());
+                    } else if (groupName != null && !(groupName instanceof NullNode) && StringUtils.isNotBlank(groupName.asText()) && !"null".equalsIgnoreCase(groupName.asText())) {
+                        values.add(groupName.asText());
+                    }
+                } else {
+                    values.add(jsonNode.asText());
+                }
+            }
+            if (isUser) {
+                List<UserInfo> userListByIds = userSSOClient.getUserListByIds(values, "2", "110");
+                List<String> userNames = userListByIds.stream().map(UserInfo::getName).collect(Collectors.toList());
+                List<String> ibankIds = userListByIds.stream().map(item -> {
+                    Optional<BaseExtend> first = item.getExtend().stream().filter(user -> user.getAlias().equalsIgnoreCase("1bankId")).findFirst();
+                    if (first.isPresent()) {
+                        return first.get().getValue();
+                    } else {
+                        return "";
+                    }
+                }).collect(Collectors.toList());
+                String[] fieldCodes = ichampFieldCode.split(",");
+                resultData.put(fieldCodes[0], String.join(",", ibankIds));
+                if (fieldCodes.length > 1) {
+                    resultData.put(fieldCodes[1], String.join(",", userNames));
+                }
+            } else {
+                resultData.put(ichampFieldCode, String.join(",", values));
+            }
+        }
+    }
+
+    private DictMapping getDictMapping(String itsmFieldCode) {
+        Map<String, DictMapping> dictMapping = extParam.getDictMapping();
+        if (dictMapping.containsKey(itsmFieldCode)) {
+            return dictMapping.get(itsmFieldCode);
+        }
+        return DictMapping.builder().idCode("id").tableCode("data_dict_detail").labelCode("label").build();
+
+    }
+
+
+    public String queryDictLabel(List<String> values, DictMapping dictMapping) {
+        List<String> labels = dictMapper.queryLabelByValues(values, dictMapping.getTableCode(), dictMapping.getIdCode(), dictMapping.getLabelCode());
+        return String.join(",", labels);
+    }
+
+    private void fillIChampValueWithMember(String ichampFieldCode, String userId, ObjectNode resultData) {
+        if (CharSequenceUtil.isNotBlank(userId)) {
+            List<UserInfo> userListByIds = userSSOClient.getUserListByIds(Lists.newArrayList(userId), "2", "110");
+            List<String> userNames = userListByIds.stream().map(UserInfo::getName).collect(Collectors.toList());
+            List<String> ibankIds = userListByIds.stream().map(item -> {
+                Optional<BaseExtend> first = item.getExtend().stream().filter(user -> user.getAlias().equalsIgnoreCase("1bankId")).findFirst();
+                if (first.isPresent()) {
+                    return first.get().getValue();
+                } else {
+                    return "";
+                }
+            }).collect(Collectors.toList());
+            String[] fieldCodes = ichampFieldCode.split(",");
+            resultData.put(fieldCodes[0], String.join(",", ibankIds));
+            if (fieldCodes.length > 1) {
+                resultData.put(fieldCodes[1], String.join(",", userNames));
+            }
+        } else {
+            resultData.put(ichampFieldCode, "");
+        }
+    }
+
+    private void fillIChampValueWithGroup(String ichampFieldCode, ObjectNode formData, String itsmFieldCode, ObjectNode resultData, String type) {
+        if ("GROUP".equals(type)) {
+            JsonNode itsmValue = formData.get(itsmFieldCode);
+            List<String> values = new ArrayList<>();
+            boolean isUser = false;
+            for (JsonNode jsonNode : itsmValue) {
+                if (jsonNode instanceof ObjectNode) {
+                    JsonNode userId = jsonNode.get("userId");
+                    JsonNode groupName = jsonNode.get("groupName");
+                    if (userId != null && !(userId instanceof NullNode) && StringUtils.isNotBlank(userId.asText()) && !"null".equalsIgnoreCase(userId.asText())) {
+                        isUser = true;
+                        values.add(userId.asText());
+                    } else if (groupName != null && !(groupName instanceof NullNode) && StringUtils.isNotBlank(groupName.asText()) && !"null".equalsIgnoreCase(groupName.asText())) {
+                        values.add(groupName.asText());
+                    }
+                } else {
+                    values.add(jsonNode.asText());
+                }
+            }
+            if (isUser) {
+                List<UserInfo> userListByIds = userSSOClient.getUserListByIds(values, "2", "110");
+                List<String> userNames = userListByIds.stream().map(UserInfo::getName).collect(Collectors.toList());
+                List<String> ibankIds = userListByIds.stream().map(item -> {
+                    Optional<BaseExtend> first = item.getExtend().stream().filter(user -> user.getAlias().equalsIgnoreCase("1bankId")).findFirst();
+                    if (first.isPresent()) {
+                        return first.get().getValue();
+                    } else {
+                        return "";
+                    }
+                }).collect(Collectors.toList());
+                String[] fieldCodes = ichampFieldCode.split(",");
+                resultData.put(fieldCodes[0], String.join(",", ibankIds));
+                if (fieldCodes.length > 1) {
+                    resultData.put(fieldCodes[1], String.join(",", userNames));
+                }
+            } else {
+                resultData.put(ichampFieldCode, String.join(",", values));
+            }
+        }
+    }
+
+
+}
